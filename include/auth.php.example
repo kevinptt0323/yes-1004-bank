@@ -1,0 +1,6 @@
+<?php
+define("DB","DB_NAME");
+define("DBUSER", "DB_USER");
+define("DBPASSWD", "DB_PASSWORD");
+define("SALT", "SALT_FOR_PASSWORD");
+?>

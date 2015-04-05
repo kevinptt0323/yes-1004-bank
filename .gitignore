@@ -7,7 +7,7 @@ Session.vim
 40x.html
 50x.html
 favicon.ico
-include/
+include/auth.php
 ignore/
 
 node_modules/
