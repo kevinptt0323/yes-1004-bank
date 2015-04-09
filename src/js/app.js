@@ -14,7 +14,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   }).hashPrefix('!');
   $routeProvider
     .when('/', {
-      redirectTo: '/job/list'
+      redirectTo: '/jobs/list'
     })
     .when('/error', {
       template: 'Error! Page Not Found!'
@@ -59,7 +59,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       controller: 'testCtrl'
     })
     .otherwise({
-      redirectTo: '/job/list'
+      redirectTo: '/'
     });
 }]);
 
