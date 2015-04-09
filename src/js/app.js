@@ -5,7 +5,7 @@
 var app = angular.module('databaseHomeworkApp', [
   'databaseHomeworkController',
   'ngRoute'
-])
+]);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode({

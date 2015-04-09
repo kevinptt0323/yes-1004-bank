@@ -1,4 +1,26 @@
-<div>
-	this is login page
+<div class="template" id="login">
+	<div class="ui large attached message"> Login </div>
+	<div class="ui blue attached fluid message" id="response"> </div>
+	<form class="ui form attached fluid segment" name="loginForm" id="loginForm">
+		<div class="field">
+			<label>uesrname</label>
+			<div class="ui left labeled icon input">
+				<i class="user icon"></i>
+				<input name="username" type="text" placeholder="username" autocomplete="off">
+				<div class="ui corner label"> <i class="icon asterisk"></i> </div>
+			</div>
+		</div>
+		<div class="field">
+			<label>Password</label>
+			<div class="ui left labeled icon input">
+				<i class="lock icon"></i>
+				<input name="password" type="password" placeholder="password">
+				<div class="ui corner label"> <i class="icon asterisk"></i> </div>
+			</div>
+		</div>
+		<div id="button_div">
+			<input type="submit" value="Login" class="ui blue submit button" />
+		</div>
+	</form>
 </div>
 

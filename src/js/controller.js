@@ -8,7 +8,6 @@ ctrl.controller('pageCtrl', ['$scope', '$location', function($scope, $location) 
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
-  $scope.includePath = 'test1.html';
   $scope.loading = false;
   $scope.currentPage = {
     name: 'Index'
