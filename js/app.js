@@ -17,7 +17,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       redirectTo: '/job/list'
     })
     .when('/error', {
-      template: '404 Not Found'
+      template: 'Error! Page Not Found!'
     })
     .when('/login', {
       templateUrl: 'template/login.html'
