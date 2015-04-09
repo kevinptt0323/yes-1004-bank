@@ -4,7 +4,10 @@
 
 var ctrl = angular.module('databaseHomeworkController', []);
 
-ctrl.controller('pageCtrl', ['$scope', function($scope) {
+ctrl.controller('pageCtrl', ['$scope', '$location', function($scope, $location) {
+  $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
+    $location.path('/error').replace();
+  });
   $scope.includePath = 'test1.html';
   $scope.loading = false;
   $scope.currentPage = {
@@ -14,8 +17,9 @@ ctrl.controller('pageCtrl', ['$scope', function($scope) {
     title: 'title1'
   };
   $scope.navigates = [
-    { name: 'test1', href: '#!/test/1' },
-    { name: 'test2', href: '#!/test/2' },
+    { name: 'List All Jobs', href: '#!/jobs/list' },
+    { name: 'Login', href: '#!/login' },
+    { name: 'Sign Up', href: '#!/signup/jobseeker' },
     { name: 'test3', href: '#!/test/3' }
   ];
 }])
