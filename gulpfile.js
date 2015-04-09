@@ -16,7 +16,7 @@ var paths = {
     dest: './dist/js'
   },
   less: {
-    src: './src/less/*.less',
+    src: './src/css/*.less',
     dest: './dist/css'
   },
   lib: {
