@@ -1,3 +1,5 @@
 <div>
-	this is job list page
+	<ul>
+		<li ng-repeat="item in jobs"><a href="{{ href(item) }}"> {{ name(item) }} </a></li>
+	</ul>
 </div>

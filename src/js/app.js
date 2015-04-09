@@ -32,16 +32,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       templateUrl: 'template/job_add.html'
     })
     .when('/jobs/list', {
-      templateUrl: 'template/job_list.html'
+      templateUrl: 'template/job_list.html',
+      controller: 'jobsShowListCtrl'
     })
-    .when('/jobseeker/list', {
-      templateUrl: 'template/jobseeker_list.html'
-    })
-    .when('/jobseeker/:id', {
-      templateUrl: 'template/jobseeker_list.html'
-    })
-    .when('/test/:id', {
-      templateUrl: 'test.html',
+    .when('/jobs/:id', {
+      templateUrl: 'template/job_show.html',
+      controller: 'jobsShowCtrl',
       resolve: {
         id: function($q, $route) {
           var deferred = $q.defer(),
@@ -50,13 +46,18 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
           if( !isNaN(id) ) {
             deferred.resolve(id);
           } else {
-            deferred.reject('QAQ');
+            deferred.reject('Jobs Not Found.');
           }
 
           return deferred.promise;
         }
-      },
-      controller: 'testCtrl'
+      }
+    })
+    .when('/jobseeker/list', {
+      templateUrl: 'template/jobseeker_list.html'
+    })
+    .when('/jobseeker/:id', {
+      templateUrl: 'template/jobseeker_list.html'
     })
     .otherwise({
       redirectTo: '/'

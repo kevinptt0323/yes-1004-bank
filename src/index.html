@@ -17,15 +17,13 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
-		<header>
-			<h1><a href="./#!/">{{ thispage.title }}</a></h1>
-		</header>
-		<nav>
-			<ul>
-				<li ng-repeat="item in navigates"><a href="{{ item.href }}"> {{ item.name }} </a></li>
-			</ul>
+		<nav class="ui fixed blue large menu" id="nav-bar">
+			<a class="item" href="./#!/">{{ thispage.title }}</a>
+			<div class="right menu">
+				<a class="item" ng-repeat="item in navigates" href="{{ item.href }}"> {{ item.name }} </a>
+			</div>
 		</nav>
-		<div class="main">
+		<div id="main">
 			<div ng-show="loading">Loading...</div>
 			<div ng-view></div>
 		</div>
