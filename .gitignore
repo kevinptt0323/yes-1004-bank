@@ -27,5 +27,6 @@ bower_components
 50x.html
 favicon.ico
 dist/
+auth.php
 ignore/
 
