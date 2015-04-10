@@ -18,9 +18,22 @@
 	</head>
 	<body>
 		<nav class="ui fixed blue large menu" id="nav-bar">
-			<a class="item" href="./#!/">{{ thispage.title }}</a>
+			<a class="header item" href="./#!/">{{ thispage.title }}</a>
 			<div class="right menu">
-				<a class="item" ng-repeat="item in navigates" href="{{ item.href }}"> {{ item.name }} </a>
+				<a class="item" href="{{ item.href }}"
+					ng-repeat-start="item in navigates" ng-if=" ! item.menu">
+					{{ item.name }}
+				</a>
+				<div class="ui simple dropdown item"
+					ng-repeat-end ng-if="!! item.menu">
+					{{ item.name }}
+					<div class="menu">
+						<a class="item" href="{{ subitem.href }}"
+							ng-repeat="subitem in item.menu">
+							{{ subitem.name }}
+						</a>
+					</div>
+				</div>
 			</div>
 		</nav>
 		<div id="main">

@@ -30,7 +30,7 @@ var paths = {
 };
 
 gulp.task('clean', function(callback) {
-  del(['dist'], callback);
+  del(['dist', '!dist/lib'], callback);
 });
 
 gulp.task('web-pages', ['clean'], function() {
@@ -70,7 +70,6 @@ gulp.task('bower-files', ['clean'], function() {
 });
 
 gulp.task('fonts', ['clean'], function() {
-  console.log(paths.fonts.src);
   return gulp.src(paths.fonts.src, { base: './bower_components/semantic-ui/src' })
     .pipe(gulp.dest(paths.fonts.dest));
 });

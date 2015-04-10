@@ -13,12 +13,17 @@ ctrl.controller('pageCtrl', ['$scope', '$location', function($scope, $location) 
     name: 'Index'
   };
   $scope.thispage = {
-    title: 'title1'
+    title: 'Yes, 1004 銀行'
   };
   $scope.navigates = [
     { name: 'List All Jobs', href: '#!/jobs/list' },
     { name: 'Login', href: '#!/login' },
-    { name: 'Sign Up', href: '#!/signup/jobseeker' }
+    { name: 'Sign Up',
+      menu: [
+        { name: 'Job Seeker', href: '#!/signup/jobseeker' },
+        { name: 'Employer', href: '#!/signup/employer' }
+      ]
+    }
   ];
 }])
 
