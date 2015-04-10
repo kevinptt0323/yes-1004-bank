@@ -1,3 +1,89 @@
-<div>
-	this is employer signup page
+<div class="template" id="signup-employer">
+	<form class="ui form segment" name="registerForm" id="registerForm" method="POST" action="./">
+		<div id="frm" class="frm">
+			<div class="four fields">
+				<div class="field">
+					<label>Username</label>
+					<div class="ui corner labeled input">
+						<input name="username" placeholder="username" type="text" tabindex="1">
+						<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Password</label>
+					<div class="ui corner labeled input">
+						<input name="password" placeholder="password" type="password" tabindex="2">
+						<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Phone</label>
+					<div class="ui corner labeled input">
+						<input name="phone" placeholder="ex: 0987-654-321" type="text" tabindex="3">
+						<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Gender</label>
+					<div class="ui corner labeled dropdown selection" tabindex="4">
+						<input name='gender' type="hidden">
+						<div class="default text">...</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" data-value="Male">Male</div>
+							<div class="item" data-value="Female">Female</div>
+						</div>
+						<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+					</div>
+				</div>
+			</div>
+			<div class="four fields">
+				<div class="field">
+					<label>Age</label>
+					<div class="ui corner labeled input">
+						<input name="age" placeholder="age" type="number" tabindex="5">
+						<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Email Address</label>
+					<div class="ui corner labeled input">
+						<input name="email" placeholder="xxx@example.com" type="email" tabindex="6">
+						<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Expected Salary</label>
+					<div class="ui corner labeled input">
+						<input name="expected_salary" placeholder="your expected salary" type="number" min="0" step="1000" value="0" tabindex="7">
+						<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Major Education</label>
+					<div class="ui corner labeled dropdown selection" tabindex="4">
+						<input name='education' type="hidden">
+						<div class="default text">...</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" data-value="Graduate School">Graduate School</div>
+							<div class="item" data-value="Undergraduate School">undergraduate School</div>
+							<div class="item" data-value="Senior High School">Senior High School</div>
+						</div>
+						<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div id="button_div">
+		<div class="ui down button" onclick="account.submit();" tabindex="22" >
+			<i class="checkmark sign icon"></i>
+			送出
+		</div>
+		<div class="ui down button" onclick="clearForm();" tabindex="23">
+			<i class="trash icon"></i>
+			清除
+		</div>
+	</div>
 </div>
