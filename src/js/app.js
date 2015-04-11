@@ -60,7 +60,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       templateUrl: 'template/jobseeker_list.html'
     })
     .otherwise({
-      redirectTo: '/'
+      redirectTo: '/error'
     });
 }]);
 
