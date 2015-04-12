@@ -45,7 +45,14 @@ ctrl.controller('pageCtrl', ['$scope', '$location', function($scope, $location) 
   ];
 }])
 
-
 .controller('jobsShowCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
   $scope.job = { id: $routeParams.id, name: 'job ??' };
-}]);
+}])
+
+.controller('signupCtrl', ['$scope', function($scope) {
+  $scope.$on('$viewContentLoaded', function(event) {
+    $('.ui.dropdown').dropdown();
+  });
+}])
+
+;

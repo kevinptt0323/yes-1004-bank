@@ -23,10 +23,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       templateUrl: 'template/login.html'
     })
     .when('/signup/jobseeker', {
-      templateUrl: 'template/signup_jobseeker.html'
+      templateUrl: 'template/signup_jobseeker.html',
+      controller: 'signupCtrl'
     })
     .when('/signup/employer', {
-      templateUrl: 'template/signup_employer.html'
+      templateUrl: 'template/signup_employer.html',
+      controller: 'signupCtrl'
     })
     .when('/jobs/add', {
       templateUrl: 'template/job_add.html'
