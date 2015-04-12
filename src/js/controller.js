@@ -2,12 +2,15 @@
 
 /* Controllers */
 
-var ctrl = angular.module('databaseHomeworkController', []);
+var ctrl = angular.module('databaseHomeworkController', [
+  'databaseHomeworkView',
+]);
 
-ctrl.controller('pageCtrl', ['$scope', '$location', function($scope, $location) {
+ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope, $location, $view) {
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
+  $view.init();
   $scope.loading = false;
   $scope.currentPage = {
     name: 'Index'
@@ -49,9 +52,10 @@ ctrl.controller('pageCtrl', ['$scope', '$location', function($scope, $location) 
   $scope.job = { id: $routeParams.id, name: 'job ??' };
 }])
 
-.controller('signupCtrl', ['$scope', function($scope) {
+.controller('signupCtrl', ['$scope', 'signupView', function($scope, $view) {
+  var $view = $view;
   $scope.$on('$viewContentLoaded', function(event) {
-    $('.ui.dropdown').dropdown();
+    $view.init();
   });
 }])
 
