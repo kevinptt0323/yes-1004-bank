@@ -23,8 +23,8 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
     { name: 'Login', href: '#!/login' },
     { name: 'Sign Up',
       menu: [
-        { name: 'Job Seeker', href: '#!/signup/jobseeker' },
-        { name: 'Employer', href: '#!/signup/employer' }
+        { name: 'Job Seeker', href: '#!/register/jobseeker' },
+        { name: 'Employer', href: '#!/register/employer' }
       ]
     }
   ];
@@ -52,12 +52,12 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
   $scope.job = { id: $routeParams.id, name: 'job ??' };
 }])
 
-.controller('signupJobseekerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
+.controller('registerJobseekerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   $scope.viewer = view[$route.current.viewer];
   $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 
-.controller('signupEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('registerEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
   $scope.viewer = view[$route.current.viewer];
   $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])

@@ -22,25 +22,25 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     .when('/login', {
       templateUrl: 'template/login.html'
     })
-    .when('/signup/jobseeker', {
-      templateUrl: 'template/signup_jobseeker.html',
-      controller: 'signupJobseekerCtrl',
-      viewer: 'signupJobseekerView'
+    .when('/register/jobseeker', {
+      templateUrl: 'template/registerJobseeker.html',
+      controller: 'registerJobseekerCtrl',
+      viewer: 'registerJobseekerView'
     })
-    .when('/signup/employer', {
-      templateUrl: 'template/signup_employer.html',
-      controller: 'signupEmployerCtrl',
-      viewer: 'signupEmployerView'
+    .when('/register/employer', {
+      templateUrl: 'template/registerEmployer.html',
+      controller: 'registerEmployerCtrl',
+      viewer: 'registerEmployerView'
     })
     .when('/jobs/add', {
-      templateUrl: 'template/job_add.html'
+      templateUrl: 'template/jobsAdd.html'
     })
     .when('/jobs/list', {
-      templateUrl: 'template/job_list.html',
+      templateUrl: 'template/jobsList.html',
       controller: 'jobsShowListCtrl'
     })
     .when('/jobs/:id', {
-      templateUrl: 'template/job_show.html',
+      templateUrl: 'template/jobsShow.html',
       controller: 'jobsShowCtrl',
       resolve: {
         id: function($q, $route) {
@@ -58,10 +58,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       }
     })
     .when('/jobseeker/list', {
-      templateUrl: 'template/jobseeker_list.html'
+      templateUrl: 'template/jobseekerList.html'
     })
     .when('/jobseeker/:id', {
-      templateUrl: 'template/jobseeker_list.html'
+      templateUrl: 'template/jobseekerList.html'
     })
     .otherwise({
       redirectTo: '/error'

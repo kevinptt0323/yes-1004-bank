@@ -1,0 +1,46 @@
+<div class="template" id="register-employer">
+	<form class="ui form segment" id="register-employer-form">
+		<div class="two fields">
+			<div class="field">
+				<label>Username</label>
+				<div class="ui corner labeled input">
+					<input ng-model="formData.username" placeholder="username" type="text" tabindex="1">
+					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+				</div>
+			</div>
+			<div class="field">
+				<label>Password</label>
+				<div class="ui corner labeled input">
+					<input ng-model="formData.password" placeholder="password" type="password" tabindex="2">
+					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+				</div>
+			</div>
+		</div>
+		<div class="two fields">
+			<div class="field">
+				<label>Phone</label>
+				<div class="ui corner labeled input">
+					<input ng-model="formData.phone" placeholder="ex: 0987-654-321" type="text" tabindex="3">
+					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+				</div>
+			</div>
+			<div class="field">
+				<label>Email Address</label>
+				<div class="ui corner labeled input">
+					<input ng-model="formData.email" placeholder="xxx@example.com" type="email" tabindex="4">
+					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div id="button_div">
+		<div class="ui down button" ng-click="viewer.process(formData)" tabindex="5">
+			<i class="checkmark sign icon"></i>
+			送出
+		</div>
+		<div class="ui down button" ng-click="clearForm()" tabindex="6">
+			<i class="trash icon"></i>
+			清除
+		</div>
+	</div>
+</div>
