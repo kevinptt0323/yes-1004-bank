@@ -2,8 +2,8 @@
 
 /* App Module */
 
-var app = angular.module('databaseHomeworkApp', [
-  'databaseHomeworkController',
+var app = angular.module('database.homework.app', [
+  'database.homework.controller',
   'ngRoute'
 ]);
 
@@ -24,11 +24,13 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     })
     .when('/signup/jobseeker', {
       templateUrl: 'template/signup_jobseeker.html',
-      controller: 'signupCtrl'
+      controller: 'signupJobseekerCtrl',
+      viewer: 'signupView'
     })
     .when('/signup/employer', {
       templateUrl: 'template/signup_employer.html',
-      controller: 'signupCtrl'
+      controller: 'signupEmployerCtrl',
+      viewer: 'signupView'
     })
     .when('/jobs/add', {
       templateUrl: 'template/job_add.html'

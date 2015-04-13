@@ -2,7 +2,7 @@
 
 /* Views */
 
-var view = angular.module('databaseHomeworkView', []);
+var view = angular.module('database.homework.view', []);
 
 view.factory('pageView', function() {
   return {
@@ -11,13 +11,17 @@ view.factory('pageView', function() {
         jQuery('.ui.dropdown').dropdown();
       });
     }
-  }
+  };
 });
 
-view.factory('signupView', function() {
+view.factory('view', function() {
   return {
-    init: function() {
-      jQuery('.ui.dropdown').dropdown();
+    pageView: {
+    },
+    signupView: {
+      init: function() {
+        jQuery('.ui.dropdown').dropdown();
+      }
     }
   };
 });

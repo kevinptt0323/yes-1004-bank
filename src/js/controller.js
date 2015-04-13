@@ -2,15 +2,15 @@
 
 /* Controllers */
 
-var ctrl = angular.module('databaseHomeworkController', [
-  'databaseHomeworkView',
+var ctrl = angular.module('database.homework.controller', [
+  'database.homework.view',
 ]);
 
-ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope, $location, $view) {
+ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope, $location, pageView) {
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
-  $view.init();
+  pageView.init();
   $scope.loading = false;
   $scope.currentPage = {
     name: 'Index'
@@ -52,11 +52,27 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
   $scope.job = { id: $routeParams.id, name: 'job ??' };
 }])
 
-.controller('signupCtrl', ['$scope', 'signupView', function($scope, $view) {
+/*.controller('signupJobseekerCtrl', ['$scope', 'signupView', function($scope, $view) {
   var $view = $view;
   $scope.$on('$viewContentLoaded', function(event) {
     $view.init();
   });
+  $scope.submit = function() {
+    alert('submit form!');
+  };
+}])*/
+
+.controller('signupJobseekerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
+  var viewer = view[$route.current.viewer];
+  $scope.$on('$viewContentLoaded', function(event) {
+    viewer.init();
+  });
 }])
 
+.controller('signupEmployerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
+  var viewer = view[$route.current.viewer];
+  $scope.$on('$viewContentLoaded', function(event) {
+    viewer.init();
+  });
+}])
 ;
