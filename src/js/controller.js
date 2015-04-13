@@ -52,27 +52,13 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
   $scope.job = { id: $routeParams.id, name: 'job ??' };
 }])
 
-/*.controller('signupJobseekerCtrl', ['$scope', 'signupView', function($scope, $view) {
-  var $view = $view;
-  $scope.$on('$viewContentLoaded', function(event) {
-    $view.init();
-  });
-  $scope.submit = function() {
-    alert('submit form!');
-  };
-}])*/
-
 .controller('signupJobseekerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-  var viewer = view[$route.current.viewer];
-  $scope.$on('$viewContentLoaded', function(event) {
-    viewer.init();
-  });
+  $scope.viewer = view[$route.current.viewer];
+  $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 
-.controller('signupEmployerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-  var viewer = view[$route.current.viewer];
-  $scope.$on('$viewContentLoaded', function(event) {
-    viewer.init();
-  });
+.controller('signupEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+  $scope.viewer = view[$route.current.viewer];
+  $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 ;
