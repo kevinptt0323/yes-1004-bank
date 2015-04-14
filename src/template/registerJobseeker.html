@@ -1,7 +1,7 @@
 <div class="template" id="register-employer">
 	<form class="ui form segment" id="register-jobseeker-form">
 		<div class="ui error message"></div>
-		<div class="four fields">
+		<div class="three fields">
 			<div class="field">
 				<label>Username</label>
 				<div class="ui corner labeled input">
@@ -17,6 +17,15 @@
 				</div>
 			</div>
 			<div class="field">
+				<label>Confirm Password</label>
+				<div class="ui corner labeled input">
+					<input name="confirm" placeholder="Type your password again" type="password" tabindex="2">
+					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+				</div>
+			</div>
+		</div>
+		<div class="three fields">
+			<div class="field">
 				<label>Phone</label>
 				<div class="ui corner labeled input">
 					<input ng-model="formData.phone" name="phone" placeholder="ex: 0987-654-321" type="text" tabindex="3">
@@ -24,10 +33,17 @@
 				</div>
 			</div>
 			<div class="field">
+				<label>Email Address</label>
+				<div class="ui corner labeled input">
+					<input ng-model="formData.email" name="email"  placeholder="xxx@example.com" type="email" tabindex="4">
+					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
+				</div>
+			</div>
+			<div class="field">
 				<label>Gender</label>
-				<div class="ui corner labeled dropdown selection" tabindex="4">
+				<div class="ui corner labeled dropdown selection" tabindex="5">
 					<input name="gender" type="hidden">
-					<div class="default text">...</div>
+					<div class="default text">Select your gender</div>
 					<i class="dropdown icon"></i>
 					<div class="menu" ng-click="formData.gender=viewer.getDropdownValue($event)">
 						<div class="item" data-value="Male">Male</div>
@@ -37,18 +53,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="four fields">
+		<div class="three fields">
 			<div class="field">
 				<label>Age</label>
 				<div class="ui corner labeled input">
-					<input ng-model="formData.age" name="age" placeholder="age" type="number" vaule="0" tabindex="5">
-					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
-				</div>
-			</div>
-			<div class="field">
-				<label>Email Address</label>
-				<div class="ui corner labeled input">
-					<input ng-model="formData.email" name="email"  placeholder="xxx@example.com" type="email" tabindex="6">
+					<input ng-model="formData.age" name="age" placeholder="age" type="number" vaule="0" tabindex="6">
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
 			</div>
@@ -63,7 +72,7 @@
 				<label>Major Education</label>
 				<div class="ui corner labeled dropdown selection" tabindex="8">
 					<input name="education" type="hidden">
-					<div class="default text">...</div>
+					<div class="default text">Select your major education</div>
 					<i class="dropdown icon"></i>
 					<div class="menu" ng-click="formData.education=viewer.getDropdownValue($event)">
 						<div class="item" data-value="Graduate School">Graduate School</div>

@@ -85,9 +85,20 @@ view.service('view', ['$http', function($http) {
           identifier : 'password',
           rules: [{ type : 'empty', prompt : 'Please enter a password' }]
         },
+        confirmpasswd: {
+          identifier : 'confirm',
+          rules: [{ type : 'match[password]', prompt : 'Confirm password is not matched' }]
+        },
         phone: {
           identifier : 'phone',
           rules: [{ type : 'empty', prompt : 'Please enter your phone' }]
+        },
+        email: {
+          identifier : 'email',
+          rules: [
+            { type : 'empty', prompt : 'Please enter your e-mail' },
+            { type : 'email', prompt : 'Please enter a valid e-mail address' }
+          ]
         },
         gender: {
           identifier : 'gender',
@@ -98,13 +109,6 @@ view.service('view', ['$http', function($http) {
           rules: [
             { type : 'empty'  , prompt : 'Please enter your age' },
             { type : 'integer', prompt : 'Age must be a number' }
-          ]
-        },
-        email: {
-          identifier : 'email',
-          rules: [
-            { type : 'empty', prompt : 'Please enter your e-mail' },
-            { type : 'email', prompt : 'Please enter a valid e-mail address' }
           ]
         },
         salary: {
@@ -135,6 +139,10 @@ view.service('view', ['$http', function($http) {
         password: {
           identifier : 'password',
           rules: [{ type : 'empty', prompt : 'Please enter a password' }]
+        },
+        confirmpasswd: {
+          identifier : 'confirm',
+          rules: [{ type : 'match[password]', prompt : 'Confirm password is not matched' }]
         },
         phone: {
           identifier : 'phone',
