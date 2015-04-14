@@ -4,14 +4,14 @@ session_start();
 
 function signupJobseeker($data) {
 	if( empty($data['username']) || empty($data['password']) || empty($data['phone']) || empty($data['gender']) || empty($data['age']) || empty($data['email']) || empty($data['salary']) || empty($data['education']) ) {
-		return new Message(Message::$ERROR, "不能有空白");
+		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
 	$db = getPDO();
 	$query_user = $db->prepare("select count(*) from `user` where `account` = :username");
 	try {
 		$query_user->execute(array(':username' => $data['username']));
 	} catch (PDOException $e) {
-		return new Message(Message::$ERROR, $e->getMessage());
+		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
 	}
 
 	if( $query_user->fetch()[0] == 1 ) {
@@ -29,9 +29,9 @@ function signupJobseeker($data) {
 				':salary'    => $data['salary'],
 				':education' => $data['education']
 			));
-			return new Message(Message::$SUCCESS, "");
+			return new Message(Message::$SUCCESS, "Register jobseeker \"$data[username]\" successfully.");
 		} catch (PDOException $e) {
-			return new Message(Message::$ERROR, $e->getMessage());
+			return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
 		}
 	}
 }

@@ -14,109 +14,142 @@ view.factory('pageView', function() {
   };
 });
 
-view.service('view', ['$http', function($http) {
-
-  this.registerJobseekerView = function() {
-    var that = {};
-    var $form = jQuery('#register-jobseeker-form')
-    that.init = function() {
-      $form.find('.ui.dropdown').dropdown();
-    };
-    that.process = function(formData) {
-      console.log("process form!");
+var registerFormView = function($http, config) {
+  var that = {};
+  var form = config.form;
+  that.init = config.init || function() {};
+  that.validate = function(success_cb, error_cb) {
+    var result = $(form).form('validate form');
+    if( result && angular.isFunction(success_cb) ) {
+      success_cb();
+    }
+    if( !result && angular.isFunction(error_cb) ) {
+      error_cb();
+    }
+  };
+  that.process = function(formData) {
+    this.validate(function() {
       $http({
         method  : 'POST',
-        url     : 'api/registerJobseeker.php',
+        url     : config.url,
         data    : $.param(formData),
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
         .success(function(data) {
           if( data.success ) {
-            console.log("success!");
+            $(form).find('.ui.message')
+              .removeClass('error')
+              .addClass('positive')
+              .html(data.message)
+              .show();
+            $(form).form('clear');
           } else {
-            console.log("Error: " + data.message);
+            console.log(form);
+            console.log($(form));
+            console.log($(form).find('.ui.message'));
+            $(form).find('.ui.message')
+              .removeClass('positive')
+              .addClass('error')
+              .html(data.message)
+              .show();
           }
         })
         .error(function() {
-          console.log("Error");
-        })
-      ;
-    };
-    return that;
-  }();
+          $(form).find('.ui.message')
+            .removeClass('positive')
+            .addClass('error')
+            .html('Error: Please contact administrator.')
+            .show();
+        });
+    });
+  };
+  that.getDropdownValue = function(e) {
+    return e.target.getAttribute('data-value');
+  }
+  return that;
+};
 
-  this.registerEmployerView = function() {
-    var that = {};
-    var $form = jQuery('#register-employer-form')
-    that.init = function() {
-      $form.form({
+view.service('view', ['$http', function($http) {
+
+  var jobseekerForm = '#register-jobseeker-form';
+  this.registerJobseekerView = new registerFormView($http, {
+    form: jobseekerForm,
+    init: function() {
+      $(jobseekerForm).find('.ui.dropdown').dropdown();
+      $(jobseekerForm).form({
         username: {
           identifier : 'username',
-          rules: [{
-            type : 'empty',
-            prompt : 'Please enter a username'
-          }]
+          rules: [{ type : 'empty', prompt : 'Please enter a username' }]
         },
         password: {
           identifier : 'password',
-          rules: [{
-            type : 'empty',
-            prompt : 'Please enter a password'
-          }]
+          rules: [{ type : 'empty', prompt : 'Please enter a password' }]
         },
         phone: {
           identifier : 'phone',
-          rules: [{
-            type : 'empty',
-            prompt : 'Please enter your phone'
-          }]
+          rules: [{ type : 'empty', prompt : 'Please enter your phone' }]
+        },
+        gender: {
+          identifier : 'gender',
+          rules: [{ type : 'empty', prompt : 'Please select your gender' }]
+        },
+        age: {
+          identifier : 'age',
+          rules: [
+            { type : 'empty'  , prompt : 'Please enter your age' },
+            { type : 'integer', prompt : 'Age must be a number' }
+          ]
         },
         email: {
           identifier : 'email',
-          rules: [{
-            type : 'empty',
-            prompt : 'Please enter your e-mail'
-          },{
-            type : 'email',
-            prompt : 'Please enter a valid e-mail address'
-          }]
+          rules: [
+            { type : 'empty', prompt : 'Please enter your e-mail' },
+            { type : 'email', prompt : 'Please enter a valid e-mail address' }
+          ]
+        },
+        salary: {
+          identifier : 'salary',
+          rules: [
+            { type : 'empty'  , prompt : 'Please enter your expected salary' },
+            { type : 'integer', prompt : 'Expected salary must be a number' }
+          ]
+        },
+        education: {
+          identifier : 'education',
+          rules: [{ type : 'empty', prompt : 'Please select your major education' }]
         }
       });
-    };
-    that.validate = function(success_cb, error_cb) {
-      console.log('validate');
-      
-      var result = $form.form('validate form');
-      if( result && angular.isFunction(success_cb) ) {
-        success_cb();
-      }
-      if( !result && angular.isFunction(error_cb) ) {
-        error_cb();
-      }
-    };
-    that.process = function(formData) {
-      console.log("process form!");
-      this.validate(function() {
-        $http({
-          method  : 'POST',
-          url     : 'api/registerEmployer.php',
-          data    : $.param(formData),
-          headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
-        })
-          .success(function(data) {
-            if( data.success ) {
-              console.log("success!");
-            } else {
-              console.log("Error: " + data.message);
-            }
-          })
-          .error(function() {
-            console.log("Error");
-          })
-        ;
+    },
+    url: 'api/registerJobseeker.php'
+  });
+
+  var employerForm = '#register-employer-form';
+  this.registerEmployerView = new registerFormView($http, {
+    form: employerForm,
+    init: function() {
+      $(employerForm).form({
+        username: {
+          identifier : 'username',
+          rules: [{ type : 'empty', prompt : 'Please enter a username' }]
+        },
+        password: {
+          identifier : 'password',
+          rules: [{ type : 'empty', prompt : 'Please enter a password' }]
+        },
+        phone: {
+          identifier : 'phone',
+          rules: [{ type : 'empty', prompt : 'Please enter your phone' }]
+        },
+        email: {
+          identifier : 'email',
+          rules: [
+            { type : 'empty', prompt : 'Please enter your e-mail' },
+            { type : 'email', prompt : 'Please enter a valid e-mail address' }
+          ]
+        }
       });
-    };
-    return that;
-  }();
+    },
+    url: 'api/registerEmployer.php'
+  });
 }]);
 
