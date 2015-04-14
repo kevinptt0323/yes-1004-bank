@@ -17,8 +17,10 @@ Url: http://kevinptt.nctucs.net/~kevinptt/database/
 ### Development
 
 第一次請先執行
+
 	$ npm install
 	$ bower install
 
 發布時請執行
+
 	$ gulp
