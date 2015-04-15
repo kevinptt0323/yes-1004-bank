@@ -7,14 +7,19 @@ var ctrl = angular.module('database.homework.controller', [
 ]);
 
 ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope, $location, pageView) {
+  $scope.$on('$viewContentLoaded', function(a) {
+    if( a.targetScope.viewer ) {
+      a.targetScope.viewer.init();
+    }
+  });
+  $scope.$on('$routeChangeSuccess', function (ev, current) {
+    $scope.currentPage.name = current.name || 'Index';
+  });
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
   pageView.init();
-  $scope.loading = false;
-  $scope.currentPage = {
-    name: 'Index'
-  };
+  $scope.currentPage = { name: 'Index' };
   $scope.thispage = {
     title: 'Yes, 1004 銀行'
   };
@@ -28,9 +33,6 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
       ]
     }
   ];
-}])
-
-.controller('mainCtrl', ['$scope', function($scope) {
 }])
 
 .controller('jobsShowListCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
@@ -57,7 +59,6 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
     '$scope': $scope,
     '$http' : $http
   });
-  $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 
 .controller('registerEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
@@ -65,7 +66,6 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
     '$scope': $scope,
     '$http' : $http
   });
-  $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 
 .controller('loginCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
@@ -73,6 +73,5 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
     '$scope': $scope,
     '$http' : $http
   });
-  $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 ;
