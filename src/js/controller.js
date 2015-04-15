@@ -52,19 +52,27 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
   $scope.job = { id: $routeParams.id, name: 'job ??' };
 }])
 
-.controller('registerJobseekerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-  $scope.viewer = view[$route.current.viewer];
+.controller('registerJobseekerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+  $scope.viewer = view[$route.current.viewer]({
+    '$scope': $scope,
+    '$http' : $http
+  });
   $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 
-.controller('registerEmployerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-  $scope.viewer = view[$route.current.viewer];
+.controller('registerEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+  $scope.viewer = view[$route.current.viewer]({
+    '$scope': $scope,
+    '$http' : $http
+  });
   $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 
-.controller('loginCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-
-  $scope.viewer = view[$route.current.viewer];
+.controller('loginCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+  $scope.viewer = view[$route.current.viewer]({
+    '$scope': $scope,
+    '$http' : $http
+  });
   $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 ;
