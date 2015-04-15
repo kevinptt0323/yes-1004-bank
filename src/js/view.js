@@ -27,8 +27,30 @@ var AjaxFormView = function($http, config) {
       error_cb();
     }
   };
+  that.message = {
+    success: function(message) {
+      if( message ) {
+        $(form).find('.ui.message')
+          .removeClass('error')
+          .addClass('positive')
+          .html(message)
+          .show();
+      }
+      $(form).form('clear');
+    },
+    error: function(message) {
+      if( message ) {
+        $(form).find('.ui.message')
+          .removeClass('positive')
+          .addClass('error')
+          .html(message)
+          .show();
+      }
+      $(form).transition('shake');
+    }
+  }
   that.process = function(formData) {
-    this.validate(function() {
+    that.validate(function() {
       $http({
         method  : 'POST',
         url     : config.url,
@@ -44,28 +66,15 @@ var AjaxFormView = function($http, config) {
             };
           }
           if( data.success ) {
-            $(form).find('.ui.message')
-              .removeClass('error')
-              .addClass('positive')
-              .html(data.message)
-              .show();
-            $(form).form('clear');
+            that.message.success(data.message);
           } else {
-            $(form).find('.ui.message')
-              .removeClass('positive')
-              .addClass('error')
-              .html(data.message)
-              .show();
+            that.message.error(data.message);
           }
         })
         .error(function() {
-          $(form).find('.ui.message')
-            .removeClass('positive')
-            .addClass('error')
-            .html('Error: Please contact administrator.')
-            .show();
+          that.message.error('Error: Please contact administrator.');
         });
-    });
+    }, that.message.error);
   };
   that.getDropdownValue = function(e) {
     return e.target.getAttribute('data-value');
