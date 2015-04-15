@@ -16,7 +16,7 @@ function signupEmployer($data) {
 		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
 	}
 
-	if( $query_jobseekeer->fetch()[0] || $query_employer->fetch()[0] ) {
+	if( $query_jobseeker->fetch()[0] || $query_employer->fetch()[0] ) {
 		return new Message(Message::$ERROR, "Username \"$data[username]\" existed.");
 	} else {
 		$insert = $db->prepare("insert into `employer` (`account`, `password`, `phone`, `email`) values (:username, sha2(:password, 256), :phone, :email)");

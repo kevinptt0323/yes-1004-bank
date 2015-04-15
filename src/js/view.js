@@ -14,7 +14,7 @@ view.factory('pageView', function() {
   };
 });
 
-var registerFormView = function($http, config) {
+var AjaxFormView = function($http, config) {
   var that = {};
   var form = config.form;
   that.init = config.init || function() {};
@@ -36,6 +36,13 @@ var registerFormView = function($http, config) {
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
         .success(function(data) {
+          if( angular.isString(data) ) {
+            console.log(data);
+            data = {
+              success: 0,
+              message: 'Error: Please contact administrator.'
+            };
+          }
           if( data.success ) {
             $(form).find('.ui.message')
               .removeClass('error')
@@ -44,9 +51,6 @@ var registerFormView = function($http, config) {
               .show();
             $(form).form('clear');
           } else {
-            console.log(form);
-            console.log($(form));
-            console.log($(form).find('.ui.message'));
             $(form).find('.ui.message')
               .removeClass('positive')
               .addClass('error')
@@ -65,15 +69,16 @@ var registerFormView = function($http, config) {
   };
   that.getDropdownValue = function(e) {
     return e.target.getAttribute('data-value');
-  }
+  };
   return that;
 };
 
 view.service('view', ['$http', function($http) {
 
   var jobseekerForm = '#register-jobseeker-form';
-  this.registerJobseekerView = new registerFormView($http, {
+  this.registerJobseekerView = new AjaxFormView($http, {
     form: jobseekerForm,
+    url: 'api/registerJobseeker.php',
     init: function() {
       $(jobseekerForm).find('.ui.dropdown').dropdown();
       $(jobseekerForm).form({
@@ -123,13 +128,13 @@ view.service('view', ['$http', function($http) {
           rules: [{ type : 'empty', prompt : 'Please select your major education' }]
         }
       });
-    },
-    url: 'api/registerJobseeker.php'
+    }
   });
 
   var employerForm = '#register-employer-form';
-  this.registerEmployerView = new registerFormView($http, {
+  this.registerEmployerView = new AjaxFormView($http, {
     form: employerForm,
+    url: 'api/registerEmployer.php',
     init: function() {
       $(employerForm).form({
         username: {
@@ -156,8 +161,7 @@ view.service('view', ['$http', function($http) {
           ]
         }
       });
-    },
-    url: 'api/registerEmployer.php'
+    }
   });
 }]);
 
