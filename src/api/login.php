@@ -17,8 +17,12 @@ function login($data) {
 	}
 
 	if( $query_jobseeker->fetch()[0] ) {
+		$_SESSION['username'] = $data['username'];
+		$_SESSION['type'] = "jobseeker";
 		return new Message(Message::$SUCCESS, "Login successful as jobseeker.");
 	} else if( $query_employer->fetch()[0] ) {
+		$_SESSION['username'] = $data['username'];
+		$_SESSION['type'] = "employer";
 		return new Message(Message::$SUCCESS, "Login successful as employer.");
 	} else {
 		return new Message(Message::$ERROR, "User \"$data[username]\" is not existed or password is incorrect.");

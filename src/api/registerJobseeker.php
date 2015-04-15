@@ -17,7 +17,7 @@ function registerJobseeker($data) {
 	}
 
 	if( $query_jobseeker->fetch()[0] || $query_employer->fetch()[0] ) {
-		return new Message(Message::$ERROR, "User Existed");
+		return new Message(Message::$ERROR, "Username \"$data[username]\" existed.");
 	} else {
 		$insert = $db->prepare("insert into `user` (`account`, `password`, `phone`, `gender`, `age`, `email`, `expected_salary`, `education`) values (:username, sha2(:password, 256), :phone, :gender, :age, :email, :salary, :education)");
 		try {
