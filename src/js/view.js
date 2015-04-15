@@ -163,5 +163,23 @@ view.service('view', ['$http', function($http) {
       });
     }
   });
+
+  var loginForm = '#login-form';
+  this.loginView = new AjaxFormView($http, {
+    form: loginForm,
+    url: 'api/login.php',
+    init: function() {
+      $(loginForm).form({
+        username: {
+          identifier : 'username',
+          rules: [{ type : 'empty', prompt : 'Please enter a username' }]
+        },
+        password: {
+          identifier : 'password',
+          rules: [{ type : 'empty', prompt : 'Please enter a password' }]
+        }
+      });
+    }
+  });
 }]);
 

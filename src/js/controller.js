@@ -57,7 +57,13 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
   $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])
 
-.controller('registerEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('registerEmployerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
+  $scope.viewer = view[$route.current.viewer];
+  $scope.$on('$viewContentLoaded', $scope.viewer.init);
+}])
+
+.controller('loginCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
+
   $scope.viewer = view[$route.current.viewer];
   $scope.$on('$viewContentLoaded', $scope.viewer.init);
 }])

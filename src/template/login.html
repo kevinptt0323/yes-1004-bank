@@ -1,25 +1,25 @@
 <div class="template" id="login">
-	<div class="ui large attached message"> Login </div>
-	<div class="ui blue attached fluid message" id="response"> </div>
-	<form class="ui form attached fluid segment" name="loginForm" id="loginForm">
+	<div class="ui large segment"> Login </div>
+	<form class="ui form" id="login-form">
+		<div class="ui error message"></div>
 		<div class="field">
 			<label>Uesrname</label>
-			<div class="ui left icon corner labeled input">
+			<div class="ui left icon input">
 				<i class="user icon"></i>
-				<input name="username" type="text" placeholder="username" autocomplete="off">
-				<div class="ui corner label"> <i class="icon asterisk"></i> </div>
+				<input ng-model="formData.username" name="username" type="text" placeholder="Username" autocomplete="off" tabindex="1">
 			</div>
 		</div>
 		<div class="field">
 			<label>Password</label>
-			<div class="ui left icon corner labeled input">
+			<div class="ui left icon input">
 				<i class="lock icon"></i>
-				<input name="password" type="password" placeholder="password">
-				<div class="ui corner label"> <i class="icon asterisk"></i> </div>
+				<input ng-model="formData.password" name="password" type="password" placeholder="Password" tabindex="2">
 			</div>
 		</div>
 		<div id="button_div">
-			<input type="submit" value="Login" class="ui blue submit button" />
+			<div class="ui blue button" ng-click="viewer.process(formData)" tabindex="3">
+				Login
+			</div>
 		</div>
 	</form>
 </div>

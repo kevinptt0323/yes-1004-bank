@@ -14,13 +14,16 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   }).hashPrefix('!');
   $routeProvider
     .when('/', {
-      redirectTo: '/jobs/list'
+      templateUrl: 'template/jobsList.html',
+      controller: 'jobsShowListCtrl'
     })
     .when('/error', {
       template: 'Error! Page Not Found!'
     })
     .when('/login', {
-      templateUrl: 'template/login.html'
+      templateUrl: 'template/login.html',
+      controller: 'loginCtrl',
+      viewer: 'loginView'
     })
     .when('/register/jobseeker', {
       templateUrl: 'template/registerJobseeker.html',
