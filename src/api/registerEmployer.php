@@ -2,7 +2,7 @@
 require_once('include/include.php');
 session_start();
 
-function signupEmployer($data) {
+function registerEmployer($data) {
 	if( empty($data['username']) || empty($data['password']) || empty($data['phone']) || empty($data['email']) ) {
 		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
@@ -34,7 +34,7 @@ function signupEmployer($data) {
 	}
 }
 
-echo json_encode(signupEmployer($_POST));
+echo json_encode(registerEmployer($_POST));
 
 
 ?>
