@@ -1,26 +1,27 @@
-@default-width: 1000px;
+@mobile:      ~"only screen and (max-width: 529px)";
+@tablet:      ~"only screen and (min-width: 530px) and (max-width: 1023px)";
+@desktop:     ~"only screen and (min-width: 1024px) and (max-width: 1128px)";
+@desktop-xl:  ~"only screen and (min-width: 1129px)";
+
 body {
 	position: relative;
 }
-#nav-bar {
-	#page-title {
 
+.container {
+	@media @mobile, @tablet {
+		width: 100%;
 	}
-}
-
-#main {
-	width: @default-width;
+	@media @desktop, @desktop-xl {
+		width: 1000px;
+	}
 	margin: 50px auto;
 }
 
 .template {
 	padding: 10px;
 	&#login {
-		width: 400px;
+		max-width: 500px;
 		margin: auto;
-		#response {
-			display: none;
-		}
 		#button_div {
 			width: 100%;
 			text-align: center;
@@ -28,4 +29,7 @@ body {
 	}
 	&#register-employer {
 	}
+}
+
+footer {
 }

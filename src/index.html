@@ -2,6 +2,7 @@
 <html ng-app="database.homework.app" ng-controller="pageCtrl">
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 		<title ng-bind-template="Database Homework: {{ currentPage.name }}">Database Homework: Index</title>
 		<script src="lib/angular.min.js"></script>
 		<script src="lib/angular-route.min.js"></script>
@@ -37,13 +38,13 @@
 				</div>
 			</div>
 		</nav>
-		<div id="main">
+		<div class="container">
 			<div ng-show="loading">Loading...</div>
 			<div ng-view></div>
+			<footer>
+				<p></p>
+			</footer>
 		</div>
-		<footer>
-			<p>This is footer</p>
-		</footer>
 	</body>
 </html>
 
