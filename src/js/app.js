@@ -28,6 +28,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       viewer: 'loginView',
       name: 'Login'
     })
+    .when('/logout', {
+      template: '',
+      controller: 'logoutCtrl'
+    })
     .when('/register/jobseeker', {
       templateUrl: 'template/registerJobseeker.html',
       controller: 'registerJobseekerCtrl',

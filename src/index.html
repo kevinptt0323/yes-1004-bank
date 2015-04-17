@@ -23,12 +23,15 @@
 			<a class="header item" href="./#!/">{{ config.title }} | {{ currentPage.name }}</a>
 			<div class="right menu">
 				<span class="item" ng-repeat-start="item in navigates" ng-if="!item.href && !item.menu">
+					<i class="ui {{ item.icon }} icon" ng-if="item.icon"></i>
 					{{ item.name }}
 				</span>
 				<a class="item" href="{{ item.href }}" ng-if="!!item.href">
+					<i class="ui {{ item.icon }} icon" ng-if="item.icon"></i>
 					{{ item.name }}
 				</a>
-				<div class="ui dropdown item" ng-repeat-end ng-if="!!item.menu">
+				<div class="ui dropdown item" ng-repeat-end ng-if="!!item.menu" on-finish-render="ngRepeatFinished">
+					<i class="ui {{ item.icon }} icon" ng-if="item.icon"></i>
 					{{ item.name }}
 					<div class="menu">
 						<a class="item" href="{{ subitem.href }}" ng-repeat="subitem in item.menu">

@@ -12,8 +12,8 @@ var view = angular.module('database.homework.view', []);
 view.factory('pageView', function() {
   return {
     init: function() {
-      jQuery(function() {
-        jQuery('.ui.dropdown').dropdown();
+      $(function() {
+        $('.ui.dropdown').dropdown();
       });
     }
   };
@@ -56,7 +56,6 @@ var AjaxFormView = function($http, config) {
     })
       .success(function(data) {
         if( angular.isString(data) ) {
-          console.log(data);
           data = {
             success: 0,
             message: 'Error: Please contact administrator.'
@@ -76,6 +75,9 @@ var AjaxFormView = function($http, config) {
       })
       .error(function() {
         that.message.error('Error: Please contact administrator.');
+        if( angular.isFunction(callback.onFailure) ) {
+          callback.onFailure();
+        }
       });
     return false;
   };
@@ -214,7 +216,7 @@ view.service('view', function() {
         onSuccess: function() {
           return that.submit(param.$scope.formData, {
             onSuccess: function() {
-              param.$scope.$emit('loginSuccess');
+              param.$scope.$emit('loginStatusChange');
             }
           });
         },

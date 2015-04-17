@@ -5,6 +5,18 @@
 var ctrl = angular.module('database.homework.controller', [
   'database.homework.view',
 ]);
+ctrl.directive('onFinishRender', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      if (scope.$last === true) {
+        $timeout(function () {
+          scope.$emit('ngRepeatFinished');
+        });
+      }
+    }
+  }
+});
 
 ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', function($scope, $location, $http, pageView) {
   var loadStatus = function() {
@@ -20,23 +32,23 @@ ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', functio
         } else {
           $scope.status = data;
         }
-        console.log($scope.status);
         if( $scope.status.isLogin ) {
           $scope.navigates = [
             { name: 'Hello, ' + $scope.status.user.name + '!' },
-            { name: 'List All Jobs', href: '#!/jobs/list' },
-            { name: 'Logout', href: '#!/logout' },
+            { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
+            { name: 'Logout', href: '#!/logout', icon: 'sign out' }
           ];
         } else {
           $scope.navigates = [
-            { name: 'List All Jobs', href: '#!/jobs/list' },
-            { name: 'Login', href: '#!/login' },
+            { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
             { name: 'Sign Up',
+              icon: 'add user',
               menu: [
                 { name: 'Job Seeker', href: '#!/register/jobseeker' },
                 { name: 'Employer', href: '#!/register/employer' }
               ]
-            }
+            },
+            { name: 'Login', href: '#!/login', icon: 'sign in' }
           ];
         }
       })
@@ -48,20 +60,22 @@ ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', functio
       a.targetScope.viewer.init();
     }
   });
+  $scope.$on('ngRepeatFinished', function(a) {
+    pageView.init();
+  });
   $scope.$on('$routeChangeSuccess', function (ev, current) {
     $scope.currentPage.name = current.name || 'Index';
   });
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
-  $scope.$on('loginSuccess', function(event) {
+  $scope.$on('loginStatusChange', function(event) {
     $location.path('/').replace();
-    $scope.status = loadStatus();
+    loadStatus();
   });
-  pageView.init();
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
-  loadStatus();
+  $scope.$emit('loginStatusChange');
 }])
 
 .controller('jobsShowListCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
@@ -102,5 +116,21 @@ ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', functio
     '$scope': $scope,
     '$http' : $http
   });
+}])
+
+.controller('logoutCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+  $scope.logout = function() {
+    $http({
+      method  : 'POST',
+      url     : 'api/logout.php',
+      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+      .success(function(data) {
+        $scope.$emit('loginStatusChange');
+      })
+      .error(function() {
+      });
+  };
+  $scope.logout();
 }])
 ;
