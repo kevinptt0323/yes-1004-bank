@@ -60,17 +60,17 @@ ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', functio
       a.targetScope.viewer.init();
     }
   });
-  $scope.$on('ngRepeatFinished', function(a) {
-    pageView.init();
-  });
+  $scope.$on('ngRepeatFinished', pageView.init);
   $scope.$on('$routeChangeSuccess', function (ev, current) {
     $scope.currentPage.name = current.name || 'Index';
   });
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
-  $scope.$on('loginStatusChange', function(event) {
+  $scope.$on('redirectToIndex', function() {
     $location.path('/').replace();
+  });
+  $scope.$on('loginStatusChange', function(event) {
     loadStatus();
   });
   $scope.currentPage = { name: 'Index' };
@@ -127,6 +127,7 @@ ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', functio
     })
       .success(function(data) {
         $scope.$emit('loginStatusChange');
+        $scope.$emit('redirectToIndex');
       })
       .error(function() {
       });

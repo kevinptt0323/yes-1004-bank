@@ -217,6 +217,7 @@ view.service('view', function() {
           return that.submit(param.$scope.formData, {
             onSuccess: function() {
               param.$scope.$emit('loginStatusChange');
+              param.$scope.$emit('redirectToIndex');
             }
           });
         },
