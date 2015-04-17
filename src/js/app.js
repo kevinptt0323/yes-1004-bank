@@ -15,10 +15,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   $routeProvider
     .when('/', {
       templateUrl: 'template/jobsList.html',
-      controller: 'jobsShowListCtrl'
+      controller: 'jobsShowListCtrl',
+      name: 'Index'
     })
     .when('/error', {
-      template: 'Error! Page Not Found!'
+      template: '<h2>Oops! Page Not Found!</h2>',
+      name: 'Error'
     })
     .when('/login', {
       templateUrl: 'template/login.html',
@@ -29,23 +31,27 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     .when('/register/jobseeker', {
       templateUrl: 'template/registerJobseeker.html',
       controller: 'registerJobseekerCtrl',
-      viewer: 'registerJobseekerView'
+      viewer: 'registerJobseekerView',
+      name: 'Register Jobseeker'
     })
     .when('/register/employer', {
       templateUrl: 'template/registerEmployer.html',
       controller: 'registerEmployerCtrl',
-      viewer: 'registerEmployerView'
+      viewer: 'registerEmployerView',
+      name: 'Register Employer'
     })
     .when('/jobs/add', {
       templateUrl: 'template/jobsAdd.html'
     })
     .when('/jobs/list', {
       templateUrl: 'template/jobsList.html',
-      controller: 'jobsShowListCtrl'
+      controller: 'jobsShowListCtrl',
+      name: 'Job List'
     })
     .when('/jobs/:id', {
       templateUrl: 'template/jobsShow.html',
       controller: 'jobsShowCtrl',
+      name: 'Job List',
       resolve: {
         id: function($q, $route) {
           var deferred = $q.defer(),
