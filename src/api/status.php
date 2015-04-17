@@ -4,13 +4,10 @@ session_start();
 
 function status() {
 	$status = array(
-		'isLogin' => isset($_SESSION['username']),
+		'isLogin' => isset($_SESSION['user']),
 	);
 	if( $status["isLogin"] ) {
-		$status["user"] = array(
-			'username' => $_SESSION['username'],
-			'type' => $_SESSION['type']
-		);
+		$status["user"] = $_SESSION['user'];
 	}
 	return $status;
 }

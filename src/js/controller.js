@@ -6,7 +6,43 @@ var ctrl = angular.module('database.homework.controller', [
   'database.homework.view',
 ]);
 
-ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope, $location, pageView) {
+ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', function($scope, $location, $http, pageView) {
+  var loadStatus = function() {
+    $scope.status = {};
+    $http({
+      method  : 'POST',
+      url     : 'api/status.php',
+      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+      .success(function(data) {
+        if( angular.isString(data) ) {
+          $scope.status.isLogin = false;
+        } else {
+          $scope.status = data;
+        }
+        console.log($scope.status);
+        if( $scope.status.isLogin ) {
+          $scope.navigates = [
+            { name: 'Hello, ' + $scope.status.user.name + '!' },
+            { name: 'List All Jobs', href: '#!/jobs/list' },
+            { name: 'Logout', href: '#!/logout' },
+          ];
+        } else {
+          $scope.navigates = [
+            { name: 'List All Jobs', href: '#!/jobs/list' },
+            { name: 'Login', href: '#!/login' },
+            { name: 'Sign Up',
+              menu: [
+                { name: 'Job Seeker', href: '#!/register/jobseeker' },
+                { name: 'Employer', href: '#!/register/employer' }
+              ]
+            }
+          ];
+        }
+      })
+      .error(function() {
+      });
+  };
   $scope.$on('$viewContentLoaded', function(a) {
     if( a.targetScope.viewer ) {
       a.targetScope.viewer.init();
@@ -18,21 +54,14 @@ ctrl.controller('pageCtrl', ['$scope', '$location', 'pageView', function($scope,
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
+  $scope.$on('loginSuccess', function(event) {
+    $location.path('/').replace();
+    $scope.status = loadStatus();
+  });
   pageView.init();
   $scope.currentPage = { name: 'Index' };
-  $scope.thispage = {
-    title: 'Yes, 1004 銀行'
-  };
-  $scope.navigates = [
-    { name: 'List All Jobs', href: '#!/jobs/list' },
-    { name: 'Login', href: '#!/login' },
-    { name: 'Sign Up',
-      menu: [
-        { name: 'Job Seeker', href: '#!/register/jobseeker' },
-        { name: 'Employer', href: '#!/register/employer' }
-      ]
-    }
-  ];
+  $scope.config = { title: 'Yes, 1004 銀行' };
+  loadStatus();
 }])
 
 .controller('jobsShowListCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {

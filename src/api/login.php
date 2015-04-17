@@ -12,17 +12,22 @@ function login($data) {
 	try {
 		$query_jobseeker -> execute(array(':username' => $data['username'], ':password' => $data['password'].SALT));
 		$query_employer  -> execute(array(':username' => $data['username'], ':password' => $data['password'].SALT));
+		$jobseeker = $query_jobseeker->fetch();
+		$employer  = $query_employer->fetch();
 	} catch (PDOException $e) {
 		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
 	}
-
-	if( $query_jobseeker->fetch()[0] ) {
-		$_SESSION['username'] = $data['username'];
-		$_SESSION['type'] = "jobseeker";
+	if( $jobseeker ) {
+		$_SESSION['user'] = array(
+			'name' => $jobseeker["account"],
+			'type' => "jobseeker"
+		);
 		return new Message(Message::$SUCCESS, "Login successful as jobseeker.");
-	} else if( $query_employer->fetch()[0] ) {
-		$_SESSION['username'] = $data['username'];
-		$_SESSION['type'] = "employer";
+	} else if( $employer ) {
+		$_SESSION['user'] = array(
+			'name' => $employer["account"],
+			'type' => "employer"
+		);
 		return new Message(Message::$SUCCESS, "Login successful as employer.");
 	} else {
 		return new Message(Message::$ERROR, "User \"$data[username]\" is not existed or password is incorrect.");

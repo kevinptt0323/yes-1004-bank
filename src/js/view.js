@@ -46,7 +46,8 @@ var AjaxFormView = function($http, config) {
       return false;
     }
   };
-  that.submit = function(formData) {
+  that.submit = function(formData, callback) {
+    callback = callback || {};
     $http({
       method  : 'POST',
       url     : config.url,
@@ -63,8 +64,14 @@ var AjaxFormView = function($http, config) {
         }
         if( data.success ) {
           that.message.success(data.message);
+          if( angular.isFunction(callback.onSuccess) ) {
+            callback.onSuccess();
+          }
         } else {
           that.message.error(data.message);
+          if( angular.isFunction(callback.onFailure) ) {
+            callback.onFailure();
+          }
         }
       })
       .error(function() {
@@ -205,7 +212,11 @@ view.service('view', function() {
         }
       },{
         onSuccess: function() {
-          return that.submit(param.$scope.formData);
+          return that.submit(param.$scope.formData, {
+            onSuccess: function() {
+              param.$scope.$emit('loginSuccess');
+            }
+          });
         },
         onFailure: that.message.error
       });
