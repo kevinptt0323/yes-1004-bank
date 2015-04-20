@@ -22,7 +22,7 @@
 		<nav class="ui fixed blue large menu" id="nav-bar">
 			<a class="header item" href="./#!/">{{ config.title }} | {{ currentPage.name }}</a>
 			<div class="right menu">
-				<span class="item" ng-repeat-start="item in navigates" ng-if="!item.href && !item.menu">
+				<span class="item" ng-repeat-start="item in navigates" ng-if="!item.href && !item.menu" ng-bind-html="item.name">
 					<i class="ui {{ item.icon }} icon" ng-if="item.icon"></i>
 					{{ item.name }}
 				</span>

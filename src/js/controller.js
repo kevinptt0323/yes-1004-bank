@@ -18,7 +18,7 @@ ctrl.directive('onFinishRender', function ($timeout) {
   }
 });
 
-ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', function($scope, $location, $http, pageView) {
+ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView', function($scope, $sce, $location, $http, pageView) {
   var loadStatus = function() {
     $scope.status = {};
     $http({
@@ -34,7 +34,7 @@ ctrl.controller('pageCtrl', ['$scope', '$location', '$http', 'pageView', functio
         }
         if( $scope.status.isLogin ) {
           $scope.navigates = [
-            { name: 'Hello, ' + $scope.status.user.name + '!' },
+            { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
             { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
             { name: 'Logout', href: '#!/logout', icon: 'sign out' }
           ];
