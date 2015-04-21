@@ -1,5 +1,56 @@
-<div>
-	<ul>
-		<li ng-repeat="item in jobs"><a href="{{ href(item) }}"> {{ name(item) }} </a></li>
-	</ul>
+<div class="template">
+	<table class="ui striped table">
+		<thead>
+			<tr>
+				<th>Job ID</th>
+				<th>Occupation</th>
+				<th>Location</th>
+				<th>Working Time</th>
+				<th>Education Required</th>
+				<th>Minimal Experience</th>
+				<th>Salary</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in jobs">
+				<td>{{ item.id }}</td>
+				<td>{{ name(item) }}</td>
+				<td><a href="{{ href(item) }}"> {{ name(item) }} </a></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr class="dropdowns" ng-show="newJob">
+				<th> </th>
+				<th>
+					<div class="ui selection compact dropdown">
+						<input name="gender" type="hidden">
+						<div class="default text">Gender</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" data-value="1">Male</div>
+							<div class="item" data-value="0">Female</div>
+						</div>
+					</div>
+				</th>
+				<th>
+					<div class="ui selection compact dropdown">
+						<input name="gender" type="hidden">
+						<div class="default text">Gender</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" data-value="1">Male</div>
+							<div class="item" data-value="0">Female</div>
+						</div>
+					</div>
+				</th>
+			</tr>
+			<tr class="controls" ng-init="newJob = false" ng-show="status.isLogin && status.user.type=='employer'" ng-click="newJob = true">
+				<th colspan="7">
+					<div class="ui primary labeled icon button">
+						<i class="add icon"></i> New Job
+					</div>
+				</th>
+			</tr>
+		</tfoot>
+	</table>
 </div>

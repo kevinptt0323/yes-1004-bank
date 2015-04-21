@@ -16,6 +16,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     .when('/', {
       templateUrl: 'template/jobsList.html',
       controller: 'jobsShowListCtrl',
+      viewer: 'jobsShowListView',
       name: 'Index'
     })
     .when('/error', {
@@ -50,6 +51,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     .when('/jobs/list', {
       templateUrl: 'template/jobsList.html',
       controller: 'jobsShowListCtrl',
+      viewer: 'jobsShowListView',
       name: 'Job List'
     })
     .when('/jobs/:id', {

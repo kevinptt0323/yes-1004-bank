@@ -15,18 +15,38 @@ ctrl.directive('onFinishRender', function ($timeout) {
         });
       }
     }
-  }
+  };
 });
 
 ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView', function($scope, $sce, $location, $http, pageView) {
-  var loadStatus = function() {
+  var loadStatus = function(config) {
     $scope.status = {};
     $http({
       method  : 'POST',
       url     : 'api/status.php',
       headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
     })
-      .success(function(data) {
+      .success(config.onSuccess || angular.noop)
+      .error(config.onError || angular.noop);
+  };
+  $scope.$on('$viewContentLoaded', function(a) {
+    if( a.targetScope.viewer ) {
+      a.targetScope.viewer.init();
+    }
+  });
+  $scope.$on('ngRepeatFinished', pageView.init);
+  $scope.$on('$routeChangeSuccess', function (ev, current) {
+    $scope.currentPage.name = current.name || 'Index';
+  });
+  $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
+    $location.path('/error').replace();
+  });
+  $scope.$on('redirectToIndex', function() {
+    $location.path('/').replace();
+  });
+  $scope.$on('loginStatusChange', function(event) {
+    loadStatus({
+      onSuccess: function(data) {
         if( angular.isString(data) ) {
           $scope.status.isLogin = false;
         } else {
@@ -51,34 +71,15 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
             { name: 'Login', href: '#!/login', icon: 'sign in' }
           ];
         }
-      })
-      .error(function() {
-      });
-  };
-  $scope.$on('$viewContentLoaded', function(a) {
-    if( a.targetScope.viewer ) {
-      a.targetScope.viewer.init();
-    }
-  });
-  $scope.$on('ngRepeatFinished', pageView.init);
-  $scope.$on('$routeChangeSuccess', function (ev, current) {
-    $scope.currentPage.name = current.name || 'Index';
-  });
-  $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
-    $location.path('/error').replace();
-  });
-  $scope.$on('redirectToIndex', function() {
-    $location.path('/').replace();
-  });
-  $scope.$on('loginStatusChange', function(event) {
-    loadStatus();
+      }
+    });
   });
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
   $scope.$emit('loginStatusChange');
 }])
 
-.controller('jobsShowListCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
+.controller('jobsShowListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
   $scope.href = function(job) {
     return '#!/jobs/' + job.id;
   };
@@ -91,6 +92,10 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
     { id: 3,    name: 'job 3'   },
     { id: 7122, name: 'job 7122'}
   ];
+  $scope.viewer = view[$route.current.viewer]({
+    '$scope': $scope,
+    '$http' : $http
+  });
 }])
 
 .controller('jobsShowCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
