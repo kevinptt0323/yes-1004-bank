@@ -7,6 +7,11 @@ function options() {
 	$options = array();
 	$options["occupation"] = $db->query("select `occupation` from `occupation` order by `id`")->fetchAll(PDO::FETCH_COLUMN, 0);
 	$options["location"] = $db->query("select `location` from `location` order by `id`")->fetchAll(PDO::FETCH_COLUMN, 0);
+	$options["working_time"] = array(
+		'Morning',
+		'Afternoon',
+		'Night'
+	);
 	$options["education"] = array(
 		'Graduate School',
 		'Undergraduate School',
