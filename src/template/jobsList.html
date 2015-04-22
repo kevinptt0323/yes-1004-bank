@@ -1,5 +1,5 @@
-<div class="template">
-	<table class="ui striped table">
+<div class="template" id="jobsList">
+	<table class="ui center aligned striped table">
 		<thead>
 			<tr>
 				<th>Job ID</th>
@@ -22,25 +22,54 @@
 			<tr class="dropdowns" ng-show="newJob">
 				<th> </th>
 				<th>
-					<div class="ui selection compact dropdown">
-						<input name="gender" type="hidden">
-						<div class="default text">Gender</div>
+					<div class="ui compact selection dropdown">
+						<input name="occupation" type="hidden">
+						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
-						<div class="menu">
-							<div class="item" data-value="1">Male</div>
-							<div class="item" data-value="0">Female</div>
+						<div class="menu" ng-click="formData.occupation=viewer.getDropdownValue($event)">
+							<div class="item" ng-repeat="item in options.occupation" data-value="{{item}}">{{item}}</div>
 						</div>
 					</div>
 				</th>
 				<th>
-					<div class="ui selection compact dropdown">
-						<input name="gender" type="hidden">
-						<div class="default text">Gender</div>
+					<div class="ui compact selection dropdown">
+						<input name="location" type="hidden">
+						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
-						<div class="menu">
-							<div class="item" data-value="1">Male</div>
-							<div class="item" data-value="0">Female</div>
+						<div class="menu" ng-click="formData.location=viewer.getDropdownValue($event)">
+							<div class="item" ng-repeat="item in options.location" data-value="{{item}}">{{item}}</div>
 						</div>
+					</div>
+				</th>
+				<th>
+					<div class="ui compact selection dropdown">
+						<input name="working_time" type="hidden">
+						<div class="default text">Working Time</div>
+						<i class="dropdown icon"></i>
+						<div class="menu" ng-click="formData.working_time=viewer.getDropdownValue($event)">
+							<div class="item" ng-repeat="item in options.working_time" data-value="{{item}}">{{item}}</div>
+						</div>
+					</div>
+				</th>
+				<th>
+					<div class="ui compact selection dropdown">
+						<input name="education" type="hidden">
+						<div class="default text">Education</div>
+						<i class="dropdown icon"></i>
+						<div class="menu" ng-click="formData.education=viewer.getDropdownValue($event)">
+							<div class="item" ng-repeat="item in options.education" data-value="{{item}}">{{item}}</div>
+						</div>
+					</div>
+				</th>
+				<th>
+					<div class="ui input">
+						<input ng-model="formData.experience" name="experience" type="number" value="0" tabindex="6" />
+						  year(s)
+					</div>
+				</th>
+				<th>
+					<div class="ui input">
+						<input ng-model="formData.salary" name="salary" type="number" min="0" step="1000" value="0" tabindex="7" />
 					</div>
 				</th>
 			</tr>

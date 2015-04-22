@@ -94,6 +94,15 @@ AjaxFormView.prototype.getDropdownValue = getDropdownValue;
 
 view.service('view', function() {
 
+  this.jobsShowListView = function(param) {
+    var that = new AjaxFormView(param.$http, {
+      init: function() {
+        $('.ui.dropdown').dropdown();
+      }
+    });
+    return that;
+  };
+
   var jobseekerForm = '#register-jobseeker-form';
   this.registerJobseekerView = function(param) {
     var that = new AjaxFormView(param.$http, {

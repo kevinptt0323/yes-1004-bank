@@ -21,11 +21,7 @@ ctrl.directive('onFinishRender', function ($timeout) {
 ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView', function($scope, $sce, $location, $http, pageView) {
   var loadStatus = function(config) {
     $scope.status = {};
-    $http({
-      method  : 'POST',
-      url     : 'api/status.php',
-      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
-    })
+    $http({ url: 'api/status.php' })
       .success(config.onSuccess || angular.noop)
       .error(config.onError || angular.noop);
   };
@@ -76,6 +72,13 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
   });
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
+  (function() {
+    var ret = {};
+    $http({ url: 'api/options.php' })
+      .success(function(data) {
+        $scope.options = data;
+      });
+  }());
   $scope.$emit('loginStatusChange');
 }])
 
