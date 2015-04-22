@@ -9,6 +9,10 @@ var jQuery = jQuery || {};
 
 var view = angular.module('database.homework.view', []);
 
+function getDropdownValue(e) {
+  return e.target.getAttribute('data-value');
+}
+
 view.factory('pageView', function() {
   return {
     init: function() {
@@ -20,10 +24,12 @@ view.factory('pageView', function() {
 });
 
 var AjaxFormView = function($http, config) {
-  var that = {};
+  if( !(this instanceof AjaxFormView) ) {
+    return new AjaxFormView($http, config);
+  }
   var form = config.form;
-  that.init = config.init || function() {};
-  that.message = {
+  this.init = config.init || function() {};
+  this.message = {
     success: function(message) {
       if( message ) {
         $(form).find('.ui.message')
@@ -46,7 +52,8 @@ var AjaxFormView = function($http, config) {
       return false;
     }
   };
-  that.submit = function(formData, callback) {
+  var message = this.message;
+  this.submit = function(formData, callback) {
     callback = callback || {};
     $http({
       method  : 'POST',
@@ -62,41 +69,30 @@ var AjaxFormView = function($http, config) {
           };
         }
         if( data.success ) {
-          that.message.success(data.message);
+          message.success(data.message);
           if( angular.isFunction(callback.onSuccess) ) {
             callback.onSuccess();
           }
         } else {
-          that.message.error(data.message);
+          message.error(data.message);
           if( angular.isFunction(callback.onFailure) ) {
             callback.onFailure();
           }
         }
       })
       .error(function() {
-        that.message.error('Error: Please contact administrator.');
+        message.error('Error: Please contact administrator.');
         if( angular.isFunction(callback.onFailure) ) {
           callback.onFailure();
         }
       });
     return false;
   };
-  that.getDropdownValue = function(e) {
-    return e.target.getAttribute('data-value');
-  };
-  return that;
 };
 
-view.service('view', function() {
+AjaxFormView.prototype.getDropdownValue = getDropdownValue;
 
-  this.jobsShowListView = function(param) {
-    var that = {
-      init: function() {
-        $('.ui.dropdown').dropdown();
-      }
-    };
-    return that;
-  };
+view.service('view', function() {
 
   var jobseekerForm = '#register-jobseeker-form';
   this.registerJobseekerView = function(param) {
