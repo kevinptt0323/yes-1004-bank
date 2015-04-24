@@ -5,8 +5,8 @@ session_start();
 function options() {
 	$db = getPDO();
 	$options = array();
-	$options["occupation"] = $db->query("select `occupation` from `occupation` order by `id`")->fetchAll(PDO::FETCH_COLUMN, 0);
-	$options["location"] = $db->query("select `location` from `location` order by `id`")->fetchAll(PDO::FETCH_COLUMN, 0);
+	$options["occupation"] = $db->query("select * from `occupation` order by `id`")->fetchAll(PDO::FETCH_ASSOC);
+	$options["location"] = $db->query("select * from `location` order by `id`")->fetchAll(PDO::FETCH_ASSOC);
 	$options["working_time"] = array(
 		'Morning',
 		'Afternoon',

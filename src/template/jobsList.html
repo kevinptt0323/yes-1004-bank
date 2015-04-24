@@ -28,7 +28,7 @@
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
 						<div class="menu" ng-click="formData.occupation=viewer.getDropdownValue($event)">
-							<div class="item" ng-repeat="item in options.occupation" data-value="{{item}}">{{item}}</div>
+							<div class="item" ng-repeat="item in options.occupation" data-value="{{item.id}}">{{item.occupation}}</div>
 						</div>
 					</div>
 				</th>
@@ -38,7 +38,7 @@
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
 						<div class="menu" ng-click="formData.location=viewer.getDropdownValue($event)">
-							<div class="item" ng-repeat="item in options.location" data-value="{{item}}">{{item}}</div>
+							<div class="item" ng-repeat="item in options.location" data-value="{{item.id}}">{{item.location}}</div>
 						</div>
 					</div>
 				</th>
