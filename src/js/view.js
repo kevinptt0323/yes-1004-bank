@@ -94,10 +94,55 @@ AjaxFormView.prototype.getDropdownValue = getDropdownValue;
 
 view.service('view', function() {
 
+  var newJobForm = '#new-job-form';
   this.jobsShowListView = function(param) {
     var that = new AjaxFormView(param.$http, {
+      form: newJobForm,
+      url: 'api/editJob.php?new',
       init: function() {
         $('.ui.dropdown').dropdown();
+        $(newJobForm).form({
+          occupation: {
+            identifier : 'occupation',
+            rules: [{ type : 'empty', prompt : 'Please select occupation' }]
+          },
+          location: {
+            identifier : 'location',
+            rules: [{ type : 'empty', prompt : 'Please select location' }]
+          },
+          working_time: {
+            identifier : 'working_time',
+            rules: [{ type : 'empty', prompt : 'Please select working time' }]
+          },
+          education: {
+            identifier : 'education',
+            rules: [{ type : 'empty', prompt : 'Please select education required' }]
+          },
+          experience: {
+            identifier : 'experience',
+            rules: [
+              { type : 'empty'  , prompt : 'Please enter minimal experience' },
+              { type : 'integer', prompt : 'Minimal experience must be a number' }
+            ]
+          },
+          salary: {
+            identifier : 'salary',
+            rules: [
+              { type : 'empty'  , prompt : 'Please enter salary' },
+              { type : 'integer', prompt : 'Salary must be a number' }
+            ]
+          }
+        },{
+          onSuccess: function() {
+            that.submit(param.$scope.formData, {
+              onSuccess: function() {
+                param.$scope.$emit('jobsListReload');
+              }
+            });
+            return false;
+          },
+          onFailure: that.message.error
+        });
       }
     });
     return that;

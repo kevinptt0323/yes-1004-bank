@@ -9,6 +9,7 @@
 				<th>Education Required</th>
 				<th>Minimal Experience</th>
 				<th>Salary</th>
+				<th>Operation </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,10 +19,10 @@
 				<td><a href="{{ href(item) }}"> {{ name(item) }} </a></td>
 			</tr>
 		</tbody>
-		<tfoot>
-			<tr class="dropdowns" ng-show="newJob">
+		<tfoot class="controls">
+			<tr class="ui form" id="new-job-form" ng-show="newJob">
 				<th> </th>
-				<th>
+				<th class="field">
 					<div class="ui compact selection dropdown">
 						<input name="occupation" type="hidden">
 						<div class="default text">Occupation</div>
@@ -31,7 +32,7 @@
 						</div>
 					</div>
 				</th>
-				<th>
+				<th class="field">
 					<div class="ui compact selection dropdown">
 						<input name="location" type="hidden">
 						<div class="default text">Location</div>
@@ -41,7 +42,7 @@
 						</div>
 					</div>
 				</th>
-				<th>
+				<th class="field">
 					<div class="ui compact selection dropdown">
 						<input name="working_time" type="hidden">
 						<div class="default text">Working Time</div>
@@ -51,7 +52,7 @@
 						</div>
 					</div>
 				</th>
-				<th>
+				<th class="field">
 					<div class="ui compact selection dropdown">
 						<input name="education" type="hidden">
 						<div class="default text">Education</div>
@@ -61,21 +62,28 @@
 						</div>
 					</div>
 				</th>
-				<th>
+				<th class="field">
 					<div class="ui input">
 						<input ng-model="formData.experience" name="experience" type="number" value="0" tabindex="6" />
-						  year(s)
+						 year(s)
 					</div>
 				</th>
-				<th>
+				<th class="field">
 					<div class="ui input">
+						$
 						<input ng-model="formData.salary" name="salary" type="number" min="0" step="1000" value="0" tabindex="7" />
 					</div>
 				</th>
+				<th>
+					<div class="ui animated fade primary submit button">
+						<div class="hidden content"> New </div>
+						<div class="visible content"><i class="add icon"></i></div>
+					</div>
+				</th>
 			</tr>
-			<tr class="controls" ng-init="newJob = false" ng-show="status.isLogin && status.user.type=='employer'" ng-click="newJob = true">
-				<th colspan="7">
-					<div class="ui primary labeled icon button">
+			<tr class="buttons">
+				<th colspan="8">
+					<div class="ui primary labeled icon button" ng-init="newJob = false" ng-show="status.isLogin && status.user.type=='employer'" ng-click="newJob = !newJob">
 						<i class="add icon"></i> New Job
 					</div>
 				</th>

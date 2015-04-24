@@ -12,7 +12,8 @@ body {
 		width: 100%;
 	}
 	@media @desktop, @desktop-xl {
-		width: 1000px;
+		min-width: 1000px;
+		width: 80%;
 	}
 	margin: 50px auto;
 }
@@ -28,17 +29,28 @@ body {
 		}
 	}
 	&#jobsList {
-		.ui.input input,
-		.ui.selection.dropdown {
-			padding: 0.4em 0.6em;
+		td, th {
+			/* fix bug for center table */
+			text-align: center;
 		}
-		.ui.input {
-			line-height: 1.8em;
-			input {
-				width: 5em;
-				text-align: right;
-				line-height: 1em;
-				margin-right: 0.4em;
+		#new-job-form {
+			.ui.button {
+				padding-top: 0.4em;
+				padding-bottom: 0.4em;
+			}
+			.ui.input input,
+			.ui.selection.dropdown {
+				padding: 0.4em 0.6em;
+			}
+			.ui.input {
+				line-height: 1.8em;
+				input {
+					width: 5em;
+					text-align: right;
+					line-height: 1em;
+					margin-left: 0.4em;
+					margin-right: 0.4em;
+				}
 			}
 		}
 	}
