@@ -10,6 +10,7 @@ var jQuery = jQuery || {};
 var view = angular.module('database.homework.view', []);
 
 function getDropdownValue(e) {
+  console.log(e.target.getAttribute('data-value'));
   return e.target.getAttribute('data-value');
 }
 
@@ -28,6 +29,7 @@ var AjaxFormView = function($http, config) {
     return new AjaxFormView($http, config);
   }
   var form = config.form;
+  this.form = config.form;
   this.init = config.init || function() {};
   this.message = {
     success: function(message) {
@@ -41,6 +43,7 @@ var AjaxFormView = function($http, config) {
       $(form).form('clear');
     },
     error: function(message) {
+      console.log(message);
       if( angular.isString(message) ) {
         $(form).find('.ui.message')
           .removeClass('positive')
@@ -92,59 +95,120 @@ var AjaxFormView = function($http, config) {
 
 AjaxFormView.prototype.getDropdownValue = getDropdownValue;
 
+var JobsForm = function($http, config) {
+  if( !(this instanceof JobsForm) ) {
+    return new JobsForm($http, config);
+  }
+  AjaxFormView.apply(this, [$http, config]);
+  this.show = false;
+  this.inited = false;
+  this.formData = {};
+  this.select = function(idx, val) {
+    console.log(idx, val);
+    this.formData[idx] = val;
+  };
+  this.toggle = function() {
+    if( !this.inited ) {
+      config.init();
+      this.inited = true;
+    }
+    this.show = !this.show;
+  };
+};
+JobsForm.prototype = AjaxFormView.prototype;
+
 view.service('view', function() {
 
-  var newJobForm = '#new-job-form';
   this.jobsShowListView = function(param) {
-    var that = new AjaxFormView(param.$http, {
-      form: newJobForm,
-      url: 'api/jobsEdit.php?new',
-      init: function() {
-        $('.ui.dropdown').dropdown();
-        $(newJobForm).form({
-          occupation: {
-            identifier : 'occupation',
-            rules: [{ type : 'empty', prompt : 'Please select occupation' }]
-          },
-          location: {
-            identifier : 'location',
-            rules: [{ type : 'empty', prompt : 'Please select location' }]
-          },
-          working_time: {
-            identifier : 'working_time',
-            rules: [{ type : 'empty', prompt : 'Please select working time' }]
-          },
-          education: {
-            identifier : 'education',
-            rules: [{ type : 'empty', prompt : 'Please select education required' }]
-          },
-          experience: {
-            identifier : 'experience',
-            rules: [
-              { type : 'empty'  , prompt : 'Please enter minimal experience' },
-              { type : 'integer', prompt : 'Minimal experience must be a number' }
-            ]
-          },
-          salary: {
-            identifier : 'salary',
-            rules: [
-              { type : 'empty'  , prompt : 'Please enter salary' },
-              { type : 'integer', prompt : 'Salary must be a number' }
-            ]
-          }
-        },{
-          onSuccess: function() {
-            that.submit(param.$scope.formData, {
-              onSuccess: function() {
-                param.$scope.$emit('jobsListReload');
-              }
-            });
-            return false;
-          },
-          onFailure: that.message.error
-        });
+    var that = {};
+    var initJob = function(self) {
+      $('.ui.dropdown').dropdown();
+      $(self.form).form({
+        occupation_id: {
+          identifier : 'occupation_id',
+          rules: [{ type : 'empty', prompt : 'Please select occupation' }]
+        },
+        location_id: {
+          identifier : 'location_id',
+          rules: [{ type : 'empty', prompt : 'Please select location' }]
+        },
+        working_time: {
+          identifier : 'working_time',
+          rules: [{ type : 'empty', prompt : 'Please select working time' }]
+        },
+        education: {
+          identifier : 'education',
+          rules: [{ type : 'empty', prompt : 'Please select education required' }]
+        },
+        experience: {
+          identifier : 'experience',
+          rules: [
+            { type : 'empty'  , prompt : 'Please enter minimal experience' },
+            { type : 'integer', prompt : 'Minimal experience must be a number' }
+          ]
+        },
+        salary: {
+          identifier : 'salary',
+          rules: [
+            { type : 'empty'  , prompt : 'Please enter salary' },
+            { type : 'integer', prompt : 'Salary must be a number' }
+          ]
+        }
+      },{
+        onSuccess: function() {
+          self.submit(self.formData, {
+            onSuccess: function() {
+              param.$scope.$emit('jobsListReload');
+            }
+          });
+          return false;
+        },
+        onFailure: self.message.error
+      })
+      if( self.formData ) {
+        $(self.form).form('set values', self.formData);
       }
-    });
+    };
+    that.getDropdownValue = getDropdownValue;
+    that.jobs = {};
+    that.visible = function(id) {
+      return that.jobs[id] && that.jobs[id].show;
+    }
+    that.toggle = function(id) {
+      if( !that.jobs[id] ) {
+        if( id==='new' ) {
+          that.jobs[id] = new JobsForm(param.$http, {
+            form: '#new-job-form',
+            url: 'api/jobsEdit.php?new',
+            init: function() {
+              initJob(that.jobs[id]);
+            }
+          });
+        } else {
+          that.jobs[id] = new JobsForm(param.$http, {
+            form: '.ui.form[data-rid=' + id + ']',
+            url: 'api/jobsEdit.php?edit',
+            init: function() {
+              var tmp = param.$scope.jobs.find(function(elem){
+                return elem.id==id;
+              });
+              that.jobs[id].formData.rid = id;
+              ['occupation_id', 'location_id', 'working_time', 'education'].forEach(function(elem) {
+                that.jobs[id].formData[elem] = tmp[elem];
+              });
+              if( tmp.experience ) {
+                that.jobs[id].formData.experience = +tmp.experience;
+              }
+              if( tmp.salary ) {
+                that.jobs[id].formData.salary = +tmp.salary;
+              }
+              initJob(that.jobs[id]);
+            }
+          });
+        }
+      }
+      that.jobs[id].toggle();
+    };
     return that;
   };
 

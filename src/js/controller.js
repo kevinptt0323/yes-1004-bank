@@ -26,7 +26,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
       .error(config.onError || angular.noop);
   };
   $scope.$on('$viewContentLoaded', function(a) {
-    if( a.targetScope.viewer ) {
+    if( a.targetScope.viewer && angular.isFunction(a.targetScope.viewer.init) ) {
       a.targetScope.viewer.init();
     }
   });
