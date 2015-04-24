@@ -70,6 +70,9 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
       }
     });
   });
+  $scope.$on('jobsListReload', function() {
+    $location.path('/jobs/list').replace();
+  });
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
   (function() {
@@ -95,6 +98,16 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
     { id: 3,    name: 'job 3'   },
     { id: 7122, name: 'job 7122'}
   ];
+  $http({ url: 'api/jobsList.php' })
+    .success(function(data) {
+      if( angular.isString(data) ) {
+        $scope.jobs = {};
+      } else {
+        $scope.jobs = data;
+      }
+    })
+    .error(function() {
+    });
   $scope.viewer = view[$route.current.viewer]({
     '$scope': $scope,
     '$http' : $http

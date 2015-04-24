@@ -19,12 +19,14 @@ function login($data) {
 	}
 	if( $jobseeker ) {
 		$_SESSION['user'] = array(
+			'id'   => $jobseeker["id"],
 			'name' => $jobseeker["account"],
 			'type' => "jobseeker"
 		);
 		return new Message(Message::$SUCCESS, "Login successful as jobseeker.");
 	} else if( $employer ) {
 		$_SESSION['user'] = array(
+			'id'   => $employer["id"],
 			'name' => $employer["account"],
 			'type' => "employer"
 		);

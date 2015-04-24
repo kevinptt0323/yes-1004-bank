@@ -98,7 +98,7 @@ view.service('view', function() {
   this.jobsShowListView = function(param) {
     var that = new AjaxFormView(param.$http, {
       form: newJobForm,
-      url: 'api/editJob.php?new',
+      url: 'api/jobsEdit.php?new',
       init: function() {
         $('.ui.dropdown').dropdown();
         $(newJobForm).form({
