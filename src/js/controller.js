@@ -71,7 +71,16 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
     });
   });
   $scope.$on('jobsListReload', function() {
-    $location.path('/jobs/list').replace();
+    $http({ url: 'api/jobsList.php' })
+      .success(function(data) {
+        if( angular.isString(data) ) {
+          $scope.jobs = {};
+        } else {
+          $scope.jobs = data;
+        }
+      })
+      .error(function() {
+      });
   });
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
@@ -86,32 +95,17 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
 }])
 
 .controller('jobsShowListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
-  $scope.href = function(job) {
-    return '#!/jobs/' + job.id;
+  $scope.occupation = function(id) {
+    return $scope.options.occupation[id];
   };
-  $scope.name = function(job) {
-    return job.name;
+  $scope.location = function(id) {
+    return $scope.options.location[id];
   };
-  $scope.jobs = [
-    { id: 1,    name: 'job 1'   },
-    { id: 2,    name: 'job 2'   },
-    { id: 3,    name: 'job 3'   },
-    { id: 7122, name: 'job 7122'}
-  ];
-  $http({ url: 'api/jobsList.php' })
-    .success(function(data) {
-      if( angular.isString(data) ) {
-        $scope.jobs = {};
-      } else {
-        $scope.jobs = data;
-      }
-    })
-    .error(function() {
-    });
   $scope.viewer = view[$route.current.viewer]({
     '$scope': $scope,
     '$http' : $http
   });
+  $scope.$emit('jobsListReload');
 }])
 
 .controller('jobsShowCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {

@@ -15,8 +15,13 @@
 		<tbody>
 			<tr ng-repeat="item in jobs">
 				<td>{{ item.id }}</td>
-				<td>{{ name(item) }}</td>
-				<td><a href="{{ href(item) }}"> {{ name(item) }} </a></td>
+				<td>{{ occupation(item.occupation_id) }}</td>
+				<td>{{ location(item.location_id) }}</td>
+				<td>{{ item.working_time }}</td>
+				<td>{{ item.education }}</td>
+				<td>{{ item.salary }}</td>
+				<td>{{ item.experience }}</td>
+				<td> </td>
 			</tr>
 		</tbody>
 		<tfoot class="controls">
@@ -28,7 +33,7 @@
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
 						<div class="menu" ng-click="formData.occupation=viewer.getDropdownValue($event)">
-							<div class="item" ng-repeat="item in options.occupation" data-value="{{item.id}}">{{item.occupation}}</div>
+							<div class="item" ng-repeat="(key, value) in options.occupation" data-value="{{key}}">{{value}}</div>
 						</div>
 					</div>
 				</th>
@@ -38,7 +43,7 @@
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
 						<div class="menu" ng-click="formData.location=viewer.getDropdownValue($event)">
-							<div class="item" ng-repeat="item in options.location" data-value="{{item.id}}">{{item.location}}</div>
+							<div class="item" ng-repeat="(key, value) in options.location" data-value="{{key}}">{{value}}</div>
 						</div>
 					</div>
 				</th>
