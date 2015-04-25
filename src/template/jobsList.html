@@ -74,14 +74,26 @@
 					</div>
 				</td>
 				<td>
-					<span ng-show="item.employer_id == status.user.id">
+					<span ng-show="item.employer_id == status.user.id" class="ui buttons">
 						<span ng-hide="viewer.visible(item.id)">
-							<div ng-click="viewer.toggle(item.id)" class="ui circular icon primary button" title="Edit"><i class="edit icon"></i></div>
+							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
+								<div class="hidden content"> Edit </div>
+								<div class="visible content"><i class="edit icon"></i></div>
+							</div>
 						</span>
 						<span ng-show="viewer.visible(item.id)">
-							<div class="ui circular icon positive submit button" title="OK"><i class="checkmark icon"></i></div>
-							<div ng-click="viewer.toggle(item.id)" class="ui circular icon primary button" title="Cancel"><i class="undo icon"></i></div>
-							<div ng-click="viewer.delete1(item.id)" class="ui circular icon negative button" title="Delete"><i class="remove icon"></i></div>
+							<div class="ui animated fade positive submit button">
+								<div class="hidden content"> OK </div>
+								<div class="visible content"><i class="checkmark icon"></i></div>
+							</div>
+							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
+								<div class="hidden content"> Cancel </div>
+								<div class="visible content"><i class="undo icon"></i></div>
+							</div>
+							<div ng-click="viewer.delete1(item.id)" class="ui animated fade negative button">
+								<div class="hidden content"> Delete </div>
+								<div class="visible content"><i class="remove icon"></i></div>
+							</div>
 						</span>
 					</span>
 				</td>
