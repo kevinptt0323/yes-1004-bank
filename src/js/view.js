@@ -10,7 +10,6 @@ var jQuery = jQuery || {};
 var view = angular.module('database.homework.view', []);
 
 function getDropdownValue(e) {
-  console.log(e.target.getAttribute('data-value'));
   return e.target.getAttribute('data-value');
 }
 
@@ -43,7 +42,6 @@ var AjaxFormView = function($http, config) {
       $(form).form('clear');
     },
     error: function(message) {
-      console.log(message);
       if( angular.isString(message) ) {
         $(form).find('.ui.message')
           .removeClass('positive')
@@ -104,7 +102,6 @@ var JobsForm = function($http, config) {
   this.inited = false;
   this.formData = {};
   this.select = function(idx, val) {
-    console.log(idx, val);
     this.formData[idx] = val;
   };
   this.toggle = function() {
@@ -158,22 +155,24 @@ view.service('view', function() {
         onSuccess: function() {
           self.submit(self.formData, {
             onSuccess: function() {
+              self.toggle();
+              self.inited = false;
               param.$scope.$emit('jobsListReload');
             }
           });
           return false;
         },
         onFailure: self.message.error
-      })
+      });
       if( self.formData ) {
-        $(self.form).form('set values', self.formData);
+        //$(self.form).form('set values', self.formData);
       }
     };
     that.getDropdownValue = getDropdownValue;
     that.jobs = {};
     that.visible = function(id) {
       return that.jobs[id] && that.jobs[id].show;
-    }
+    };
     that.toggle = function(id) {
       if( !that.jobs[id] ) {
         if( id==='new' ) {
@@ -208,6 +207,17 @@ view.service('view', function() {
         }
       }
       that.jobs[id].toggle();
+    };
+    that.delete1 = function(id) {
+      param.$http({
+        method  : 'POST',
+        url     : 'api/jobsEdit.php?delete',
+        data    : $.param({ rid: id }),
+        headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+        .success(function(data) {
+          param.$scope.$emit('jobsListReload');
+        });
     };
     return that;
   };

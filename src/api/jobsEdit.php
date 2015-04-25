@@ -48,7 +48,7 @@ function editJob($data) {
 	if( !$query->fetch() ) {
 		return new Message(Message::$ERROR, "Permission denied.");
 	}
-	$insert = $db->prepare("
+	$update = $db->prepare("
 		update `recruit`
 		set occupation_id = :oid,
 				location_id = :lid,
@@ -58,7 +58,7 @@ function editJob($data) {
 				salary = :sal
 		where id = :rid");
 	try {
-		$insert->execute(array(
+		$update->execute(array(
 			':rid'  => $data['rid'],
 			':oid'  => $data['occupation_id'],
 			':lid'  => $data['location_id'],
@@ -67,7 +67,36 @@ function editJob($data) {
 			':exp'  => $data['experience'],
 			':sal'  => $data['salary']
 		));
-		return new Message(Message::$SUCCESS, "Update job successfully.");
+		return new Message(Message::$SUCCESS, "Update job $data[rid] successfully.");
+	} catch (PDOException $e) {
+		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
+	}
+}
+function delete1($data) {
+	if( $_SESSION['user']['type'] != "employer" ) {
+		return new Message(Message::$ERROR, "Permission denied.");
+	}
+	if( empty($data['rid']) ) {
+		return new Message(Message::$ERROR, "Cannot have empty field.");
+	}
+	$db = getPDO();
+	$query = $db->prepare("select * from `recruit` where `id` = :rid and `employer_id` = :eid");
+	try {
+		$query->execute(array(
+			':rid' => $data['rid'],
+			':eid' => $_SESSION['user']['id']
+		));
+	} catch (PDOException $e) {
+		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
+	}
+	if( !$query->fetch() ) {
+		return new Message(Message::$ERROR, "Permission denied.");
+	}
+
+	$delete_sql = $db->prepare("delete from `recruit` where `id` = :rid");
+	try {
+		$delete_sql->execute(array(':rid' => $data['rid']));
+		return new Message(Message::$SUCCESS, "Delete job $data[rid] successfully.");
 	} catch (PDOException $e) {
 		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
 	}
@@ -77,6 +106,8 @@ if( isset($_GET['new']) ) {
 	echo json_encode(newJob($_POST));
 } else if( isset($_GET['edit']) ) {
 	echo json_encode(editJob($_POST));
+} else if( isset($_GET['delete']) ) {
+	echo json_encode(delete1($_POST));
 }
 
 ?>

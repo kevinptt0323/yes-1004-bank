@@ -79,9 +79,9 @@
 							<div ng-click="viewer.toggle(item.id)" class="ui circular icon primary button" title="Edit"><i class="edit icon"></i></div>
 						</span>
 						<span ng-show="viewer.visible(item.id)">
-							<div class="ui circular icon positive button" title="OK"><i class="checkmark icon"></i></div>
+							<div class="ui circular icon positive submit button" title="OK"><i class="checkmark icon"></i></div>
 							<div ng-click="viewer.toggle(item.id)" class="ui circular icon primary button" title="Cancel"><i class="undo icon"></i></div>
-							<div class="ui circular icon negative button" title="Delete"><i class="remove icon"></i></div>
+							<div ng-click="viewer.delete1(item.id)" class="ui circular icon negative button" title="Delete"><i class="remove icon"></i></div>
 						</span>
 					</span>
 				</td>
