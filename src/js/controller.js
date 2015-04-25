@@ -49,11 +49,20 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
           $scope.status = data;
         }
         if( $scope.status.isLogin ) {
-          $scope.navigates = [
-            { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
-            { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
-            { name: 'Logout', href: '#!/logout', icon: 'sign out' }
-          ];
+          if( $scope.status.user.type === "employer" ) {
+            $scope.navigates = [
+              { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
+              { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
+              { name: 'List All Jobseekers', href: '#!/jobseeker/list', icon: 'users' },
+              { name: 'Logout', href: '#!/logout', icon: 'sign out' }
+            ];
+          } else {
+            $scope.navigates = [
+              { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
+              { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
+              { name: 'Logout', href: '#!/logout', icon: 'sign out' }
+            ];
+          }
         } else {
           $scope.navigates = [
             { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
