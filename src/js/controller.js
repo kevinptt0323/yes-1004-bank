@@ -2,6 +2,8 @@
 
 /* Controllers */
 
+var angular = angular || {};
+
 var ctrl = angular.module('database.homework.controller', [
   'database.homework.view',
 ]);
@@ -19,9 +21,9 @@ ctrl.directive('onFinishRender', function ($timeout) {
 });
 
 ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView', function($scope, $sce, $location, $http, pageView) {
-  var loadStatus = function(config) {
-    $scope.status = {};
-    $http({ url: 'api/status.php' })
+  var load = function(config) {
+    $scope[config.name] = $scope[config.name] || {};
+    $http({ url: config.url })
       .success(config.onSuccess || angular.noop)
       .error(config.onError || angular.noop);
   };
@@ -41,7 +43,9 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
     $location.path('/').replace();
   });
   $scope.$on('loginStatusChange', function(event) {
-    loadStatus({
+    load({
+      name: 'status',
+      url: 'api/status.php',
       onSuccess: function(data) {
         if( angular.isString(data) ) {
           $scope.status.isLogin = false;
@@ -49,11 +53,20 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
           $scope.status = data;
         }
         if( $scope.status.isLogin ) {
-          $scope.navigates = [
-            { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
-            { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
-            { name: 'Logout', href: '#!/logout', icon: 'sign out' }
-          ];
+          if( $scope.status.user.type === "employer" ) {
+            $scope.navigates = [
+              { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
+              { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
+              { name: 'List All Jobseekers', href: '#!/jobseeker/list', icon: 'users' },
+              { name: 'Logout', href: '#!/logout', icon: 'sign out' }
+            ];
+          } else {
+            $scope.navigates = [
+              { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
+              { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
+              { name: 'Logout', href: '#!/logout', icon: 'sign out' }
+            ];
+          }
         } else {
           $scope.navigates = [
             { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
@@ -71,16 +84,27 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
     });
   });
   $scope.$on('jobsListReload', function() {
-    $http({ url: 'api/jobsList.php' })
-      .success(function(data) {
-        if( angular.isString(data) ) {
-          $scope.jobs = {};
-        } else {
+    load({
+      name: 'jobs',
+      url: 'api/jobsList.php',
+      onSuccess: function(data) {
+        if( !angular.isString(data) ) {
           $scope.jobs = data;
         }
-      })
-      .error(function() {
-      });
+      }
+    });
+  });
+  $scope.$on('jobseekerListReload', function() {
+    load({
+      name: 'jobseekers',
+      url: 'api/jobseekerList.php',
+      onSuccess: function(data) {
+        if( !angular.isString(data) ) {
+          $scope.jobseekers = data;
+          console.log($scope.jobseekers);
+        }
+      }
+    });
   });
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
@@ -148,5 +172,13 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
       });
   };
   $scope.logout();
+}])
+
+.controller('jobseekerListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+  $scope.viewer = view[$route.current.viewer]({
+    '$scope': $scope,
+    '$http' : $http
+  });
+  $scope.$emit('jobseekerListReload');
 }])
 ;

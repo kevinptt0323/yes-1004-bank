@@ -2,6 +2,8 @@
 
 /* App Module */
 
+var angular = angular || {};
+
 var app = angular.module('database.homework.app', [
   'database.homework.controller',
   'ngRoute'
@@ -74,7 +76,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       }
     })
     .when('/jobseeker/list', {
-      templateUrl: 'template/jobseekerList.html'
+      templateUrl: 'template/jobseekerList.html',
+      controller: 'jobseekerListCtrl',
+      viewer: 'jobseekerListView'
     })
     .when('/jobseeker/:id', {
       templateUrl: 'template/jobseekerList.html'
