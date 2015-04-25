@@ -29,7 +29,7 @@ function newJob($data) {
 	}
 }
 function editJob($data) {
-	if( $_SESSION['user']['type'] != "employer" ) {
+	if( !isset($_SESSION['user']['type']) || $_SESSION['user']['type'] != "employer" ) {
 		return new Message(Message::$ERROR, "Permission denied.");
 	}
 	if( empty($data['rid']) || empty($data['occupation_id']) || empty($data['location_id']) || empty($data['working_time']) || empty($data['education']) || empty($data['experience']) || empty($data['salary']) ) {
