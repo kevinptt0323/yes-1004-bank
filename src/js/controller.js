@@ -19,9 +19,9 @@ ctrl.directive('onFinishRender', function ($timeout) {
 });
 
 ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView', function($scope, $sce, $location, $http, pageView) {
-  var loadStatus = function(config) {
-    $scope.status = {};
-    $http({ url: 'api/status.php' })
+  var load = function(config) {
+    $scope[config.name] = {};
+    $http({ url: config.url })
       .success(config.onSuccess || angular.noop)
       .error(config.onError || angular.noop);
   };
@@ -41,7 +41,9 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
     $location.path('/').replace();
   });
   $scope.$on('loginStatusChange', function(event) {
-    loadStatus({
+    load({
+      name: 'status',
+      url: 'api/status.php',
       onSuccess: function(data) {
         if( angular.isString(data) ) {
           $scope.status.isLogin = false;
