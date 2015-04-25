@@ -9,7 +9,7 @@ function jobseekerList() {
 	$db = getPDO();
 	try {
 		$list = $db->query("select `id`, `account`, `education`, `expected_salary`, `phone`, `gender`, `age`, `email` from `user` order by `id`")->fetchAll(PDO::FETCH_ASSOC);
-		return $list;
+		return new Message(Message::$SUCCESS, $list);
 	} catch (PDOException $e) {
 		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
 	}

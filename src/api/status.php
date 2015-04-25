@@ -9,7 +9,7 @@ function status() {
 	if( $status["isLogin"] ) {
 		$status["user"] = $_SESSION['user'];
 	}
-	return $status;
+	return new Message(Message::$SUCCESS, $status);
 }
 
 echo json_encode(status());
