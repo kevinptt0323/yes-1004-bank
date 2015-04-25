@@ -3,7 +3,7 @@ require_once('include/include.php');
 session_start();
 
 function newJob($data) {
-	if( $_SESSION['user']['type'] != "employer" ) {
+	if( !isset($_SESSION['user']['type']) || $_SESSION['user']['type'] != "employer" ) {
 		return new Message(Message::$ERROR, "Permission denied.");
 	}
 	if( empty($data['occupation_id']) || empty($data['location_id']) || empty($data['working_time']) || empty($data['education']) || empty($data['experience']) || empty($data['salary']) ) {
@@ -73,7 +73,7 @@ function editJob($data) {
 	}
 }
 function delete1($data) {
-	if( $_SESSION['user']['type'] != "employer" ) {
+	if( !isset($_SESSION['user']['type']) || $_SESSION['user']['type'] != "employer" ) {
 		return new Message(Message::$ERROR, "Permission denied.");
 	}
 	if( empty($data['rid']) ) {
