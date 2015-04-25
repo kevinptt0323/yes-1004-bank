@@ -1,3 +1,28 @@
-<div>
-	this is job seeker list page
+<div class="template" id="jobsList">
+	<table class="ui center aligned striped table">
+		<thead>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Gender</th>
+			<th>Age</th>
+			<th>Education</th>
+			<th>Expected Salary</th>
+			<th>Phone</th>
+			<th>Email</th>
+			<th>Specialty</th>
+		</thead>
+		<tbody>
+			<tr data-rid="{{ jobsk.id }}" ng-repeat="jobsk in jobseekers">
+				<td>{{ jobsk.id }}</td>
+				<td>{{ jobsk.account }}</td>
+				<td>{{ jobsk.gender }}</td>
+				<td>{{ jobsk.age }}</td>
+				<td>{{ jobsk.education }}</td>
+				<td>{{ jobsk.expected_salary }}</td>
+				<td>{{ jobsk.phone }}</td>
+				<td>{{ jobsk.email }}</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
 </div>

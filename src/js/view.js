@@ -334,28 +334,36 @@ view.service('view', function() {
     var that = new AjaxFormView(param.$http, {
       form: loginForm,
       url: 'api/login.php',
+      init: function() {
+        $(loginForm).form({
+          username: {
+            identifier : 'username',
+            rules: [{ type : 'empty', prompt : 'Please enter a username' }]
+          },
+          password: {
+            identifier : 'password',
+            rules: [{ type : 'empty', prompt : 'Please enter a password' }]
+          }
+        },{
+          onSuccess: function() {
+            return that.submit(param.$scope.formData, {
+              onSuccess: function() {
+                param.$scope.$emit('loginStatusChange');
+                param.$scope.$emit('redirectToIndex');
+              }
+            });
+          },
+          onFailure: that.message.error
+        });
+      }
     });
+    return that;
+  };
+
+  this.jobseekerListView = function(param) {
+    var that = {};
     that.init = function() {
-      $(loginForm).form({
-        username: {
-          identifier : 'username',
-          rules: [{ type : 'empty', prompt : 'Please enter a username' }]
-        },
-        password: {
-          identifier : 'password',
-          rules: [{ type : 'empty', prompt : 'Please enter a password' }]
-        }
-      },{
-        onSuccess: function() {
-          return that.submit(param.$scope.formData, {
-            onSuccess: function() {
-              param.$scope.$emit('loginStatusChange');
-              param.$scope.$emit('redirectToIndex');
-            }
-          });
-        },
-        onFailure: that.message.error
-      });
+      $('.ui.dropdown').dropdown();
     };
     return that;
   };
