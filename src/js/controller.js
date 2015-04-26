@@ -13,7 +13,7 @@ ctrl.directive('onFinishRender', function ($timeout) {
     link: function (scope, element, attr) {
       if (scope.$last === true) {
         $timeout(function () {
-          scope.$emit('ngRepeatFinished');
+          scope.$emit(attr.onFinishRender);
         });
       }
     }
@@ -39,7 +39,12 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
       a.targetScope.viewer.init();
     }
   });
-  $scope.$on('ngRepeatFinished', pageView.init);
+  $scope.$on('initDropdown', function() {
+    $('.ui.dropdown').dropdown();
+  });
+  $scope.$on('initCheckbox', function() {
+    $('.ui.checkbox').checkbox();
+  });
   $scope.$on('$routeChangeSuccess', function (ev, current) {
     $scope.currentPage.name = current.name || 'Index';
   });

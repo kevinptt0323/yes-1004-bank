@@ -229,6 +229,8 @@ view.service('view', function() {
       url: 'api/registerJobseeker.php',
       init: function() {
         $(jobseekerForm).find('.ui.dropdown').dropdown();
+        $(jobseekerForm).find('.ui.checkbox').checkbox();
+        console.log($(jobseekerForm).find('.ui.checkbox'));
         $(jobseekerForm).form({
           username: {
             identifier : 'username',
