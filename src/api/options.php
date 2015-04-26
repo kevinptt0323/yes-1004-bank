@@ -14,8 +14,10 @@ function options() {
 		foreach($db->query("select * from `location` order by `id`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			$options["location"][$row["id"]] = $row["location"];
 		}
-		//$options["occupation"] = $db->query("select * from `occupation` order by `id`")->fetchAll(PDO::FETCH_ASSOC);
-		//$options["location"] = $db->query("select * from `location` order by `id`")->fetchAll(PDO::FETCH_ASSOC);
+		$options["specialty"] = array();
+		foreach($db->query("select * from `specialty` order by `id`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
+			$options["specialty"][$row["id"]] = $row["specialty"];
+		}
 		$options["working_time"] = array(
 			'Morning',
 			'Afternoon',
