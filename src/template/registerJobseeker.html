@@ -81,8 +81,8 @@
 			</div>
 		</div>
 		<div class="field">
-			<div class="ui checkbox" ng-repeat="(key,value) in options.specialty" on-finish-render="initCheckbox">
-				<input name="{{key}}" type="checkbox"> <label>{{value}}<label>
+			<div class="ui checkbox" ng-repeat="(key,value) in options.specialty">
+				<input name="{{key}}" id="checkbox-{{key}}" type="checkbox" ng-model="specialty[key]"> <label for="checkbox-{{key}}">{{value}}<label>
 			</div>
 		</div>
 		<div class="ui divider"></div>

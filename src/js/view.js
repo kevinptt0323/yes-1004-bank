@@ -266,6 +266,12 @@ view.service('view', function() {
           }
         },{
           onSuccess: function() {
+            param.$scope.formData.specialty = [];
+            for(var key in param.$scope.specialty) {
+              if( param.$scope.specialty[key] ) {
+                param.$scope.formData.specialty.push(key);
+              }
+            }
             that.submit(param.$scope.formData);
             return false;
           },

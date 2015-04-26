@@ -134,6 +134,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     '$scope': $scope,
     '$http' : $http
   });
+  $scope.specialty = {};
 }])
 
 .controller('registerEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
