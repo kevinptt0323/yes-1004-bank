@@ -13,16 +13,6 @@ function getDropdownValue(e) {
   return e.target.getAttribute('data-value');
 }
 
-view.factory('pageView', function() {
-  return {
-    init: function() {
-      $(function() {
-        $('.ui.dropdown').dropdown();
-      });
-    }
-  };
-});
-
 var AjaxFormView = function($http, config) {
   if( !(this instanceof AjaxFormView) ) {
     return new AjaxFormView($http, config);
@@ -119,7 +109,7 @@ view.service('view', function() {
   this.jobsShowListView = function(param) {
     var that = {};
     var initJob = function(self) {
-      $('.ui.dropdown').dropdown();
+      param.$scope.$emit('initDropdown');
       $(self.form).form({
         occupation_id: {
           identifier : 'occupation_id',
@@ -228,9 +218,6 @@ view.service('view', function() {
       form: jobseekerForm,
       url: 'api/registerJobseeker.php',
       init: function() {
-        $(jobseekerForm).find('.ui.dropdown').dropdown();
-        $(jobseekerForm).find('.ui.checkbox').checkbox();
-        console.log($(jobseekerForm).find('.ui.checkbox'));
         $(jobseekerForm).form({
           username: {
             identifier : 'username',
@@ -359,14 +346,6 @@ view.service('view', function() {
         });
       }
     });
-    return that;
-  };
-
-  this.jobseekerListView = function(param) {
-    var that = {};
-    that.init = function() {
-      $('.ui.dropdown').dropdown();
-    };
     return that;
   };
 });

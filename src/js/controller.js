@@ -20,7 +20,7 @@ ctrl.directive('onFinishRender', function ($timeout) {
   };
 });
 
-ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView', function($scope, $sce, $location, $http, pageView) {
+ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($scope, $sce, $location, $http) {
   var load = function(config) {
     $scope[config.name] = $scope[config.name] || {};
     $http({ url: config.url })
@@ -168,10 +168,6 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
 }])
 
 .controller('jobseekerListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
-  $scope.viewer = view[$route.current.viewer]({
-    '$scope': $scope,
-    '$http' : $http
-  });
   $scope.$emit('jobseekerListReload');
 }])
 ;

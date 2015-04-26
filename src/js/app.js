@@ -77,8 +77,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     })
     .when('/jobseeker/list', {
       templateUrl: 'template/jobseekerList.html',
-      controller: 'jobseekerListCtrl',
-      viewer: 'jobseekerListView'
+      controller: 'jobseekerListCtrl'
     })
     .when('/jobseeker/:id', {
       templateUrl: 'template/jobseekerList.html'
