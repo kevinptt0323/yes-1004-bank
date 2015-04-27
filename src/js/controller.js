@@ -177,6 +177,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       .success(function(data) {
         $scope.$emit('loginStatusChange');
         $scope.$emit('redirectToIndex');
+        $scope.jobseekers = null;
       })
       .error(function() {
       });
