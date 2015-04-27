@@ -146,25 +146,37 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('registerJobseekerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
-  $scope.viewer = view[$route.current.viewer]({
-    '$scope': $scope,
-    '$http' : $http
-  });
-  $scope.specialty = {};
+  if( $scope.status && $scope.status.isLogin ) {
+    $scope.$emit('redirectToIndex');
+  } else {
+    $scope.viewer = view[$route.current.viewer]({
+      '$scope': $scope,
+      '$http' : $http
+    });
+    $scope.specialty = {};
+  }
 }])
 
 .controller('registerEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
-  $scope.viewer = view[$route.current.viewer]({
-    '$scope': $scope,
-    '$http' : $http
-  });
+  if( $scope.status && $scope.status.isLogin ) {
+    $scope.$emit('redirectToIndex');
+  } else {
+    $scope.viewer = view[$route.current.viewer]({
+      '$scope': $scope,
+      '$http' : $http
+    });
+  }
 }])
 
 .controller('loginCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
-  $scope.viewer = view[$route.current.viewer]({
-    '$scope': $scope,
-    '$http' : $http
-  });
+  if( $scope.status && $scope.status.isLogin ) {
+    $scope.$emit('redirectToIndex');
+  } else {
+    $scope.viewer = view[$route.current.viewer]({
+      '$scope': $scope,
+      '$http' : $http
+    });
+  }
 }])
 
 .controller('logoutCtrl', ['$scope', '$http', 'view', function($scope, $http, view) {
@@ -186,9 +198,14 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('jobseekerListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+  console.log($scope.status);
+  if( !$scope.status || !$scope.status.isLogin || $scope.status.user.type !== 'employer' ) {
+    $scope.$emit('redirectToIndex');
+  } else {
+    $scope.$emit('jobseekerListReload');
+  }
   $scope.specialty = function(id) {
     return $scope.options.specialty[id];
   };
-  $scope.$emit('jobseekerListReload');
 }])
 ;
