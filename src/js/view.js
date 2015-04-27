@@ -179,9 +179,9 @@ view.service('view', function() {
             form: '.ui.form[data-rid=' + id + ']',
             url: 'api/jobsEdit.php?edit',
             init: function() {
-              var tmp = param.$scope.jobs.find(function(elem){
+              var tmp = param.$scope.jobs.filter(function(elem){
                 return elem.id==id;
-              });
+              })[0];
               that.jobs[id].formData.rid = id;
               ['occupation_id', 'location_id', 'working_time', 'education'].forEach(function(elem) {
                 that.jobs[id].formData[elem] = tmp[elem];
