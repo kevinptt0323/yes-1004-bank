@@ -169,6 +169,9 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('jobseekerListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+  $scope.specialty = function(id) {
+    return $scope.options.specialty[id];
+  };
   $scope.$emit('jobseekerListReload');
 }])
 ;
