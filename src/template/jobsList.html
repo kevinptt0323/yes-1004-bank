@@ -74,7 +74,7 @@
 					</div>
 				</td>
 				<td>
-					<span ng-show="item.employer_id == status.user.id" class="ui buttons">
+					<span ng-show="status.isLogin && status.user.type=='employer' && item.employer_id == status.user.id" class="ui buttons">
 						<span ng-hide="viewer.visible(item.id)">
 							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
 								<div class="hidden content"> Edit </div>

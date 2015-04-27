@@ -6,8 +6,9 @@ function registerJobseeker($data) {
 	if( empty($data['username']) || empty($data['password']) || empty($data['phone']) || empty($data['gender']) || empty($data['age']) || empty($data['email']) || empty($data['salary']) || empty($data['education']) ) {
 		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
+	escape($data);
 	$db = getPDO();
-	if( !empty($data['specialty']) ) {
+	if( isset($data['specialty']) && !empty($data['specialty']) ) {
 		$specialty = array();
 		foreach($db->query("select * from `specialty` order by `id`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			$specialty[$row["id"]] = $row["specialty"];
@@ -43,12 +44,14 @@ function registerJobseeker($data) {
 				':salary'    => $data['salary'],
 				':education' => $data['education']
 			));
-			for($i=0, $len=count($data['specialty']); $i<$len; $i++) {
-				if( $data['specialty'][$i] ) {
-					$insert_spe->execute(array(
-						':username' => $data['username'],
-						':sid'      => $data['specialty'][$i]
-					));
+			if( isset($data['specialty']) && !empty($data['specialty']) ) {
+				for($i=0, $len=count($data['specialty']); $i<$len; $i++) {
+					if( $data['specialty'][$i] ) {
+						$insert_spe->execute(array(
+							':username' => $data['username'],
+							':sid'      => $data['specialty'][$i]
+						));
+					}
 				}
 			}
 			return new Message(Message::$SUCCESS, "Register jobseeker \"$data[username]\" successfully.");
