@@ -46,8 +46,7 @@
 					<div class="default text">Select your gender</div>
 					<i class="dropdown icon"></i>
 					<div class="menu" ng-click="formData.gender=viewer.getDropdownValue($event)">
-						<div class="item" data-value="Male">Male</div>
-						<div class="item" data-value="Female">Female</div>
+						<div ng-repeat="item in ['Male', 'Female']" on-finish-render="initDropdown" class="item" data-value="{{item}}">{{item}}</div>
 					</div>
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
@@ -75,10 +74,15 @@
 					<div class="default text">Select your major education</div>
 					<i class="dropdown icon"></i>
 					<div class="menu" ng-click="formData.education=viewer.getDropdownValue($event)">
-						<div class="item" ng-repeat="item in options.education" data-value="{{item}}">{{item}}</div>
+						<div ng-repeat="item in options.education" on-finish-render="initDropdown" class="item" data-value="{{item}}">{{item}}</div>
 					</div>
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
+			</div>
+		</div>
+		<div class="field">
+			<div class="ui checkbox" ng-repeat="(key,value) in options.specialty">
+				<input name="{{key}}" id="checkbox-{{key}}" type="checkbox" ng-model="specialty[key]"> <label for="checkbox-{{key}}">{{value}}<label>
 			</div>
 		</div>
 		<div class="ui divider"></div>

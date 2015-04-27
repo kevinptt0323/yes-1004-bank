@@ -21,7 +21,9 @@
 				<td>{{ jobsk.expected_salary }}</td>
 				<td>{{ jobsk.phone }}</td>
 				<td>{{ jobsk.email }}</td>
-				<td></td>
+				<td>
+					<div class="ui teal label" ng-repeat="specialty_id in jobsk.specialty">{{ specialty(specialty_id) }}</div>
+				</td>
 			</tr>
 		</tbody>
 	</table>

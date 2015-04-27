@@ -34,7 +34,7 @@
 					<i class="ui {{ item.icon }} icon" ng-if="item.icon"></i>
 					{{ item.name }}
 					<div class="menu">
-						<a class="item" href="{{ subitem.href }}" ng-repeat="subitem in item.menu" on-finish-render="ngRepeatFinished">
+						<a class="item" href="{{ subitem.href }}" ng-repeat="subitem in item.menu" on-finish-render="initDropdown">
 							{{ subitem.name }}
 						</a>
 					</div>

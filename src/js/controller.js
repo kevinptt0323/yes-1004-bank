@@ -13,18 +13,25 @@ ctrl.directive('onFinishRender', function ($timeout) {
     link: function (scope, element, attr) {
       if (scope.$last === true) {
         $timeout(function () {
-          scope.$emit('ngRepeatFinished');
+          scope.$emit(attr.onFinishRender);
         });
       }
     }
   };
 });
 
-ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView', function($scope, $sce, $location, $http, pageView) {
+ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($scope, $sce, $location, $http) {
   var load = function(config) {
     $scope[config.name] = $scope[config.name] || {};
     $http({ url: config.url })
-      .success(config.onSuccess || angular.noop)
+      .success(function(data) {
+        if( data.success ) {
+          $scope[config.name] = data.message;
+          (config.onSuccess || angular.noop)(data);
+        } else {
+          (config.onError || angular.noop)(data);
+        }
+      })
       .error(config.onError || angular.noop);
   };
   $scope.$on('$viewContentLoaded', function(a) {
@@ -32,7 +39,12 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
       a.targetScope.viewer.init();
     }
   });
-  $scope.$on('ngRepeatFinished', pageView.init);
+  $scope.$on('initDropdown', function() {
+    $('.ui.dropdown').dropdown();
+  });
+  $scope.$on('initCheckbox', function() {
+    $('.ui.checkbox').checkbox();
+  });
   $scope.$on('$routeChangeSuccess', function (ev, current) {
     $scope.currentPage.name = current.name || 'Index';
   });
@@ -47,11 +59,6 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
       name: 'status',
       url: 'api/status.php',
       onSuccess: function(data) {
-        if( angular.isString(data) ) {
-          $scope.status.isLogin = false;
-        } else {
-          $scope.status = data;
-        }
         if( $scope.status.isLogin ) {
           if( $scope.status.user.type === "employer" ) {
             $scope.navigates = [
@@ -86,35 +93,21 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
   $scope.$on('jobsListReload', function() {
     load({
       name: 'jobs',
-      url: 'api/jobsList.php',
-      onSuccess: function(data) {
-        if( !angular.isString(data) ) {
-          $scope.jobs = data;
-        }
-      }
+      url: 'api/jobsList.php'
     });
   });
   $scope.$on('jobseekerListReload', function() {
     load({
       name: 'jobseekers',
-      url: 'api/jobseekerList.php',
-      onSuccess: function(data) {
-        if( !angular.isString(data) ) {
-          $scope.jobseekers = data;
-          console.log($scope.jobseekers);
-        }
-      }
+      url: 'api/jobseekerList.php'
     });
   });
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
-  (function() {
-    var ret = {};
-    $http({ url: 'api/options.php' })
-      .success(function(data) {
-        $scope.options = data;
-      });
-  }());
+  load({
+    name: 'options',
+    url: 'api/options.php'
+  });
   $scope.$emit('loginStatusChange');
 }])
 
@@ -141,6 +134,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
     '$scope': $scope,
     '$http' : $http
   });
+  $scope.specialty = {};
 }])
 
 .controller('registerEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
@@ -175,10 +169,9 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'pageView',
 }])
 
 .controller('jobseekerListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
-  $scope.viewer = view[$route.current.viewer]({
-    '$scope': $scope,
-    '$http' : $http
-  });
+  $scope.specialty = function(id) {
+    return $scope.options.specialty[id];
+  };
   $scope.$emit('jobseekerListReload');
 }])
 ;
