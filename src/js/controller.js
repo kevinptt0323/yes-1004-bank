@@ -198,7 +198,6 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('jobseekerListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
-  console.log($scope.status);
   if( !$scope.status || !$scope.status.isLogin || $scope.status.user.type !== 'employer' ) {
     $scope.$emit('redirectToIndex');
   } else {
