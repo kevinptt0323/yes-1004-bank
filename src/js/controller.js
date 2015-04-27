@@ -40,7 +40,16 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     }
   });
   $scope.$on('initDropdown', function(a, elem) {
-    $(elem).closest('.ui.dropdown').dropdown();
+    if( elem ) {
+      var $elem = $(elem);
+      if( $elem.hasClass('ui dropdown') ) {
+        $elem.dropdown();
+      } else {
+        $elem.closest('.ui.dropdown').dropdown();
+      }
+    } else {
+      $('.ui.dropdown').dropdown();
+    }
   });
   $scope.$on('initCheckbox', function(a, elem) {
     $('.ui.checkbox').checkbox();
