@@ -102,6 +102,13 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       url: 'api/jobseekerList.php'
     });
   });
+  $scope.toHTML = function(text) {
+    if( angular.isString(text) ) {
+      return $sce.trustAsHtml(text);
+    } else {
+      return text;
+    }
+  }
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
   load({
@@ -151,7 +158,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   });
 }])
 
-.controller('logoutCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('logoutCtrl', ['$scope', '$http', 'view', function($scope, $http, view) {
   $scope.logout = function() {
     $http({
       method  : 'POST',

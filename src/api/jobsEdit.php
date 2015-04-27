@@ -9,6 +9,7 @@ function newJob($data) {
 	if( empty($data['occupation_id']) || empty($data['location_id']) || empty($data['working_time']) || empty($data['education']) || empty($data['experience']) || empty($data['salary']) ) {
 		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
+	escape($data);
 	$db = getPDO();
 	$insert = $db->prepare("insert into `recruit`
 	(`employer_id`, `occupation_id`, `location_id`, `working_time`, `education`, `experience`, `salary`) values
