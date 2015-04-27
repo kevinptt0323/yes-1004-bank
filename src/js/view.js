@@ -30,6 +30,7 @@ var AjaxFormView = function($http, config) {
           .show();
       }
       $(form).form('clear');
+      $('input[type=checkbox]').prop("checked", false);
     },
     error: function(message) {
       if( angular.isString(message) ) {
