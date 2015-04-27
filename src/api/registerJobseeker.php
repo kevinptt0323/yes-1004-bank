@@ -7,6 +7,17 @@ function registerJobseeker($data) {
 		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
 	$db = getPDO();
+	if( !empty($data['specialty']) ) {
+		$specialty = array();
+		foreach($db->query("select * from `specialty` order by `id`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
+			$specialty[$row["id"]] = $row["specialty"];
+		}
+		for($i=0, $len=count($data['specialty']); $i<$len; $i++) {
+			if( $data['specialty'][$i] && !$specialty[$data['specialty'][$i]] ) {
+				return new Message(Message::$ERROR, "Invalid specialty id $data[speciailty][$i].");
+			}
+		}
+	}
 	$query_jobseeker = $db->prepare("select count(*) from `user` where `account` = :username");
 	$query_employer = $db->prepare("select count(*) from `employer` where `account` = :username");
 	try {
@@ -19,25 +30,8 @@ function registerJobseeker($data) {
 	if( $query_jobseeker->fetch()[0] || $query_employer->fetch()[0] ) {
 		return new Message(Message::$ERROR, "Username \"$data[username]\" existed.");
 	} else {
-		if( !empty($data['specialty']) ) {
-			$specialty = array();
-			foreach($db->query("select * from `specialty` order by `id`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
-				$specialty[$row["id"]] = $row["specialty"];
-			}
-			$insert_spe = $db->prepare("insert into `user_specialty` (`user`, `specialty_id`) VALUE (:username, :sid)");
-			for($i=0, $len=count($data['specialty']); $i<$len; $i++) {
-				if( $data['specialty'][$i] && !$specialty[$data['specialty'][$i]] ) {
-					return new Message(Message::$ERROR, "Invalid specialty id $data[speciailty][$i].");
-				}
-				if( $data['specialty'][$i] ) {
-					$insert_spe->execute(array(
-						':username' => $data['username'],
-						':sid'      => $data['specialty'][$i]
-					));
-				}
-			}
-		}
 		$insert = $db->prepare("insert into `user` (`account`, `password`, `phone`, `gender`, `age`, `email`, `expected_salary`, `education`) values (:username, sha2(:password, 256), :phone, :gender, :age, :email, :salary, :education)");
+		$insert_spe = $db->prepare("insert into `user_specialty` (`user`, `specialty_id`) VALUE (:username, :sid)");
 		try {
 			$insert->execute(array(
 				':username'  => $data['username'],
@@ -49,6 +43,14 @@ function registerJobseeker($data) {
 				':salary'    => $data['salary'],
 				':education' => $data['education']
 			));
+			for($i=0, $len=count($data['specialty']); $i<$len; $i++) {
+				if( $data['specialty'][$i] ) {
+					$insert_spe->execute(array(
+						':username' => $data['username'],
+						':sid'      => $data['specialty'][$i]
+					));
+				}
+			}
 			return new Message(Message::$SUCCESS, "Register jobseeker \"$data[username]\" successfully.");
 		} catch (PDOException $e) {
 			return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
