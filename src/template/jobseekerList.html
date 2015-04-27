@@ -14,7 +14,7 @@
 		<tbody>
 			<tr data-rid="{{ jobsk.id }}" ng-repeat="jobsk in jobseekers">
 				<td>{{ jobsk.id }}</td>
-				<td>{{ jobsk.account }}</td>
+				<td ng-init="jobsk.account = toHTML(jobsk.account)" ng-bind-html="jobsk.account">{{ jobsk.account }}</td>
 				<td>{{ jobsk.gender }}</td>
 				<td>{{ jobsk.age }}</td>
 				<td>{{ jobsk.education }}</td>

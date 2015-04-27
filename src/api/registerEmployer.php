@@ -6,6 +6,7 @@ function registerEmployer($data) {
 	if( empty($data['username']) || empty($data['password']) || empty($data['phone']) || empty($data['email']) ) {
 		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
+	escape($data);
 	$db = getPDO();
 	$query_jobseeker = $db->prepare("select count(*) from `user` where `account` = :username");
 	$query_employer = $db->prepare("select count(*) from `employer` where `account` = :username");

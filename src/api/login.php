@@ -6,6 +6,7 @@ function login($data) {
 	if( empty($data['username']) || empty($data['password']) ) {
 		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
+	escape($data);
 	$db = getPDO();
 	$query_jobseeker = $db->prepare("select * from `user` where `account` = :username and `password` = sha2(:password, 256)");
 	$query_employer  = $db->prepare("select * from `employer` where `account` = :username and `password` = sha2(:password, 256)");

@@ -13,7 +13,7 @@ ctrl.directive('onFinishRender', function ($timeout) {
     link: function (scope, element, attr) {
       if (scope.$last === true) {
         $timeout(function () {
-          scope.$emit(attr.onFinishRender);
+          scope.$emit(attr.onFinishRender, element);
         });
       }
     }
@@ -39,10 +39,19 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       a.targetScope.viewer.init();
     }
   });
-  $scope.$on('initDropdown', function() {
-    $('.ui.dropdown').dropdown();
+  $scope.$on('initDropdown', function(a, elem) {
+    if( elem ) {
+      var $elem = $(elem);
+      if( $elem.hasClass('ui dropdown') ) {
+        $elem.dropdown();
+      } else {
+        $elem.closest('.ui.dropdown').dropdown();
+      }
+    } else {
+      $('.ui.dropdown').dropdown();
+    }
   });
-  $scope.$on('initCheckbox', function() {
+  $scope.$on('initCheckbox', function(a, elem) {
     $('.ui.checkbox').checkbox();
   });
   $scope.$on('$routeChangeSuccess', function (ev, current) {
@@ -102,6 +111,13 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       url: 'api/jobseekerList.php'
     });
   });
+  $scope.toHTML = function(text) {
+    if( angular.isString(text) ) {
+      return $sce.trustAsHtml(text);
+    } else {
+      return text;
+    }
+  }
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
   load({
@@ -151,7 +167,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   });
 }])
 
-.controller('logoutCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('logoutCtrl', ['$scope', '$http', 'view', function($scope, $http, view) {
   $scope.logout = function() {
     $http({
       method  : 'POST',

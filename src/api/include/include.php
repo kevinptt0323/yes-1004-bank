@@ -9,6 +9,13 @@ function getPDO() {
 		echo 'Connection failed: ' . $e->getMessage();
 	}
 }
+function escape(&$data) {
+	foreach( $data as &$key ) {
+		if( is_string($key) ) {
+			$key = htmlspecialchars($key);
+		}
+	}
+}
 
 class Message {
 	public $state, $success, $message;

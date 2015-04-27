@@ -18,44 +18,44 @@
 				<td class="field">
 					<div ng-hide="viewer.visible(item.id)">{{ occupation(item.occupation_id) }}</div>
 					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
-						<input name="occupation_id" type="hidden">
+						<input name="occupation_id" type="hidden" value="{{ occupation(item.occupation_id) }}">
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
-							<div class="item" ng-repeat="(key, value) in options.occupation" ng-click="viewer.jobs[item.id].select('occupation_id', key)" data-value="{{key}}">{{value}}</div>
+							<div class="item" ng-repeat="(key, value) in options.occupation" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('occupation_id', key)" data-value="{{key}}">{{value}}</div>
 						</div>
 					</div>
 				</td>
 				<td class="field">
 					<div ng-hide="viewer.visible(item.id)">{{ location(item.location_id) }}</div>
 					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
-						<input name="location_id" type="hidden">
+						<input name="location_id" type="hidden" value="{{ location(item.location_id) }}">
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
-							<div class="item" ng-repeat="(key, value) in options.location" ng-click="viewer.jobs[item.id].select('location_id', key)" data-value="{{key}}">{{value}}</div>
+							<div class="item" ng-repeat="(key, value) in options.location" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('location_id', key)" data-value="{{key}}">{{value}}</div>
 						</div>
 					</div>
 				</td>
 				<td class="field">
 					<div ng-hide="viewer.visible(item.id)">{{ item.working_time }}</div>
 					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
-						<input name="working_time" type="hidden">
+						<input name="working_time" type="hidden" value="{{ item.working_time }}">
 						<div class="default text">Working Time</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
-							<div class="item" ng-repeat="value in options.working_time" ng-click="viewer.jobs[item.id].select('working_time', value)" data-value="{{value}}">{{value}}</div>
+							<div class="item" ng-repeat="value in options.working_time" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('working_time', value)" data-value="{{value}}">{{value}}</div>
 						</div>
 					</div>
 				</td>
 				<td class="field">
 					<div ng-hide="viewer.visible(item.id)">{{ item.education }}</div>
 					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
-						<input name="education" type="hidden">
+						<input name="education" type="hidden" value="{{ item.education }}">
 						<div class="default text">Education</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
-							<div class="item" ng-repeat="value in options.education" ng-click="viewer.jobs[item.id].select('education', value)" data-value="{{value}}">{{value}}</div>
+							<div class="item" ng-repeat="value in options.education" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('education', value)" data-value="{{value}}">{{value}}</div>
 						</div>
 					</div>
 				</td>
@@ -74,7 +74,7 @@
 					</div>
 				</td>
 				<td>
-					<span ng-show="item.employer_id == status.user.id" class="ui buttons">
+					<span ng-show="status.isLogin && status.user.type=='employer' && item.employer_id == status.user.id" class="ui buttons">
 						<span ng-hide="viewer.visible(item.id)">
 							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
 								<div class="hidden content"> Edit </div>
@@ -108,7 +108,7 @@
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
-							<div class="item" ng-repeat="(key, value) in options.occupation" ng-click="viewer.jobs['new'].select('occupation_id', key)" data-value="{{key}}">{{value}}</div>
+							<div class="item" ng-repeat="(key, value) in options.occupation" on-finish-render="initDropdown" ng-click="viewer.jobs['new'].select('occupation_id', key)" data-value="{{key}}">{{value}}</div>
 						</div>
 					</div>
 				</th>
@@ -118,7 +118,7 @@
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
-							<div class="item" ng-repeat="(key, value) in options.location" ng-click="viewer.jobs['new'].select('location_id', key)" data-value="{{key}}">{{value}}</div>
+							<div class="item" ng-repeat="(key, value) in options.location" on-finish-render="initDropdown" ng-click="viewer.jobs['new'].select('location_id', key)" data-value="{{key}}">{{value}}</div>
 						</div>
 					</div>
 				</th>
@@ -128,7 +128,7 @@
 						<div class="default text">Working Time</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
-							<div class="item" ng-repeat="value in options.working_time" ng-click="viewer.jobs['new'].select('working_time', value)" data-value="{{value}}">{{value}}</div>
+							<div class="item" ng-repeat="value in options.working_time" on-finish-render="initDropdown" ng-click="viewer.jobs['new'].select('working_time', value)" data-value="{{value}}">{{value}}</div>
 						</div>
 					</div>
 				</th>
@@ -138,7 +138,7 @@
 						<div class="default text">Education</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
-							<div class="item" ng-repeat="value in options.education" ng-click="viewer.jobs['new'].select('education', value)" data-value="{{value}}">{{value}}</div>
+							<div class="item" ng-repeat="value in options.education" on-finish-render="initDropdown" ng-click="viewer.jobs['new'].select('education', value)" data-value="{{value}}">{{value}}</div>
 						</div>
 					</div>
 				</th>

@@ -9,9 +9,9 @@ function jobseekerList() {
 	$db = getPDO();
 	try {
 		$list = $db->query("select `id`, `account`, `education`, `expected_salary`, `phone`, `gender`, `age`, `email` from `user` order by `id`")->fetchAll(PDO::FETCH_ASSOC);
-		$specialty_list = $db->query("select user, specialty_id from user_specialty order by user")->fetchAll(PDO::FETCH_ASSOC);
+		$specialty_list = $db->query("select user, specialty_id from user_specialty order by id")->fetchAll(PDO::FETCH_ASSOC);
 		for($i=0, $j=0, $len1=count($list), $len2=count($specialty_list); $i<$len1 && $j<$len2; $j++) {
-			while( $list[$i]["account"] != $specialty_list[$j]["user"] ) $i++;
+			while( $i<$len1 && $list[$i]["account"] != $specialty_list[$j]["user"] ) $i++;
 			if( !isset($list[$i]["specialty"]) ) {
 				$list[$i]["specialty"] = array();
 			}
