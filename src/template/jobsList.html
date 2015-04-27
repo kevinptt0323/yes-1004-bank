@@ -18,7 +18,7 @@
 				<td class="field">
 					<div ng-hide="viewer.visible(item.id)">{{ occupation(item.occupation_id) }}</div>
 					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
-						<input name="occupation_id" type="hidden">
+						<input name="occupation_id" type="hidden" value="{{ occupation(item.occupation_id) }}">
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
@@ -29,7 +29,7 @@
 				<td class="field">
 					<div ng-hide="viewer.visible(item.id)">{{ location(item.location_id) }}</div>
 					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
-						<input name="location_id" type="hidden">
+						<input name="location_id" type="hidden" value="{{ location(item.location_id) }}">
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
@@ -40,7 +40,7 @@
 				<td class="field">
 					<div ng-hide="viewer.visible(item.id)">{{ item.working_time }}</div>
 					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
-						<input name="working_time" type="hidden">
+						<input name="working_time" type="hidden" value="{{ item.working_time }}">
 						<div class="default text">Working Time</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
@@ -51,7 +51,7 @@
 				<td class="field">
 					<div ng-hide="viewer.visible(item.id)">{{ item.education }}</div>
 					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
-						<input name="education" type="hidden">
+						<input name="education" type="hidden" value="{{ item.education }}">
 						<div class="default text">Education</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
