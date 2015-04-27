@@ -12,14 +12,14 @@
 			<div class="field">
 				<label>Password</label>
 				<div class="ui corner labeled input">
-					<input ng-model="formData.password" name="password" placeholder="password" type="password" tabindex="2">
+					<input ng-model="formData.password" name="password" placeholder="password" type="password" tabindex="1">
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
 			</div>
 			<div class="field">
 				<label>Confirm Password</label>
 				<div class="ui corner labeled input">
-					<input name="confirm" placeholder="Type your password again" type="password" tabindex="2">
+					<input name="confirm" placeholder="Type your password again" type="password" tabindex="1">
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
 			</div>
@@ -28,20 +28,20 @@
 			<div class="field">
 				<label>Phone</label>
 				<div class="ui corner labeled input">
-					<input ng-model="formData.phone" name="phone" placeholder="ex: 0987-654-321" type="text" tabindex="3">
+					<input ng-model="formData.phone" name="phone" placeholder="ex: 0987-654-321" type="text" tabindex="1">
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
 			</div>
 			<div class="field">
 				<label>Email Address</label>
 				<div class="ui corner labeled input">
-					<input ng-model="formData.email" name="email" placeholder="xxx@example.com" type="email" tabindex="4">
+					<input ng-model="formData.email" name="email" placeholder="xxx@example.com" type="email" tabindex="1">
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
 			</div>
 			<div class="field">
 				<label>Gender</label>
-				<div class="ui corner labeled dropdown selection" tabindex="5">
+				<div class="ui corner labeled dropdown selection" tabindex="1">
 					<input name="gender" type="hidden">
 					<div class="default text">Select your gender</div>
 					<i class="dropdown icon"></i>
@@ -56,24 +56,24 @@
 			<div class="field">
 				<label>Age</label>
 				<div class="ui corner labeled input">
-					<input ng-model="formData.age" name="age" placeholder="age" type="number" value="0" tabindex="6">
+					<input ng-model="formData.age" name="age" placeholder="age" type="number" value="0" tabindex="1">
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
 			</div>
 			<div class="field">
 				<label>Expected Salary</label>
 				<div class="ui corner labeled input">
-					<input ng-model="formData.salary" name="salary" placeholder="your expected salary" type="number" min="0" step="1000" value="0" tabindex="7">
+					<input ng-model="formData.salary" name="salary" placeholder="your expected salary" type="number" min="0" step="1000" value="0" tabindex="1">
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
 				</div>
 			</div>
 			<div class="field">
 				<label>Major Education</label>
-				<div class="ui corner labeled dropdown selection" tabindex="8">
+				<div class="ui corner labeled dropdown selection" tabindex="1">
 					<input name="education" type="hidden">
 					<div class="default text">Select your major education</div>
 					<i class="dropdown icon"></i>
-					<div class="menu" ng-click="formData.education=viewer.getDropdownValue($event)">
+					<div class="menu" ng-click="formData.education=viewer.getDropdownValue($event)" tabindex="1">
 						<div ng-repeat="item in options.education" on-finish-render="initDropdown" class="item" data-value="{{item}}">{{item}}</div>
 					</div>
 					<div class="ui corner label"> <i class="asterisk icon"></i> </div>
@@ -82,13 +82,13 @@
 		</div>
 		<div class="field">
 			<div class="ui checkbox" ng-repeat="(key,value) in options.specialty">
-				<input name="{{key}}" id="checkbox-{{key}}" type="checkbox" ng-model="specialty[key]"> <label for="checkbox-{{key}}">{{value}}<label>
+				<input name="{{key}}" id="checkbox-{{key}}" type="checkbox" ng-model="specialty[key]" tabindex="1"> <label for="checkbox-{{key}}">{{value}}<label>
 			</div>
 		</div>
 		<div class="ui divider"></div>
 		<div class="buttons">
-			<div class="ui positive labeled icon submit button"> <i class="checkmark icon"></i> Register </div>
-			<div class="ui negative labeled icon clear  button"> <i class="repeat icon"></i> Clear </div>
+			<div class="ui positive labeled icon submit button" tabindex="1"> <i class="checkmark icon"></i> Register </div>
+			<div class="ui negative labeled icon clear  button" tabindex="1"> <i class="repeat icon"></i> Clear </div>
 		</div>
 	</form>
 </div>
