@@ -74,7 +74,7 @@
 					</div>
 				</td>
 				<td>
-					<span ng-show="status.isLogin && status.user.type=='employer' && item.employer_id == status.user.id" class="ui buttons">
+					<span ng-show="status.user.type=='employer' && item.employer_id == status.user.id" class="ui buttons">
 						<span ng-hide="viewer.visible(item.id)">
 							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
 								<div class="hidden content"> Edit </div>
@@ -99,7 +99,7 @@
 				</td>
 			</tr>
 		</tbody>
-		<tfoot class="controls">
+		<tfoot class="controls" ng-show="status.user.type=='employer'">
 			<tr class="ui form" id="new-job-form" ng-show="viewer.visible('new')">
 				<th> </th>
 				<th class="field">
@@ -163,7 +163,7 @@
 			</tr>
 			<tr class="buttons">
 				<th colspan="8">
-					<div class="ui primary labeled icon button" ng-show="status.isLogin && status.user.type=='employer'" ng-click="viewer.toggle('new')">
+					<div class="ui primary labeled icon button" ng-show="status.user.type=='employer'" ng-click="viewer.toggle('new')">
 						<i class="add icon"></i> New Job
 					</div>
 				</th>
