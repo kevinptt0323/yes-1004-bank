@@ -148,7 +148,7 @@ view.service('view', function() {
             onSuccess: function() {
               self.toggle();
               self.inited = false;
-              param.$scope.$emit('jobsListReload');
+              param.$scope.$emit('jobsListReload', param.$routeParams);
             }
           });
           return false;
@@ -207,7 +207,7 @@ view.service('view', function() {
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
         .success(function(data) {
-          param.$scope.$emit('jobsListReload');
+          param.$scope.$emit('jobsListReload', param.$routeParams);
         });
     };
     return that;

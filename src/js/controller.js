@@ -143,7 +143,8 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   };
   $scope.viewer = view[$route.current.viewer]({
     '$scope': $scope,
-    '$http' : $http
+    '$http' : $http,
+    '$routeParams': $routeParams
   });
   $scope.$emit('jobsListReload', $routeParams);
 }])
