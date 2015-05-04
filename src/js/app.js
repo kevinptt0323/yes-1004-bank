@@ -56,7 +56,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       viewer: 'jobsShowListView',
       name: 'Job List'
     })
-    .when('/jobs/list/sort/:row/:order', {
+    .when('/jobs/list/sort/:column/:order', {
       templateUrl: 'template/jobsList.html',
       controller: 'jobsShowListCtrl',
       viewer: 'jobsShowListView',

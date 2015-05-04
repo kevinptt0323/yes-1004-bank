@@ -100,10 +100,10 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     });
   });
   $scope.$on('jobsListReload', function(event, config) {
-    if( config.row && config.order ) {
+    if( config.column && config.order ) {
       load({
         name: 'jobs',
-        url: 'api/jobsList.php?row=' + config.row + '&order=' + config.order
+        url: 'api/jobsList.php?column=' + config.column + '&order=' + config.order
       });
     } else {
       load({

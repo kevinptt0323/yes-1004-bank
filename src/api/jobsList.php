@@ -4,17 +4,24 @@ session_start();
 
 function jobsList() {
 	$db = getPDO();
-	try {
-		if( isset($_GET['row']) && isset($_GET['order']) ) {
-			if( $_GET['order'] == "ascending" ) {
-				$order = "asc";
-			} else if( $_GET['order'] == "descending" ) {
-				$order = "desc";
-			}
-			$list = $db->query("select * from `recruit` order by $_GET[row] $order")->fetchAll(PDO::FETCH_ASSOC);
-		} else {
-			$list = $db->query("select * from `recruit` order by `id`")->fetchAll(PDO::FETCH_ASSOC);
+	if( isset($_GET['column']) && isset($_GET['order']) ) {
+		$column = $_GET['column'];
+		if( $column != "salary" ) {
+			return new Message(Message::$ERROR, "Invalid Parameters.");
 		}
+		if( $_GET['order'] == "ascending" ) {
+			$order = "asc";
+		} else if( $_GET['order'] == "descending" ) {
+			$order = "desc";
+		} else {
+			return new Message(Message::$ERROR, "Invalid Parameters.");
+		}
+	} else {
+		$column = "id";
+		$order = "asc";
+	}
+	try {
+		$list = $db->query("select * from `recruit` order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
 		return new Message(Message::$SUCCESS, $list);
 	} catch (PDOException $e) {
 		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");
