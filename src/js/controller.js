@@ -99,11 +99,18 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       }
     });
   });
-  $scope.$on('jobsListReload', function() {
-    load({
-      name: 'jobs',
-      url: 'api/jobsList.php'
-    });
+  $scope.$on('jobsListReload', function(event, config) {
+    if( config.column && config.order ) {
+      load({
+        name: 'jobs',
+        url: 'api/jobsList.php?column=' + config.column + '&order=' + config.order
+      });
+    } else {
+      load({
+        name: 'jobs',
+        url: 'api/jobsList.php'
+      });
+    }
   });
   $scope.$on('jobseekerListReload', function() {
     load({
@@ -127,7 +134,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   $scope.$emit('loginStatusChange');
 }])
 
-.controller('jobsShowListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('jobsShowListCtrl', ['$scope', '$route', '$routeParams', '$http', 'view', function($scope, $route, $routeParams, $http, view) {
   $scope.occupation = function(id) {
     return $scope.options.occupation[id];
   };
@@ -136,9 +143,10 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   };
   $scope.viewer = view[$route.current.viewer]({
     '$scope': $scope,
-    '$http' : $http
+    '$http' : $http,
+    '$routeParams': $routeParams
   });
-  $scope.$emit('jobsListReload');
+  $scope.$emit('jobsListReload', $routeParams);
 }])
 
 .controller('jobsShowCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {

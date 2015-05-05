@@ -56,6 +56,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       viewer: 'jobsShowListView',
       name: 'Job List'
     })
+    .when('/jobs/list/sort/:column/:order', {
+      templateUrl: 'template/jobsList.html',
+      controller: 'jobsShowListCtrl',
+      viewer: 'jobsShowListView',
+      name: 'Job List'
+    })
     .when('/jobs/:id', {
       templateUrl: 'template/jobsShow.html',
       controller: 'jobsShowCtrl',
@@ -65,10 +71,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
           var deferred = $q.defer(),
               id = +$route.current.params.id;
           
-          if( !isNaN(id) ) {
-            deferred.resolve(id);
-          } else {
+          if( isNaN(id) ) {
             deferred.reject('Jobs Not Found.');
+          } else {
+            deferred.resolve(id);
           }
 
           return deferred.promise;
