@@ -161,7 +161,7 @@ view.service('view', function() {
     };
     that.getDropdownValue = getDropdownValue;
     that.jobs = {};
-    that.visible = function(id) {
+    that.editing = function(id) {
       return that.jobs[id] && that.jobs[id].show;
     };
     that.toggle = function(id) {

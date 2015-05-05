@@ -75,13 +75,13 @@
 				</td>
 				<td>
 					<span ng-show="status.user.type=='employer' && item.employer_id == status.user.id" class="ui buttons">
-						<span ng-hide="viewer.visible(item.id)">
+						<span ng-hide="viewer.editing(item.id)">
 							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
 								<div class="hidden content"> Edit </div>
 								<div class="visible content"><i class="edit icon"></i></div>
 							</div>
 						</span>
-						<span ng-show="viewer.visible(item.id)">
+						<span ng-show="viewer.editing(item.id)">
 							<div class="ui animated fade positive submit button">
 								<div class="hidden content"> OK </div>
 								<div class="visible content"><i class="checkmark icon"></i></div>
