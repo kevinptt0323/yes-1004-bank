@@ -210,6 +210,17 @@ view.service('view', function() {
           param.$scope.$emit('jobsListReload', param.$routeParams);
         });
     };
+    that.apply = function(id) {
+      param.$http({
+        method  : 'POST',
+        url     : 'api/apply.php?new',
+        data    : $.param({ rid: id }),
+        headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+        .success(function(data) {
+          param.$scope.$emit('jobsListReload', param.$routeParams);
+        });
+    };
     return that;
   };
 
