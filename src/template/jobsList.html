@@ -16,8 +16,8 @@
 			<tr class="ui form" data-rid="{{ item.id }}" ng-repeat="item in jobs">
 				<td>{{ item.id }}</td>
 				<td class="field">
-					<div ng-hide="viewer.visible(item.id)">{{ occupation(item.occupation_id) }}</div>
-					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
+					<div ng-hide="viewer.editing(item.id)">{{ occupation(item.occupation_id) }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
 						<input name="occupation_id" type="hidden" value="{{ occupation(item.occupation_id) }}">
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
@@ -27,8 +27,8 @@
 					</div>
 				</td>
 				<td class="field">
-					<div ng-hide="viewer.visible(item.id)">{{ location(item.location_id) }}</div>
-					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
+					<div ng-hide="viewer.editing(item.id)">{{ location(item.location_id) }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
 						<input name="location_id" type="hidden" value="{{ location(item.location_id) }}">
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
@@ -38,8 +38,8 @@
 					</div>
 				</td>
 				<td class="field">
-					<div ng-hide="viewer.visible(item.id)">{{ item.working_time }}</div>
-					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
+					<div ng-hide="viewer.editing(item.id)">{{ item.working_time }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
 						<input name="working_time" type="hidden" value="{{ item.working_time }}">
 						<div class="default text">Working Time</div>
 						<i class="dropdown icon"></i>
@@ -49,8 +49,8 @@
 					</div>
 				</td>
 				<td class="field">
-					<div ng-hide="viewer.visible(item.id)">{{ item.education }}</div>
-					<div ng-show="viewer.visible(item.id)" class="ui compact selection dropdown">
+					<div ng-hide="viewer.editing(item.id)">{{ item.education }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
 						<input name="education" type="hidden" value="{{ item.education }}">
 						<div class="default text">Education</div>
 						<i class="dropdown icon"></i>
@@ -60,15 +60,15 @@
 					</div>
 				</td>
 				<td class="field">
-					<div ng-hide="viewer.visible(item.id)">{{ item.experience }}</div>
-					<div ng-show="viewer.visible(item.id)" class="ui input">
+					<div ng-hide="viewer.editing(item.id)">{{ item.experience }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui input">
 						<input ng-model="viewer.jobs[item.id].formData.experience" name="experience" type="number" />
 						 year(s)
 					</div>
 				</td>
 				<td class="field">
-					<div ng-hide="viewer.visible(item.id)">{{ item.salary }}</div>
-					<div ng-show="viewer.visible(item.id)" class="ui input">
+					<div ng-hide="viewer.editing(item.id)">{{ item.salary }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui input">
 						$
 						<input ng-model="viewer.jobs[item.id].formData.salary" name="salary" type="number" min="0" step="1000" />
 					</div>
@@ -100,7 +100,7 @@
 			</tr>
 		</tbody>
 		<tfoot class="controls" ng-show="status.user.type=='employer'">
-			<tr class="ui form" id="new-job-form" ng-show="viewer.visible('new')">
+			<tr class="ui form" id="new-job-form" ng-show="viewer.editing('new')">
 				<th> </th>
 				<th class="field">
 					<div class="ui compact selection dropdown">
