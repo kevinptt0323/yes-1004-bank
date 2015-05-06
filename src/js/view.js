@@ -105,7 +105,7 @@ var JobsForm = function($http, config) {
 };
 JobsForm.prototype = AjaxFormView.prototype;
 
-view.service('view', function() {
+view.service('view', ['$http', function($http) {
 
   this.jobsShowListView = function(param) {
     var that = {};
@@ -161,13 +161,13 @@ view.service('view', function() {
     };
     that.getDropdownValue = getDropdownValue;
     that.jobs = {};
-    that.visible = function(id) {
+    that.editing = function(id) {
       return that.jobs[id] && that.jobs[id].show;
     };
     that.toggle = function(id) {
       if( !that.jobs[id] ) {
         if( id==='new' ) {
-          that.jobs[id] = new JobsForm(param.$http, {
+          that.jobs[id] = new JobsForm($http, {
             form: '#new-job-form',
             url: 'api/jobsEdit.php?new',
             init: function() {
@@ -175,7 +175,7 @@ view.service('view', function() {
             }
           });
         } else {
-          that.jobs[id] = new JobsForm(param.$http, {
+          that.jobs[id] = new JobsForm($http, {
             form: '.ui.form[data-rid=' + id + ']',
             url: 'api/jobsEdit.php?edit',
             init: function() {
@@ -200,9 +200,33 @@ view.service('view', function() {
       that.jobs[id].toggle();
     };
     that.delete1 = function(id) {
-      param.$http({
+      $http({
         method  : 'POST',
         url     : 'api/jobsEdit.php?delete',
+        data    : $.param({ rid: id }),
+        headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+        .success(function(data) {
+          param.$scope.$emit('jobsListReload', param.$routeParams);
+        });
+    };
+    that.apply = function(id, option) {
+      var operation = option?'new':'delete';
+      $http({
+        method  : 'POST',
+        url     : 'api/apply.php?' + operation,
+        data    : $.param({ rid: id }),
+        headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+        .success(function(data) {
+          param.$scope.$emit('jobsListReload', param.$routeParams);
+        });
+    };
+    that.favorite = function(id, option) {
+      var operation = option?'new':'delete';
+      $http({
+        method  : 'POST',
+        url     : 'api/favorite.php?' + operation,
         data    : $.param({ rid: id }),
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
@@ -215,7 +239,7 @@ view.service('view', function() {
 
   var jobseekerForm = '#register-jobseeker-form';
   this.registerJobseekerView = function(param) {
-    var that = new AjaxFormView(param.$http, {
+    var that = new AjaxFormView($http, {
       form: jobseekerForm,
       url: 'api/registerJobseeker.php',
       init: function() {
@@ -285,7 +309,7 @@ view.service('view', function() {
 
   var employerForm = '#register-employer-form';
   this.registerEmployerView = function(param) {
-    var that = new AjaxFormView(param.$http, {
+    var that = new AjaxFormView($http, {
       form: employerForm,
       url: 'api/registerEmployer.php',
       init: function() {
@@ -327,7 +351,7 @@ view.service('view', function() {
 
   var loginForm = '#login-form';
   this.loginView = function(param) {
-    var that = new AjaxFormView(param.$http, {
+    var that = new AjaxFormView($http, {
       form: loginForm,
       url: 'api/login.php',
       init: function() {
@@ -355,5 +379,5 @@ view.service('view', function() {
     });
     return that;
   };
-});
+}]);
 

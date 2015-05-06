@@ -3,6 +3,7 @@
 /* Controllers */
 
 var angular = angular || {};
+var $ = $ || {};
 
 var ctrl = angular.module('database.homework.controller', [
   'database.homework.view',
@@ -56,6 +57,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   });
   $scope.$on('$routeChangeSuccess', function (ev, current) {
     $scope.currentPage.name = current.name || 'Index';
+    $scope.currentPage.path = $location.path();
   });
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
@@ -100,17 +102,17 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     });
   });
   $scope.$on('jobsListReload', function(event, config) {
-    if( config.column && config.order ) {
-      load({
-        name: 'jobs',
-        url: 'api/jobsList.php?column=' + config.column + '&order=' + config.order
-      });
-    } else {
-      load({
-        name: 'jobs',
-        url: 'api/jobsList.php'
-      });
+    var url = 'api/jobsList.php?';
+    if( config.favorite == "favorite" ) {
+      url += 'favorite&';
     }
+    if( config.column && config.order ) {
+      url += 'column=' + config.column + '&order=' + config.order + '&';
+    }
+    load({
+      name: 'jobs',
+      url: url
+    });
   });
   $scope.$on('jobseekerListReload', function() {
     load({
@@ -124,7 +126,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     } else {
       return text;
     }
-  }
+  };
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
   load({
@@ -134,7 +136,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   $scope.$emit('loginStatusChange');
 }])
 
-.controller('jobsShowListCtrl', ['$scope', '$route', '$routeParams', '$http', 'view', function($scope, $route, $routeParams, $http, view) {
+.controller('jobsShowListCtrl', ['$scope', '$route', '$routeParams', 'view', function($scope, $route, $routeParams, view) {
   $scope.occupation = function(id) {
     return $scope.options.occupation[id];
   };
@@ -143,9 +145,15 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   };
   $scope.viewer = view[$route.current.viewer]({
     '$scope': $scope,
-    '$http' : $http,
     '$routeParams': $routeParams
   });
+  $scope.checkFavorite = function() {
+    if( $routeParams.favorite == "favorite" ) {
+      return "/favorite";
+    } else {
+      return "";
+    }
+  };
   $scope.$emit('jobsListReload', $routeParams);
 }])
 
@@ -153,36 +161,33 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   $scope.job = { id: $routeParams.id, name: 'job ??' };
 }])
 
-.controller('registerJobseekerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('registerJobseekerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   if( $scope.status && $scope.status.isLogin ) {
     $scope.$emit('redirectToIndex');
   } else {
     $scope.viewer = view[$route.current.viewer]({
-      '$scope': $scope,
-      '$http' : $http
+      '$scope': $scope
     });
     $scope.specialty = {};
   }
 }])
 
-.controller('registerEmployerCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('registerEmployerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   if( $scope.status && $scope.status.isLogin ) {
     $scope.$emit('redirectToIndex');
   } else {
     $scope.viewer = view[$route.current.viewer]({
-      '$scope': $scope,
-      '$http' : $http
+      '$scope': $scope
     });
   }
 }])
 
-.controller('loginCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('loginCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   if( $scope.status && $scope.status.isLogin ) {
     $scope.$emit('redirectToIndex');
   } else {
     $scope.viewer = view[$route.current.viewer]({
-      '$scope': $scope,
-      '$http' : $http
+      '$scope': $scope
     });
   }
 }])
@@ -205,7 +210,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   $scope.logout();
 }])
 
-.controller('jobseekerListCtrl', ['$scope', '$route', '$http', 'view', function($scope, $route, $http, view) {
+.controller('jobseekerListCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   if( !$scope.status || !$scope.status.isLogin || $scope.status.user.type !== 'employer' ) {
     $scope.$emit('redirectToIndex');
   } else {
