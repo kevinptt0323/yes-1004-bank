@@ -21,7 +21,15 @@ function jobsList() {
 		$order = "asc";
 	}
 	try {
-		$list = $db->query("select * from `recruit` order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
+		if( isset($_SESSION['user']['type']) && $_SESSION['user']['type'] == "jobseeker" ) {
+			$uid = $_SESSION['user']['id'];
+			$list = $db->query("select *,
+				exists( select * from application APP where APP.recruit_id=REC.id and APP.user_id=$uid) as apply,
+				exists( select * from favorite FAV where FAV.recruit_id=REC.id and FAV.user_id=$uid) as favorite
+				from recruit REC order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
+		} else {
+			$list = $db->query("select * from recruit REC order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
+		}
 		return new Message(Message::$SUCCESS, $list);
 	} catch (PDOException $e) {
 		return new Message(Message::$ERROR, $e->getMessage() . "<br />Please contact administrator.");

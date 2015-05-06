@@ -75,11 +75,11 @@
 				</td>
 				<td>
 					<span ng-show="status.user.type=='jobseeker'" class="ui buttons">
-						<div ng-click="viewer.apply(item.id)" class="ui animated fade positive button">
+						<div ng-class="{'disabled':item.apply==1}" ng-click="viewer.apply(item.id)" class="ui animated fade positive button">
 							<div class="hidden content"> Apply </div>
 							<div class="visible content"><i class="checkmark box icon"></i></div>
 						</div>
-						<div ng-click="viewer.favorite(item.id)" class="ui animated fade yellow button">
+						<div ng-class="{'disabled':item.favorite==1}" ng-click="viewer.favorite(item.id)" class="ui animated fade yellow button">
 							<div class="hidden content"> Favorite </div>
 							<div class="visible content"><i class="star icon"></i></div>
 						</div>
