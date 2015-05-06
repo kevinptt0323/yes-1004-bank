@@ -50,13 +50,13 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     .when('/jobs/add', {
       templateUrl: 'template/jobsAdd.html'
     })
-    .when('/jobs/list', {
+    .when('/jobs/list/:favorite?', {
       templateUrl: 'template/jobsList.html',
       controller: 'jobsShowListCtrl',
       viewer: 'jobsShowListView',
       name: 'Job List'
     })
-    .when('/jobs/list/sort/:column/:order', {
+    .when('/jobs/list/:favorite?/sort/:column/:order', {
       templateUrl: 'template/jobsList.html',
       controller: 'jobsShowListCtrl',
       viewer: 'jobsShowListView',

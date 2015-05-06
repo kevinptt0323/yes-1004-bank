@@ -57,6 +57,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   });
   $scope.$on('$routeChangeSuccess', function (ev, current) {
     $scope.currentPage.name = current.name || 'Index';
+    $scope.currentPage.path = $location.path();
   });
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
@@ -101,17 +102,17 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     });
   });
   $scope.$on('jobsListReload', function(event, config) {
-    if( config.column && config.order ) {
-      load({
-        name: 'jobs',
-        url: 'api/jobsList.php?column=' + config.column + '&order=' + config.order
-      });
-    } else {
-      load({
-        name: 'jobs',
-        url: 'api/jobsList.php'
-      });
+    var url = 'api/jobsList.php?';
+    if( config.favorite == "favorite" ) {
+      url += 'favorite&';
     }
+    if( config.column && config.order ) {
+      url += 'column=' + config.column + '&order=' + config.order + '&';
+    }
+    load({
+      name: 'jobs',
+      url: url
+    });
   });
   $scope.$on('jobseekerListReload', function() {
     load({
@@ -146,6 +147,13 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     '$scope': $scope,
     '$routeParams': $routeParams
   });
+  $scope.checkFavorite = function() {
+    if( $routeParams.favorite == "favorite" ) {
+      return "/favorite";
+    } else {
+      return "";
+    }
+  };
   $scope.$emit('jobsListReload', $routeParams);
 }])
 
