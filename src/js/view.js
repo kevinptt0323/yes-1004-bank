@@ -105,7 +105,7 @@ var JobsForm = function($http, config) {
 };
 JobsForm.prototype = AjaxFormView.prototype;
 
-view.service('view', function() {
+view.service('view', ['$http', function($http) {
 
   this.jobsShowListView = function(param) {
     var that = {};
@@ -167,7 +167,7 @@ view.service('view', function() {
     that.toggle = function(id) {
       if( !that.jobs[id] ) {
         if( id==='new' ) {
-          that.jobs[id] = new JobsForm(param.$http, {
+          that.jobs[id] = new JobsForm($http, {
             form: '#new-job-form',
             url: 'api/jobsEdit.php?new',
             init: function() {
@@ -175,7 +175,7 @@ view.service('view', function() {
             }
           });
         } else {
-          that.jobs[id] = new JobsForm(param.$http, {
+          that.jobs[id] = new JobsForm($http, {
             form: '.ui.form[data-rid=' + id + ']',
             url: 'api/jobsEdit.php?edit',
             init: function() {
@@ -200,7 +200,7 @@ view.service('view', function() {
       that.jobs[id].toggle();
     };
     that.delete1 = function(id) {
-      param.$http({
+      $http({
         method  : 'POST',
         url     : 'api/jobsEdit.php?delete',
         data    : $.param({ rid: id }),
@@ -211,7 +211,7 @@ view.service('view', function() {
         });
     };
     that.apply = function(id) {
-      param.$http({
+      $http({
         method  : 'POST',
         url     : 'api/apply.php?new',
         data    : $.param({ rid: id }),
@@ -226,7 +226,7 @@ view.service('view', function() {
 
   var jobseekerForm = '#register-jobseeker-form';
   this.registerJobseekerView = function(param) {
-    var that = new AjaxFormView(param.$http, {
+    var that = new AjaxFormView($http, {
       form: jobseekerForm,
       url: 'api/registerJobseeker.php',
       init: function() {
@@ -296,7 +296,7 @@ view.service('view', function() {
 
   var employerForm = '#register-employer-form';
   this.registerEmployerView = function(param) {
-    var that = new AjaxFormView(param.$http, {
+    var that = new AjaxFormView($http, {
       form: employerForm,
       url: 'api/registerEmployer.php',
       init: function() {
@@ -338,7 +338,7 @@ view.service('view', function() {
 
   var loginForm = '#login-form';
   this.loginView = function(param) {
-    var that = new AjaxFormView(param.$http, {
+    var that = new AjaxFormView($http, {
       form: loginForm,
       url: 'api/login.php',
       init: function() {
@@ -366,5 +366,5 @@ view.service('view', function() {
     });
     return that;
   };
-});
+}]);
 
