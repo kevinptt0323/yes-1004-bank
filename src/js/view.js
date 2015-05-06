@@ -210,10 +210,23 @@ view.service('view', ['$http', function($http) {
           param.$scope.$emit('jobsListReload', param.$routeParams);
         });
     };
-    that.apply = function(id) {
+    that.apply = function(id, option) {
+      var operation = option?'new':'delete';
       $http({
         method  : 'POST',
-        url     : 'api/apply.php?new',
+        url     : 'api/apply.php?' + operation,
+        data    : $.param({ rid: id }),
+        headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+        .success(function(data) {
+          param.$scope.$emit('jobsListReload', param.$routeParams);
+        });
+    };
+    that.favorite = function(id, option) {
+      var operation = option?'new':'delete';
+      $http({
+        method  : 'POST',
+        url     : 'api/favorite.php?' + operation,
         data    : $.param({ rid: id }),
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
       })

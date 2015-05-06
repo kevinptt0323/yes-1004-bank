@@ -3,6 +3,7 @@
 /* Controllers */
 
 var angular = angular || {};
+var $ = $ || {};
 
 var ctrl = angular.module('database.homework.controller', [
   'database.homework.view',
@@ -124,7 +125,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     } else {
       return text;
     }
-  }
+  };
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
   load({
