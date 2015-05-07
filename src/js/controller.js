@@ -60,7 +60,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     $scope.currentPage.path = $location.path();
   });
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
-    $location.path('/error').replace();
+    $scope.$emit('redirect', '/error');
   });
   $scope.$on('redirect', function(ev, dir) {
     $location.path(dir).replace();
