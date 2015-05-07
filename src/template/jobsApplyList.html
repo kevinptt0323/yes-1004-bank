@@ -1,31 +1,50 @@
 <div class="template" id="jobsApplyList">
-	<table class="ui center aligned striped table" ng-repeat="job in jobsApply">
-		<thead>
-			<tr>
-				<th>{{ job.id }}</th>
-				<th>{{ occupation(job.occupation_id) }}</th>
-				<th>{{ location(job.location_id) }}</th>
-				<th>{{ job.working_time }}</th>
-				<th>{{ job.education }}</th>
-				<th>{{ job.experience }} year(s)</th>
-				<th>{{ job.salary }}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr data-rid="{{ jobsk.id }}" ng-repeat="jobsk in job.applicant">
-				<td>{{ jobsk.id }}</td>
-				<td ng-init="jobsk.account = toHTML(jobsk.account)" ng-bind-html="jobsk.account">{{ jobsk.account }}</td>
-				<td>{{ jobsk.gender }}</td>
-				<td>{{ jobsk.age }}</td>
-				<td>{{ jobsk.education }}</td>
-				<td>{{ jobsk.expected_salary }}</td>
-				<td>{{ jobsk.phone }}</td>
-				<td>{{ jobsk.email }}</td>
-				<td>
-					<div class="ui teal label" ng-repeat="specialty_id in jobsk.specialty">{{ specialty(specialty_id) }}</div>
-				</td>
-				<td> Hire </td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="ui stacked segment" ng-repeat="job in jobsApply">
+		<div class="ui big blue ribbon label">
+			{{ occupation(job.occupation_id) }}@{{ location(job.location_id) }}
+		</div>
+		<table class="ui center aligned blue celled table">
+			<tbody>
+				<tr>
+					<td>{{ job.id }}</td>
+					<td>{{ occupation(job.occupation_id) }}</td>
+					<td>{{ location(job.location_id) }}</td>
+					<td>{{ job.working_time }}</td>
+					<td>{{ job.education }}</td>
+					<td>{{ job.experience }} year(s)</td>
+					<td>{{ job.salary }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="ui center aligned striped table">
+			<thead>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Gender</th>
+				<th>Age</th>
+				<th>Education</th>
+				<th>Expected Salary</th>
+				<th>Phone</th>
+				<th>Email</th>
+				<th>Specialty</th>
+				<th>Operation</th>
+			</thead>
+			<tbody>
+				<tr data-rid="{{ jobsk.id }}" ng-repeat="jobsk in job.applicant">
+					<td>{{ jobsk.id }}</td>
+					<td ng-init="jobsk.account = toHTML(jobsk.account)" ng-bind-html="jobsk.account">{{ jobsk.account }}</td>
+					<td>{{ jobsk.gender }}</td>
+					<td>{{ jobsk.age }}</td>
+					<td>{{ jobsk.education }}</td>
+					<td>{{ jobsk.expected_salary }}</td>
+					<td>{{ jobsk.phone }}</td>
+					<td>{{ jobsk.email }}</td>
+					<td>
+						<div class="ui teal label" ng-repeat="specialty_id in jobsk.specialty">{{ specialty(specialty_id) }}</div>
+					</td>
+					<td> Hire </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
