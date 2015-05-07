@@ -10,9 +10,14 @@ function getPDO() {
 	}
 }
 function escape(&$data) {
-	foreach( $data as &$key ) {
-		if( is_string($key) ) {
-			$key = htmlspecialchars($key);
+	if( is_string($data) ) {
+		$data = htmlspecialchars($data);
+		return $data;
+	} else {
+		foreach( $data as &$key ) {
+			if( is_string($key) ) {
+				$key = htmlspecialchars($key);
+			}
 		}
 	}
 }

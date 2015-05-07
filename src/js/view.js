@@ -17,6 +17,7 @@ var AjaxFormView = function($http, config) {
   if( !(this instanceof AjaxFormView) ) {
     return new AjaxFormView($http, config);
   }
+  config.clear = config.clear || true;
   var form = config.form;
   this.form = config.form;
   this.init = config.init || function() {};
@@ -29,8 +30,10 @@ var AjaxFormView = function($http, config) {
           .html(message)
           .show();
       }
-      $(form).form('clear');
-      $('input[type=checkbox]').prop("checked", false);
+      if( config.clear ) {
+        $(form).form('clear');
+        $('input[type=checkbox]').prop("checked", false);
+      }
     },
     error: function(message) {
       if( angular.isString(message) ) {
@@ -172,6 +175,21 @@ view.service('view', ['$http', function($http) {
             url: 'api/jobsEdit.php?new',
             init: function() {
               initJob(that.jobs[id]);
+            }
+          });
+        } else if( id==='search' ) {
+          that.jobs[id] = new JobsForm($http, {
+            form: '#search-job-form',
+            url: 'api/jobsList.php?search',
+            init: function() {
+              (function(self) {
+                $(self.form).form({
+                },{
+                  onSuccess: function() {
+                    param.$scope.$emit('jobsListReload', param.$routeParams, self.formData);
+                  }
+                });
+              })(that.jobs[id]);
             }
           });
         } else {

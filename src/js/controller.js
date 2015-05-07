@@ -101,13 +101,25 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       }
     });
   });
-  $scope.$on('jobsListReload', function(event, config) {
+  $scope.$on('jobsListReload', function(event, config, searchData) {
     var url = 'api/jobsList.php?';
     if( config.favorite == "favorite" ) {
       url += 'favorite&';
     }
     if( config.column && config.order ) {
       url += 'column=' + config.column + '&order=' + config.order + '&';
+    }
+    if( searchData !== null ) {
+      var search = false;
+      for(var key in searchData) {
+        if( searchData.hasOwnProperty(key) && searchData[key] ) {
+          url += key + '=' + searchData[key] + '&';
+          search = true;
+        }
+      }
+      if( search ) {
+        url += 'search&';
+      }
     }
     load({
       name: 'jobs',
