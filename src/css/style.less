@@ -3,6 +3,13 @@
 @desktop:     ~"only screen and (min-width: 1024px) and (max-width: 1128px)";
 @desktop-xl:  ~"only screen and (min-width: 1129px)";
 
+.ui.center.aligned.table {
+	td, th {
+		/* fix bug for center table */
+		text-align: center;
+	}
+}
+
 body {
 	position: relative;
 }
@@ -30,10 +37,6 @@ body {
 		}
 	}
 	&#jobsList {
-		td, th {
-			/* fix bug for center table */
-			text-align: center;
-		}
 		.ui.form {
 			.ui.button {
 				padding-top: 0.4em;
