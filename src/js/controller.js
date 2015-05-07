@@ -62,8 +62,8 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
-  $scope.$on('redirectToIndex', function() {
-    $location.path('/').replace();
+  $scope.$on('redirect', function(ev, dir) {
+    $location.path(dir).replace();
   });
   $scope.$on('loginStatusChange', function(event) {
     load({
@@ -149,6 +149,9 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('jobsShowListCtrl', ['$scope', '$route', '$routeParams', 'view', function($scope, $route, $routeParams, view) {
+  if( $routeParams.favorite && (!$scope.status || !$scope.status.isLogin || $scope.status.user.type !== 'jobseeker') ) {
+    $scope.$emit('redirect', '/jobs/list');
+  }
   $scope.occupation = function(id) {
     return $scope.options.occupation[id];
   };
@@ -175,7 +178,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 
 .controller('registerJobseekerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   if( $scope.status && $scope.status.isLogin ) {
-    $scope.$emit('redirectToIndex');
+    $scope.$emit('redirect', '/');
   } else {
     $scope.viewer = view[$route.current.viewer]({
       '$scope': $scope
@@ -186,7 +189,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 
 .controller('registerEmployerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   if( $scope.status && $scope.status.isLogin ) {
-    $scope.$emit('redirectToIndex');
+    $scope.$emit('redirect', '/');
   } else {
     $scope.viewer = view[$route.current.viewer]({
       '$scope': $scope
@@ -196,7 +199,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 
 .controller('loginCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   if( $scope.status && $scope.status.isLogin ) {
-    $scope.$emit('redirectToIndex');
+    $scope.$emit('redirect', '/');
   } else {
     $scope.viewer = view[$route.current.viewer]({
       '$scope': $scope
@@ -213,7 +216,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     })
       .success(function(data) {
         $scope.$emit('loginStatusChange');
-        $scope.$emit('redirectToIndex');
+        $scope.$emit('redirect', '/');
         $scope.jobseekers = null;
       })
       .error(function() {
@@ -224,7 +227,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 
 .controller('jobseekerListCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
   if( !$scope.status || !$scope.status.isLogin || $scope.status.user.type !== 'employer' ) {
-    $scope.$emit('redirectToIndex');
+    $scope.$emit('redirect', '/');
   } else {
     $scope.$emit('jobseekerListReload');
   }
