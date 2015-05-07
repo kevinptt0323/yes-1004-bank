@@ -173,10 +173,9 @@ view.service('view', ['$http', function($http) {
           that.jobs[id] = new JobsForm($http, {
             form: '#new-job-form',
             url: 'api/jobsEdit.php?new',
-            init: function() {
-              initJob(that.jobs[id]);
-            }
+            init: function() { }
           });
+          initJob(that.jobs[id]);
         } else if( id==='search' ) {
           that.jobs[id] = new JobsForm($http, {
             form: '#search-job-form',
