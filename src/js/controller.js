@@ -74,14 +74,20 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
           if( $scope.is.employer() ) {
             $scope.navigates = [
               { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
-              { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
-              { name: 'List All Jobseekers', href: '#!/jobseeker/list', icon: 'users' },
+              { name: 'Jobs',
+                icon: 'list',
+                menu: [
+                  { name: 'List All Jobs', href: '#!/jobs/list' },
+                  { name: 'List My Jobs', href: '#!/jobs/list/my' }
+                ]
+              },
+              { name: 'Jobseekers', href: '#!/jobseeker/list', icon: 'users' },
               { name: 'Logout', href: '#!/logout', icon: 'sign out' }
             ];
           } else {
             $scope.navigates = [
               { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
-              { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
+              { name: 'Jobs', href: '#!/jobs/list', icon: 'list' },
               { name: 'Logout', href: '#!/logout', icon: 'sign out' }
             ];
           }
@@ -124,6 +130,12 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     load({
       name: 'jobs',
       url: url
+    });
+  });
+  $scope.$on('jobsApplyListReload', function() {
+    load({
+      name: 'jobsApply',
+      url: 'api/jobsApplyList.php'
     });
   });
   $scope.$on('jobseekerListReload', function() {
@@ -181,6 +193,35 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     }
   };
   $scope.$emit('jobsListReload', $routeParams);
+}])
+
+.controller('jobsShowApplyListCtrl', ['$scope', '$http', function($scope, $http) {
+  if( !$scope.is.employer() ) {
+    $scope.$emit('redirect', '/jobs/list');
+  }
+  $scope.$emit('jobsApplyListReload');
+  $scope.occupation = function(id) {
+    return $scope.options.occupation[id];
+  };
+  $scope.location = function(id) {
+    return $scope.options.location[id];
+  };
+  $scope.specialty = function(id) {
+    return $scope.options.specialty[id];
+  };
+  $scope.hire = function(jobID, jobseekerID) {
+    $http({
+      method  : 'POST',
+      url     : 'api/jobsEdit.php?delete',
+      data    : $.param({rid: jobID}),
+      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+      .success(function(data) {
+        $scope.$emit('jobsApplyListReload');
+      })
+      .error(function() {
+      });
+  };
 }])
 
 .controller('jobsShowCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {

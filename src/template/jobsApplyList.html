@@ -1,0 +1,57 @@
+<div class="template" id="jobsApplyList">
+	<div class="ui stacked segment" ng-repeat="job in jobsApply">
+		<div class="ui big blue ribbon label">
+			{{ occupation(job.occupation_id) }}@{{ location(job.location_id) }}
+		</div>
+		<table class="ui center aligned blue celled table">
+			<tbody>
+				<tr>
+					<td>{{ job.id }}</td>
+					<td>{{ occupation(job.occupation_id) }}</td>
+					<td>{{ location(job.location_id) }}</td>
+					<td>{{ job.working_time }}</td>
+					<td>{{ job.education }}</td>
+					<td>{{ job.experience }} year(s)</td>
+					<td>{{ job.salary }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="ui center aligned striped table">
+			<thead>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Gender</th>
+				<th>Age</th>
+				<th>Education</th>
+				<th>Expected Salary</th>
+				<th>Phone</th>
+				<th>Email</th>
+				<th>Specialty</th>
+				<th>Operation</th>
+			</thead>
+			<tbody>
+				<tr data-rid="{{ jobsk.id }}" ng-repeat="jobsk in job.applicant">
+					<td>{{ jobsk.id }}</td>
+					<td ng-init="jobsk.account = toHTML(jobsk.account)" ng-bind-html="jobsk.account">{{ jobsk.account }}</td>
+					<td>{{ jobsk.gender }}</td>
+					<td>{{ jobsk.age }}</td>
+					<td>{{ jobsk.education }}</td>
+					<td>{{ jobsk.expected_salary }}</td>
+					<td>{{ jobsk.phone }}</td>
+					<td>{{ jobsk.email }}</td>
+					<td>
+						<div class="ui teal label" ng-repeat="specialty_id in jobsk.specialty">{{ specialty(specialty_id) }}</div>
+					</td>
+					<td>
+						<span class="ui buttons">
+							<div class="ui animated fade positive button" ng-click="hire(job.id, jobsk.id)">
+								<div class="hidden content"> Hire </div>
+								<div class="visible content"><i class="checkmark icon"></i></div>
+							</div>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
