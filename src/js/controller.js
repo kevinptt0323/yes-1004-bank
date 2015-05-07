@@ -195,8 +195,8 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   $scope.$emit('jobsListReload', $routeParams);
 }])
 
-.controller('jobsShowApplyListCtrl', ['$scope', '$route', '$routeParams', 'view', function($scope, $route, $routeParams, view) {
-  if( $routeParams.favorite && !$scope.is.employer() ) {
+.controller('jobsShowApplyListCtrl', ['$scope', '$http', function($scope, $http) {
+  if( !$scope.is.employer() ) {
     $scope.$emit('redirect', '/jobs/list');
   }
   $scope.$emit('jobsApplyListReload');
@@ -208,6 +208,19 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   };
   $scope.specialty = function(id) {
     return $scope.options.specialty[id];
+  };
+  $scope.hire = function(jobID, jobseekerID) {
+    $http({
+      method  : 'POST',
+      url     : 'api/jobsEdit.php?delete',
+      data    : $.param({rid: jobID}),
+      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+      .success(function(data) {
+        $scope.$emit('jobsApplyListReload');
+      })
+      .error(function() {
+      });
   };
 }])
 
