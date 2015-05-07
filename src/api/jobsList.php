@@ -5,6 +5,22 @@ session_start();
 function jobsList() {
 	$db = getPDO();
 	$favorite = isset($_GET['favorite']);
+	$search = "and 1=1";
+	if( isset($_GET['search']) ) {
+		$search = "";
+		if( !empty($_GET['occupation_id']) )
+			$search .= "and occupation_id=" . escape($_GET['occupation_id']) . " ";
+		if( !empty($_GET['location_id']) )
+			$search .= "and location_id=" . escape($_GET['location_id']) . " ";
+		if( !empty($_GET['working_time']) )
+			$search .= "and working_time='" . escape($_GET['working_time']) . "' ";
+		if( !empty($_GET['education']) )
+			$search .= "and education='" . escape($_GET['education']) . "' ";
+		if( !empty($_GET['experience']) )
+			$search .= "and experience=" . escape($_GET['experience']) . " ";
+		if( !empty($_GET['salary']) )
+			$search .= "and salary=" . escape($_GET['salary']) . " ";
+	}
 	if( isset($_GET['column']) && isset($_GET['order']) ) {
 		$column = $_GET['column'];
 		if( $column != "salary" ) {
@@ -29,16 +45,18 @@ function jobsList() {
 					exists( select * from application APP where APP.recruit_id=REC.id and APP.user_id=$uid) as apply,
 					exists( select * from favorite FAV where FAV.recruit_id=REC.id and FAV.user_id=$uid) as favorite
 					from favorite FAV inner join recruit REC on FAV.recruit_id=REC.id
-					where FAV.user_id=$uid
+					where FAV.user_id=$uid $search
 					order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
 			} else {
 				$list = $db->query("select *,
 					exists( select * from application APP where APP.recruit_id=REC.id and APP.user_id=$uid) as apply,
 					exists( select * from favorite FAV where FAV.recruit_id=REC.id and FAV.user_id=$uid) as favorite
-					from recruit REC order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
+					from recruit REC
+					where 1=1 $search
+					order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
 			}
 		} else {
-			$list = $db->query("select * from recruit REC order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
+			$list = $db->query("select * from recruit REC where 1=1 $search order by $column $order")->fetchAll(PDO::FETCH_ASSOC);
 		}
 		return new Message(Message::$SUCCESS, $list);
 	} catch (PDOException $e) {

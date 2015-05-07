@@ -62,16 +62,16 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
     $location.path('/error').replace();
   });
-  $scope.$on('redirectToIndex', function() {
-    $location.path('/').replace();
+  $scope.$on('redirect', function(ev, dir) {
+    $location.path(dir).replace();
   });
   $scope.$on('loginStatusChange', function(event) {
     load({
       name: 'status',
       url: 'api/status.php',
       onSuccess: function(data) {
-        if( $scope.status.isLogin ) {
-          if( $scope.status.user.type === "employer" ) {
+        if( $scope.is.login() ) {
+          if( $scope.is.employer() ) {
             $scope.navigates = [
               { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
               { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
@@ -101,13 +101,25 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       }
     });
   });
-  $scope.$on('jobsListReload', function(event, config) {
+  $scope.$on('jobsListReload', function(event, config, searchData) {
     var url = 'api/jobsList.php?';
     if( config.favorite == "favorite" ) {
       url += 'favorite&';
     }
     if( config.column && config.order ) {
       url += 'column=' + config.column + '&order=' + config.order + '&';
+    }
+    if( searchData !== null ) {
+      var search = false;
+      for(var key in searchData) {
+        if( searchData.hasOwnProperty(key) && searchData[key] ) {
+          url += key + '=' + searchData[key] + '&';
+          search = true;
+        }
+      }
+      if( search ) {
+        url += 'search&';
+      }
     }
     load({
       name: 'jobs',
@@ -129,6 +141,17 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   };
   $scope.currentPage = { name: 'Index' };
   $scope.config = { title: 'Yes, 1004 銀行' };
+  $scope.is = {
+    login: function() {
+      return $scope.status.isLogin;
+    },
+    jobseeker: function() {
+      return $scope.is.login() && $scope.status.user.type == 'jobseeker';
+    },
+    employer: function() {
+      return $scope.is.login() && $scope.status.user.type == 'employer';
+    }
+  };
   load({
     name: 'options',
     url: 'api/options.php'
@@ -137,6 +160,9 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('jobsShowListCtrl', ['$scope', '$route', '$routeParams', 'view', function($scope, $route, $routeParams, view) {
+  if( $routeParams.favorite && !$scope.is.jobseeker() ) {
+    $scope.$emit('redirect', '/jobs/list');
+  }
   $scope.occupation = function(id) {
     return $scope.options.occupation[id];
   };
@@ -162,8 +188,8 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('registerJobseekerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-  if( $scope.status && $scope.status.isLogin ) {
-    $scope.$emit('redirectToIndex');
+  if( $scope.is.login() ) {
+    $scope.$emit('redirect', '/');
   } else {
     $scope.viewer = view[$route.current.viewer]({
       '$scope': $scope
@@ -173,8 +199,8 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('registerEmployerCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-  if( $scope.status && $scope.status.isLogin ) {
-    $scope.$emit('redirectToIndex');
+  if( $scope.is.login() ) {
+    $scope.$emit('redirect', '/');
   } else {
     $scope.viewer = view[$route.current.viewer]({
       '$scope': $scope
@@ -183,8 +209,8 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('loginCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-  if( $scope.status && $scope.status.isLogin ) {
-    $scope.$emit('redirectToIndex');
+  if( $scope.is.login() ) {
+    $scope.$emit('redirect', '/');
   } else {
     $scope.viewer = view[$route.current.viewer]({
       '$scope': $scope
@@ -201,7 +227,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     })
       .success(function(data) {
         $scope.$emit('loginStatusChange');
-        $scope.$emit('redirectToIndex');
+        $scope.$emit('redirect', '/');
         $scope.jobseekers = null;
       })
       .error(function() {
@@ -211,8 +237,8 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
 }])
 
 .controller('jobseekerListCtrl', ['$scope', '$route', 'view', function($scope, $route, view) {
-  if( !$scope.status || !$scope.status.isLogin || $scope.status.user.type !== 'employer' ) {
-    $scope.$emit('redirectToIndex');
+  if( !$scope.is.employer() ) {
+    $scope.$emit('redirect', '/');
   } else {
     $scope.$emit('jobseekerListReload');
   }
