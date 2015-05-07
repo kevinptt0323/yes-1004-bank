@@ -78,7 +78,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
                 icon: 'list',
                 menu: [
                   { name: 'List All Jobs', href: '#!/jobs/list' },
-                  { name: 'List Your Jobs', href: '#!/jobs/list/my' }
+                  { name: 'List My Jobs', href: '#!/jobs/list/my' }
                 ]
               },
               { name: 'Jobseekers', href: '#!/jobseeker/list', icon: 'users' },
@@ -130,6 +130,12 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     load({
       name: 'jobs',
       url: url
+    });
+  });
+  $scope.$on('jobsApplyListReload', function() {
+    load({
+      name: 'jobsApply',
+      url: 'api/jobsApplyList.php'
     });
   });
   $scope.$on('jobseekerListReload', function() {
@@ -187,6 +193,22 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     }
   };
   $scope.$emit('jobsListReload', $routeParams);
+}])
+
+.controller('jobsShowApplyListCtrl', ['$scope', '$route', '$routeParams', 'view', function($scope, $route, $routeParams, view) {
+  if( $routeParams.favorite && !$scope.is.employer() ) {
+    $scope.$emit('redirect', '/jobs/list');
+  }
+  $scope.$emit('jobsApplyListReload');
+  $scope.occupation = function(id) {
+    return $scope.options.occupation[id];
+  };
+  $scope.location = function(id) {
+    return $scope.options.location[id];
+  };
+  $scope.specialty = function(id) {
+    return $scope.options.specialty[id];
+  };
 }])
 
 .controller('jobsShowCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
