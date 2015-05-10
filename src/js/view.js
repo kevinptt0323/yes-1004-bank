@@ -182,9 +182,11 @@ view.service('view', ['$http', function($http) {
             url: 'api/jobsList.php?search',
             init: function() {
               (function(self) {
+                self.formData = $.extend(true, {}, param.$scope.$parent.searchData);
                 $(self.form).form({
                 },{
                   onSuccess: function() {
+                    param.$scope.$parent.searchData = $.extend(true, {}, self.formData);
                     param.$scope.$emit('jobsListReload', param.$routeParams, self.formData);
                   }
                 });

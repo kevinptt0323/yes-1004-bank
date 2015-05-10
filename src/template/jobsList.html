@@ -17,7 +17,7 @@
 				<td> </td>
 				<td class="field">
 					<div class="ui compact selection dropdown">
-						<input name="occupation_id" type="hidden">
+						<input name="occupation_id" type="hidden" value="{{ viewer.jobs['search'].formData.occupation_id }}">
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
@@ -28,7 +28,7 @@
 				</td>
 				<td class="field">
 					<div class="ui compact selection dropdown">
-						<input name="location_id" type="hidden">
+						<input name="location_id" type="hidden" value="{{ viewer.jobs['search'].formData.location_id }}">
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
@@ -39,7 +39,7 @@
 				</td>
 				<td class="field">
 					<div class="ui compact selection dropdown">
-						<input name="working_time" type="hidden">
+						<input name="working_time" type="hidden" value="{{ viewer.jobs['search'].formData.working_time }}">
 						<div class="default text">Working Time</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
@@ -50,7 +50,7 @@
 				</td>
 				<td class="field">
 					<div class="ui compact selection dropdown">
-						<input name="education" type="hidden">
+						<input name="education" type="hidden" value="{{ viewer.jobs['search'].formData.education }}">
 						<div class="default text">Education</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
