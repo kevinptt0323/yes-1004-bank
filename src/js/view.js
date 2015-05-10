@@ -190,6 +190,10 @@ view.service('view', ['$http', function($http) {
                     param.$scope.$emit('jobsListReload', param.$routeParams, self.formData);
                   }
                 });
+                self.reset = function() {
+                  self.formData = {};
+                  $(self.form).form('reset').form('submit');
+                };
               })(that.jobs[id]);
             }
           });

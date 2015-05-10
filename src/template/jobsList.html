@@ -72,10 +72,16 @@
 					</div>
 				</td>
 				<td>
-					<div class="ui animated fade primary submit button" tabindex="1">
-						<div class="hidden content"> Search </div>
-						<div class="visible content"><i class="search icon"></i></div>
-					</div>
+					<span class="ui buttons">
+						<div class="ui animated fade primary submit button" tabindex="1">
+							<div class="hidden content"> Search </div>
+							<div class="visible content"><i class="search icon"></i></div>
+						</div>
+						<div class="ui animated fade button" ng-click="viewer.jobs['search'].reset()" tabindex="1">
+							<div class="hidden content"> Reset </div>
+							<div class="visible content"><i class="repeat icon"></i></div>
+						</div>
+					</span>
 				</td>
 			</tr>
 			<tr class="ui form" data-rid="{{ item.id }}" ng-repeat="item in jobs">
