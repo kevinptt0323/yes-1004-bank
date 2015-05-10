@@ -145,8 +145,10 @@
 							<div class="visible content"><i class="checkmark box icon"></i></div>
 						</div>
 						<div ng-class="{'yellow':item.favorite==1}" ng-click="viewer.favorite(item.id, item.favorite==0)" class="ui animated fade button">
-							<div ng-show="item.favorite==0" class="hidden content"> Star </div>
-							<div ng-show="item.favorite==1" class="hidden content"> Un-star </div>
+							<div class="hidden content">
+								<span ng-show="item.favorite==0"> Star </span>
+								<span ng-show="item.favorite==1"> Un-star </span>
+							</div>
 							<div class="visible content"><i class="star icon"></i></div>
 						</div>
 					</span>

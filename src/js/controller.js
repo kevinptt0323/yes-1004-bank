@@ -93,7 +93,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
           }
         } else {
           $scope.navigates = [
-            { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
+            { name: 'Jobs', href: '#!/jobs/list', icon: 'list' },
             { name: 'Sign Up',
               icon: 'add user',
               menu: [
