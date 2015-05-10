@@ -16,7 +16,7 @@
 			<tr class="ui form" id="search-job-form" ng-init="viewer.toggle('search')">
 				<td> </td>
 				<td class="field">
-					<div class="ui compact selection dropdown">
+					<div class="ui compact selection dropdown" tabindex="1">
 						<input name="occupation_id" type="hidden" value="{{ viewer.jobs['search'].formData.occupation_id }}">
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
@@ -27,7 +27,7 @@
 					</div>
 				</td>
 				<td class="field">
-					<div class="ui compact selection dropdown">
+					<div class="ui compact selection dropdown" tabindex="1">
 						<input name="location_id" type="hidden" value="{{ viewer.jobs['search'].formData.location_id }}">
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
@@ -38,7 +38,7 @@
 					</div>
 				</td>
 				<td class="field">
-					<div class="ui compact selection dropdown">
+					<div class="ui compact selection dropdown" tabindex="1">
 						<input name="working_time" type="hidden" value="{{ viewer.jobs['search'].formData.working_time }}">
 						<div class="default text">Working Time</div>
 						<i class="dropdown icon"></i>
@@ -49,7 +49,7 @@
 					</div>
 				</td>
 				<td class="field">
-					<div class="ui compact selection dropdown">
+					<div class="ui compact selection dropdown" tabindex="1">
 						<input name="education" type="hidden" value="{{ viewer.jobs['search'].formData.education }}">
 						<div class="default text">Education</div>
 						<i class="dropdown icon"></i>
@@ -61,18 +61,18 @@
 				</td>
 				<td class="field">
 					<div class="ui input">
-						<input ng-model="viewer.jobs['search'].formData.experience" name="experience" type="number" value="0" tabindex="6" />
+						<input ng-model="viewer.jobs['search'].formData.experience" name="experience" type="number" value="0" tabindex="1" />
 						 year(s)
 					</div>
 				</td>
 				<td class="field">
 					<div class="ui input">
 						$
-						<input ng-model="viewer.jobs['search'].formData.salary" name="salary" type="number" min="0" step="1000" value="0" tabindex="7" />
+						<input ng-model="viewer.jobs['search'].formData.salary" name="salary" type="number" min="0" step="1000" value="0" tabindex="1" />
 					</div>
 				</td>
 				<td>
-					<div class="ui animated fade primary submit button">
+					<div class="ui animated fade primary submit button" tabindex="1">
 						<div class="hidden content"> Search </div>
 						<div class="visible content"><i class="search icon"></i></div>
 					</div>
@@ -190,7 +190,7 @@
 			<tr class="ui form" id="new-job-form" ng-show="viewer.editing('new')">
 				<th> </th>
 				<th class="field">
-					<div class="ui compact selection dropdown">
+					<div class="ui compact selection dropdown" tabindex="3">
 						<input name="occupation_id" type="hidden">
 						<div class="default text">Occupation</div>
 						<i class="dropdown icon"></i>
@@ -200,7 +200,7 @@
 					</div>
 				</th>
 				<th class="field">
-					<div class="ui compact selection dropdown">
+					<div class="ui compact selection dropdown" tabindex="3">
 						<input name="location_id" type="hidden">
 						<div class="default text">Location</div>
 						<i class="dropdown icon"></i>
@@ -210,7 +210,7 @@
 					</div>
 				</th>
 				<th class="field">
-					<div class="ui compact selection dropdown">
+					<div class="ui compact selection dropdown" tabindex="3">
 						<input name="working_time" type="hidden">
 						<div class="default text">Working Time</div>
 						<i class="dropdown icon"></i>
@@ -220,7 +220,7 @@
 					</div>
 				</th>
 				<th class="field">
-					<div class="ui compact selection dropdown">
+					<div class="ui compact selection dropdown" tabindex="3">
 						<input name="education" type="hidden">
 						<div class="default text">Education</div>
 						<i class="dropdown icon"></i>
@@ -231,18 +231,18 @@
 				</th>
 				<th class="field">
 					<div class="ui input">
-						<input ng-model="viewer.jobs['new'].formData.experience" name="experience" type="number" value="0" tabindex="6" />
+						<input ng-model="viewer.jobs['new'].formData.experience" name="experience" type="number" value="0" tabindex="3" />
 						 year(s)
 					</div>
 				</th>
 				<th class="field">
 					<div class="ui input">
 						$
-						<input ng-model="viewer.jobs['new'].formData.salary" name="salary" type="number" min="0" step="1000" value="0" tabindex="7" />
+						<input ng-model="viewer.jobs['new'].formData.salary" name="salary" type="number" min="0" step="1000" value="0" tabindex="3" />
 					</div>
 				</th>
 				<th>
-					<div class="ui animated fade primary submit button">
+					<div class="ui animated fade primary submit button" tabindex="3">
 						<div class="hidden content"> New </div>
 						<div class="visible content"><i class="add icon"></i></div>
 					</div>
