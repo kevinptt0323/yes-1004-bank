@@ -32,7 +32,7 @@ function registerJobseeker($data) {
 		return new Message(Message::$ERROR, "Username \"$data[username]\" existed.");
 	} else {
 		$insert = $db->prepare("insert into `user` (`account`, `password`, `phone`, `gender`, `age`, `email`, `expected_salary`, `education`) values (:username, sha2(:password, 256), :phone, :gender, :age, :email, :salary, :education)");
-		$insert_spe = $db->prepare("insert into `user_specialty` (`user`, `specialty_id`) VALUE (:username, :sid)");
+		$insert_spe = $db->prepare("insert into `user_specialty` (`user_id`, `specialty_id`) VALUE (:uid, :sid)");
 		try {
 			$insert->execute(array(
 				':username'  => $data['username'],
@@ -44,12 +44,13 @@ function registerJobseeker($data) {
 				':salary'    => $data['salary'],
 				':education' => $data['education']
 			));
+			$uid = $db->lastInsertId();
 			if( isset($data['specialty']) && !empty($data['specialty']) ) {
 				for($i=0, $len=count($data['specialty']); $i<$len; $i++) {
 					if( $data['specialty'][$i] ) {
 						$insert_spe->execute(array(
-							':username' => $data['username'],
-							':sid'      => $data['specialty'][$i]
+							':uid' => $uid,
+							':sid' => $data['specialty'][$i]
 						));
 					}
 				}
