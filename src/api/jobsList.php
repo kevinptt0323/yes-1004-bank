@@ -19,7 +19,7 @@ function jobsList() {
 		if( !empty($_GET['experience']) )
 			$search .= "and experience=" . escape($_GET['experience']) . " ";
 		if( !empty($_GET['salary']) )
-			$search .= "and salary=" . escape($_GET['salary']) . " ";
+			$search .= "and salary>=" . escape($_GET['salary']) . " ";
 	}
 	if( isset($_GET['column']) && isset($_GET['order']) ) {
 		$column = $_GET['column'];
