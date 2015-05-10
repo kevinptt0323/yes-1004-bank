@@ -229,28 +229,32 @@ view.service('view', ['$http', function($http) {
           param.$scope.$emit('jobsListReload', param.$routeParams);
         });
     };
-    that.apply = function(id, option) {
-      var operation = option?'new':'delete';
+    that.apply = function(item) {
+      item.apply = item.apply==1;
+      item.apply = !item.apply;
+      var operation = item.apply?'new':'delete';
       $http({
         method  : 'POST',
         url     : 'api/apply.php?' + operation,
-        data    : $.param({ rid: id }),
+        data    : $.param({ rid: item.id }),
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
         .success(function(data) {
-          param.$scope.$emit('jobsListReload', param.$routeParams);
+          //param.$scope.$emit('jobsListReload', param.$routeParams);
         });
     };
-    that.favorite = function(id, option) {
-      var operation = option?'new':'delete';
+    that.favorite = function(item) {
+      item.favorite = item.favorite==1;
+      item.favorite = !item.favorite;
+      var operation = item.favorite?'new':'delete';
       $http({
         method  : 'POST',
         url     : 'api/favorite.php?' + operation,
-        data    : $.param({ rid: id }),
+        data    : $.param({ rid: item.id }),
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
         .success(function(data) {
-          param.$scope.$emit('jobsListReload', param.$routeParams);
+          //param.$scope.$emit('jobsListReload', param.$routeParams);
         });
     };
     return that;
