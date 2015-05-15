@@ -14,7 +14,8 @@ function newApply($data) {
 	$find_stat = $db->prepare("select count(*) from application where user_id=? and recruit_id=?");
 	try {
 		$find_stat->execute(array($_SESSION['user']['id'], $data['rid']));
-		if( $find_stat->fetch()[0] != 0 ) {
+		$find = $find_stat->fetch();
+		if( !$find || $find[0] != 0 ) {
 			return new Message(Message::$ERROR, "You've applied this recruit, please be patient.");
 		} else {
 			$insert->execute(array($_SESSION['user']['id'], $data['rid']));
