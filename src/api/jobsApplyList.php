@@ -8,14 +8,20 @@ function jobsApplyList() {
 	}
 	$db = getPDO();
 	try {
-		$uid = $_SESSION['user']['id'];
-		$list = $db->query("select * from recruit where employer_id=$uid")->fetchAll(PDO::FETCH_ASSOC);
+		$stat = $db->prepare("select * from recruit where employer_id=?");
+		$stat->execute(array($_SESSION['user']['id']));
+		$list = $stat->fetchAll(PDO::FETCH_ASSOC);
+
+		$app_stat = $db->prepare("select id, account, education, expected_salary, phone, gender, age, email
+			from user inner join application A on A.user_id=user.id
+			where A.recruit_id=?");
+		$user_spe_stat = $db->prepare("select specialty_id from user_specialty where user_id=?");
 		foreach($list as &$job) {
-			$job['applicant'] = $db->query("select U.id, U.account, U.education, U.expected_salary, U.phone, U.gender, U.age, U.email
-			from application A inner join user U on A.user_id=U.id
-			where recruit_id=$job[id]")->fetchAll(PDO::FETCH_ASSOC);
+			$app_stat->execute(array($job['id']));
+			$job['applicant'] = $app_stat->fetchAll(PDO::FETCH_ASSOC);
 			foreach($job['applicant'] as &$jobsk) {
-				$jobsk['specialty'] = $db->query("select specialty_id from user_specialty where user_id=$jobsk[id]")->fetchAll(PDO::FETCH_COLUMN, 0);
+				$user_spe_stat->execute(array($jobsk['id']));
+				$jobsk['specialty'] = $user_spe_stat->fetchAll(PDO::FETCH_COLUMN, 0);
 			}
 		}
 		return new Message(Message::$SUCCESS, $list);

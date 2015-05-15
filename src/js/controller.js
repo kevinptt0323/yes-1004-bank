@@ -60,7 +60,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     $scope.currentPage.path = $location.path();
   });
   $scope.$on('$routeChangeError', function (ev, current, previous, rejection) {
-    $location.path('/error').replace();
+    $scope.$emit('redirect', '/error');
   });
   $scope.$on('redirect', function(ev, dir) {
     $location.path(dir).replace();
@@ -93,7 +93,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
           }
         } else {
           $scope.navigates = [
-            { name: 'List All Jobs', href: '#!/jobs/list', icon: 'list' },
+            { name: 'Jobs', href: '#!/jobs/list', icon: 'list' },
             { name: 'Sign Up',
               icon: 'add user',
               menu: [
@@ -164,6 +164,16 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       return $scope.is.login() && $scope.status.user.type == 'employer';
     }
   };
+  $scope.occupation = function(id) {
+    return $scope.options.occupation[id];
+  };
+  $scope.location = function(id) {
+    return $scope.options.location[id];
+  };
+  $scope.specialty = function(id) {
+    return $scope.options.specialty[id];
+  };
+  $scope.searchData = {};
   load({
     name: 'options',
     url: 'api/options.php'
@@ -175,12 +185,6 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   if( $routeParams.favorite && !$scope.is.jobseeker() ) {
     $scope.$emit('redirect', '/jobs/list');
   }
-  $scope.occupation = function(id) {
-    return $scope.options.occupation[id];
-  };
-  $scope.location = function(id) {
-    return $scope.options.location[id];
-  };
   $scope.viewer = view[$route.current.viewer]({
     '$scope': $scope,
     '$routeParams': $routeParams
@@ -192,7 +196,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
       return "";
     }
   };
-  $scope.$emit('jobsListReload', $routeParams);
+  $scope.$emit('jobsListReload', $routeParams, $scope.searchData);
 }])
 
 .controller('jobsShowApplyListCtrl', ['$scope', '$http', function($scope, $http) {
@@ -200,15 +204,6 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     $scope.$emit('redirect', '/jobs/list');
   }
   $scope.$emit('jobsApplyListReload');
-  $scope.occupation = function(id) {
-    return $scope.options.occupation[id];
-  };
-  $scope.location = function(id) {
-    return $scope.options.location[id];
-  };
-  $scope.specialty = function(id) {
-    return $scope.options.specialty[id];
-  };
   $scope.hire = function(jobID, jobseekerID) {
     $http({
       method  : 'POST',
@@ -283,8 +278,5 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
   } else {
     $scope.$emit('jobseekerListReload');
   }
-  $scope.specialty = function(id) {
-    return $scope.options.specialty[id];
-  };
 }])
 ;

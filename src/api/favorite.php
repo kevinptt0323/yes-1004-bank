@@ -9,12 +9,13 @@ function newFavorite($data) {
 	if( empty($data['rid']) ) {
 		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
-	escape($data);
 	$db = getPDO();
-	$insert = $db->prepare("insert into `favorite` (user_id, recruit_id) values (?, ?)");
+	$insert = $db->prepare("insert into favorite (user_id, recruit_id) values (?, ?)");
+	$find_stat = $db->prepare("select count(*) from favorite where user_id=? and recruit_id=?");
 	try {
-		$find = $db->query("select count(*) from `favorite` where user_id='" . $_SESSION['user']['id'] . "' and recruit_id='" . $data['rid'] . "'");
-		if( $find->fetch()[0] != 0 ) {
+		$find_stat->execute(array($_SESSION['user']['id'], $data['rid']));
+		$find = $find_stat->fetch();
+		if( !$find || $find[0] != 0 ) {
 			return new Message(Message::$ERROR, "You've added this job as favorite.");
 		} else {
 			$insert->execute(array($_SESSION['user']['id'], $data['rid']));
@@ -32,9 +33,8 @@ function deleteFavorite($data) {
 	if( empty($data['rid']) ) {
 		return new Message(Message::$ERROR, "Cannot have empty field.");
 	}
-	escape($data);
 	$db = getPDO();
-	$insert = $db->prepare("delete from `favorite` where user_id=? and recruit_id=?");
+	$insert = $db->prepare("delete from favorite where user_id=? and recruit_id=?");
 	try {
 		$insert->execute(array($_SESSION['user']['id'], $data['rid']));
 		return new Message(Message::$SUCCESS, "Remove favorite job successfully.");
