@@ -28,6 +28,8 @@ Url: http://dbhw.kevinptt.nctucs.net/
 	$ cp auth.php.example auth.php
 	$ vim auth.php
 
+然後將 `Init.sql` 匯入至 MySQL 之中，以建立初始 table 。
+
 ### Release
 
 發布時請執行
