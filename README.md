@@ -22,6 +22,14 @@ Url: http://dbhw.kevinptt.nctucs.net/
 	$ npm install
 	$ bower install
 
+接著設定資料庫使用者帳號密碼
+
+	$ cd src/api/include
+	$ cp auth.php.example auth.php
+	$ vim auth.php
+
+### Release
+
 發布時請執行
 
 	$ gulp
