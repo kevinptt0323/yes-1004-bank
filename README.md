@@ -34,5 +34,5 @@ Url: http://dbhw.kevinptt.nctucs.net/
 
 發布時請執行
 
-	$ gulp
+	$ npm run gulp
 
