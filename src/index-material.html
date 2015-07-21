@@ -9,18 +9,38 @@
 		<script src="lib/angular-animate.min.js"></script>
 		<script src="lib/angular-aria.min.js"></script>
 		<script src="lib/angular-material.min.js"></script>
-		<script src="lib/jquery.min.js"></script>
-		<script src="js/app.js"></script>
-		<script src="js/controller.js"></script>
-		<script src="js/view.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.5.0/angular-material-icons.min.js"></script>
+		<script src="js/md-app.js"></script>
+		<script src="js/md-controller.js"></script>
+		<script src="js/md-view.js"></script>
 		<!--[if lt IE 9]>
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		<link rel="stylesheet" type="text/css" href="lib/normalize.css">
 		<link rel="stylesheet" type="text/css" href="lib/angular-material.min.css">
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/md-style.css">
 	</head>
 	<body>
+		<md-content>
+			<md-toolbar>
+				<div class="md-toolbar-tools md-default-theme">
+					<md-button class="md-icon-button" aria-label="Settings">
+						<ng-md-icon icon="menu"></ng-md-icon>
+					</md-button>
+					<h2>
+						<span>Toolbar with Icon Buttons</span>
+					</h2>
+					<span flex=""></span>
+					<md-button class="md-icon-button" aria-label="Favorite">
+						<ng-md-icon icon="favorite" style="fill: greenyellow;"></ng-md-icon>
+					</md-button>
+					<md-button class="md-icon-button" aria-label="More">
+						<ng-md-icon icon="more_vert"></ng-md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+		</md-content>
+		<!--
 		<nav class="ui fixed blue large menu" id="nav-bar">
 			<a class="header item" href="./#!/">{{ config.title }} | {{ currentPage.name }}</a>
 			<div class="right menu">
@@ -50,6 +70,7 @@
 				<p></p>
 			</footer>
 		</div>
+		-->
 	</body>
 </html>
 

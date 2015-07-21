@@ -1,0 +1,92 @@
+@mobile:      ~"only screen and (max-width: 529px)";
+@tablet:      ~"only screen and (min-width: 530px) and (max-width: 1023px)";
+@desktop:     ~"only screen and (min-width: 1024px) and (max-width: 1128px)";
+@desktop-xl:  ~"only screen and (min-width: 1129px)";
+
+.ui.center.aligned.table {
+	td, th {
+		/* fix bug for center table */
+		text-align: center;
+	}
+}
+
+body {
+	position: relative;
+}
+
+.container {
+	@media @mobile, @tablet {
+		width: 100%;
+	}
+	@media @desktop, @desktop-xl {
+		min-width: 1000px;
+		width: 80%;
+	}
+	padding-top: 50px;
+	margin: auto;
+}
+
+.template {
+	padding: 10px;
+	&#login {
+		max-width: 500px;
+		margin: auto;
+		#button_div {
+			width: 100%;
+			text-align: center;
+		}
+	}
+	&#jobsList {
+		.ui.form {
+			.ui.button {
+				padding-top: 0.4em;
+				padding-bottom: 0.4em;
+			}
+			.ui.input input,
+			.ui.selection.dropdown {
+				padding: 0.4em 0.6em;
+			}
+			.ui.input {
+				line-height: 1.8em;
+				input {
+					width: 5em;
+					text-align: right;
+					line-height: 1em;
+					margin-left: 0.4em;
+					margin-right: 0.4em;
+				}
+			}
+		}
+	}
+	&#jobsApplyList {
+		.ui.button {
+			padding-top: 0.4em;
+			padding-bottom: 0.4em;
+		}
+	}
+	#register-employer-form,
+	#register-jobseeker-form {
+		.buttons {
+			text-align: center;
+		}
+	}
+	#register-jobseeker-form {
+		.ui.checkbox {
+			margin-right: 1em;
+		}
+	}
+}
+
+footer {
+}
+
+ng-md-icon {
+	fill: currentColor;
+	vertical-align: middle;
+	display: inline-block;
+	line-height: 1;
+}
+
+md-toolbar.md-default-theme .md-button {
+	fill: white;
+}

@@ -2,7 +2,7 @@
 require_once("auth.php");
 function getPDO() {
 	try {
-		$db = new PDO("mysql:host=127.0.0.1;charset=UTF8;dbname=".DB, DBUSER, DBPASSWD, array(PDO::ATTR_PERSISTENT=>true));
+		$db = new PDO("mysql:host=140.113.27.57;charset=UTF8;dbname=".DB, DBUSER, DBPASSWD, array(PDO::ATTR_PERSISTENT=>true));
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		return $db;
 	} catch (PDOException $e) {
