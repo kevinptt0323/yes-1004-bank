@@ -48,10 +48,10 @@
         "angular-animate.min.js.map"
       ]
     },
-    "angular-area": {
+    "angular-aria": {
       "main": [
-        "angular-area.min.js",
-        "angular-area.min.js.map"
+        "angular-aria.min.js",
+        "angular-aria.min.js.map"
       ]
     },
     "jquery": {
