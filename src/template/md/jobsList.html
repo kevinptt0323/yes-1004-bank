@@ -1,0 +1,388 @@
+<div class="template" id="jobsList">
+	<md-grid-list
+		md-cols-sm="1"
+		md-cols-md="2"
+		md-cols-gt-md="4"
+		md-row-height-gt-md="4:3"
+		md-row-height="4:3"
+		md-gutter="12px" md-gutter-gt-sm="8px" >
+		<md-grid-tile ng-repeat="item in jobs" class="md-whiteframe-z1">
+			<div class="md-toolbar-tools">
+				<h3>No. {{ item.id }} {{ occupation(item.occupation_id) }}</h3>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-class="{'md-accent':item.favorite==1}" ng-click="viewer.favorite(item)" aria-label="Favorite">
+					<ng-md-icon icon="favorite"></ng-md-icon>
+				</md-button>
+			</div>
+			<p>Location: {{ location(item.location_id) }}</p>
+			<p>Salary: ${{ item.salary }}</p>
+		</md-list-item>
+	</md-grid-list>
+	<!--
+			<tr class="ui form" data-rid="{{ item.id }}" ng-repeat="item in jobs">
+				<td>{{ item.id }}</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ occupation(item.occupation_id) }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
+						<input name="occupation_id" type="hidden" value="{{ occupation(item.occupation_id) }}">
+						<div class="default text">Occupation</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="(key, value) in options.occupation" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('occupation_id', key)" data-value="{{key}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ location(item.location_id) }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
+						<input name="location_id" type="hidden" value="{{ location(item.location_id) }}">
+						<div class="default text">Location</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="(key, value) in options.location" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('location_id', key)" data-value="{{key}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ item.working_time }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
+						<input name="working_time" type="hidden" value="{{ item.working_time }}">
+						<div class="default text">Working Time</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="value in options.working_time" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('working_time', value)" data-value="{{value}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ item.education }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
+						<input name="education" type="hidden" value="{{ item.education }}">
+						<div class="default text">Education</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="value in options.education" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('education', value)" data-value="{{value}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ item.experience }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui input">
+						<input ng-model="viewer.jobs[item.id].formData.experience" name="experience" type="number" />
+						 year(s)
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ item.salary }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui input">
+						$
+						<input ng-model="viewer.jobs[item.id].formData.salary" name="salary" type="number" min="0" step="1000" />
+					</div>
+				</td>
+				<td>
+					<span ng-show="status.user.type=='jobseeker'" class="ui buttons">
+						<div ng-class="{'disabled':item.apply==1}" ng-click="viewer.apply(item)" class="ui animated fade positive button">
+							<div class="hidden content"> Apply </div>
+							<div class="visible content"><i class="checkmark box icon"></i></div>
+						</div>
+						<div ng-class="{'yellow':item.favorite==1}" ng-click="viewer.favorite(item)" class="ui animated fade button">
+							<div class="hidden content">
+								<span ng-show="item.favorite==0"> Star </span>
+								<span ng-show="item.favorite==1"> Un-star </span>
+							</div>
+							<div class="visible content"><i class="star icon"></i></div>
+						</div>
+					</span>
+					<span ng-show="status.user.type=='employer' && item.employer_id == status.user.id" class="ui buttons">
+						<span ng-hide="viewer.editing(item.id)">
+							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
+								<div class="hidden content"> Edit </div>
+								<div class="visible content"><i class="edit icon"></i></div>
+							</div>
+						</span>
+						<span ng-show="viewer.editing(item.id)">
+							<div class="ui animated fade positive submit button">
+								<div class="hidden content"> OK </div>
+								<div class="visible content"><i class="checkmark icon"></i></div>
+							</div>
+							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
+								<div class="hidden content"> Cancel </div>
+								<div class="visible content"><i class="undo icon"></i></div>
+							</div>
+							<div ng-click="viewer.delete1(item.id)" class="ui animated fade negative button">
+								<div class="hidden content"> Delete </div>
+								<div class="visible content"><i class="remove icon"></i></div>
+							</div>
+						</span>
+					</span>
+				</td>
+			</tr>
+-->
+
+<!--
+	<table class="ui center aligned striped unstackable table">
+		<thead>
+			<tr>
+				<th>Job ID</th>
+				<th>Occupation</th>
+				<th>Location</th>
+				<th>Working Time</th>
+				<th>Education Required</th>
+				<th>Minimal Experience</th>
+				<th>Salary&nbsp;<a href="#!/jobs/list{{ checkFavorite() }}/sort/salary/ascending"><i class="caret up icon"></i></a><a href="#!/jobs/list{{ checkFavorite() }}/sort/salary/descending"><i class="caret down icon"></i></a></th>
+				<th>Operation </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="ui form" id="search-job-form" ng-init="viewer.toggle('search')">
+				<td> </td>
+				<td class="field">
+					<div class="ui compact selection dropdown" tabindex="1">
+						<input name="occupation_id" type="hidden" value="{{ viewer.jobs['search'].formData.occupation_id }}">
+						<div class="default text">Occupation</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-click="viewer.jobs['search'].select('occupation_id')">- -</div>
+							<div class="item" ng-repeat="(key, value) in options.occupation" on-finish-render="initDropdown" ng-click="viewer.jobs['search'].select('occupation_id', key)" data-value="{{key}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui compact selection dropdown" tabindex="1">
+						<input name="location_id" type="hidden" value="{{ viewer.jobs['search'].formData.location_id }}">
+						<div class="default text">Location</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-click="viewer.jobs['search'].select('location_id')">- -</div>
+							<div class="item" ng-repeat="(key, value) in options.location" on-finish-render="initDropdown" ng-click="viewer.jobs['search'].select('location_id', key)" data-value="{{key}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui compact selection dropdown" tabindex="1">
+						<input name="working_time" type="hidden" value="{{ viewer.jobs['search'].formData.working_time }}">
+						<div class="default text">Working Time</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-click="viewer.jobs['search'].select('working_time')">- -</div>
+							<div class="item" ng-repeat="value in options.working_time" on-finish-render="initDropdown" ng-click="viewer.jobs['search'].select('working_time', value)" data-value="{{value}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui compact selection dropdown" tabindex="1">
+						<input name="education" type="hidden" value="{{ viewer.jobs['search'].formData.education }}">
+						<div class="default text">Education</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-click="viewer.jobs['search'].select('education')">- -</div>
+							<div class="item" ng-repeat="value in options.education" on-finish-render="initDropdown" ng-click="viewer.jobs['search'].select('education', value)" data-value="{{value}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui input">
+						<input ng-model="viewer.jobs['search'].formData.experience" name="experience" type="number" value="0" tabindex="1" />
+						 year(s)
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui input">
+						&gt;=$
+						<input ng-model="viewer.jobs['search'].formData.salary" name="salary" type="number" min="0" step="1000" value="0" tabindex="1" />
+					</div>
+				</td>
+				<td>
+					<span class="ui buttons">
+						<div class="ui animated fade primary submit button" tabindex="1">
+							<div class="hidden content"> Search </div>
+							<div class="visible content"><i class="search icon"></i></div>
+						</div>
+						<div class="ui animated fade button" ng-click="viewer.jobs['search'].reset()" tabindex="1">
+							<div class="hidden content"> Reset </div>
+							<div class="visible content"><i class="repeat icon"></i></div>
+						</div>
+					</span>
+				</td>
+			</tr>
+			<tr class="ui form" data-rid="{{ item.id }}" ng-repeat="item in jobs">
+				<td>{{ item.id }}</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ occupation(item.occupation_id) }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
+						<input name="occupation_id" type="hidden" value="{{ occupation(item.occupation_id) }}">
+						<div class="default text">Occupation</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="(key, value) in options.occupation" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('occupation_id', key)" data-value="{{key}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ location(item.location_id) }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
+						<input name="location_id" type="hidden" value="{{ location(item.location_id) }}">
+						<div class="default text">Location</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="(key, value) in options.location" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('location_id', key)" data-value="{{key}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ item.working_time }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
+						<input name="working_time" type="hidden" value="{{ item.working_time }}">
+						<div class="default text">Working Time</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="value in options.working_time" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('working_time', value)" data-value="{{value}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ item.education }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui compact selection dropdown">
+						<input name="education" type="hidden" value="{{ item.education }}">
+						<div class="default text">Education</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="value in options.education" on-finish-render="initDropdown" ng-click="viewer.jobs[item.id].select('education', value)" data-value="{{value}}">{{value}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ item.experience }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui input">
+						<input ng-model="viewer.jobs[item.id].formData.experience" name="experience" type="number" />
+						 year(s)
+					</div>
+				</td>
+				<td class="field">
+					<div ng-hide="viewer.editing(item.id)">{{ item.salary }}</div>
+					<div ng-show="viewer.editing(item.id)" class="ui input">
+						$
+						<input ng-model="viewer.jobs[item.id].formData.salary" name="salary" type="number" min="0" step="1000" />
+					</div>
+				</td>
+				<td>
+					<span ng-show="status.user.type=='jobseeker'" class="ui buttons">
+						<div ng-class="{'disabled':item.apply==1}" ng-click="viewer.apply(item)" class="ui animated fade positive button">
+							<div class="hidden content"> Apply </div>
+							<div class="visible content"><i class="checkmark box icon"></i></div>
+						</div>
+						<div ng-class="{'yellow':item.favorite==1}" ng-click="viewer.favorite(item)" class="ui animated fade button">
+							<div class="hidden content">
+								<span ng-show="item.favorite==0"> Star </span>
+								<span ng-show="item.favorite==1"> Un-star </span>
+							</div>
+							<div class="visible content"><i class="star icon"></i></div>
+						</div>
+					</span>
+					<span ng-show="status.user.type=='employer' && item.employer_id == status.user.id" class="ui buttons">
+						<span ng-hide="viewer.editing(item.id)">
+							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
+								<div class="hidden content"> Edit </div>
+								<div class="visible content"><i class="edit icon"></i></div>
+							</div>
+						</span>
+						<span ng-show="viewer.editing(item.id)">
+							<div class="ui animated fade positive submit button">
+								<div class="hidden content"> OK </div>
+								<div class="visible content"><i class="checkmark icon"></i></div>
+							</div>
+							<div ng-click="viewer.toggle(item.id)" class="ui animated fade primary button">
+								<div class="hidden content"> Cancel </div>
+								<div class="visible content"><i class="undo icon"></i></div>
+							</div>
+							<div ng-click="viewer.delete1(item.id)" class="ui animated fade negative button">
+								<div class="hidden content"> Delete </div>
+								<div class="visible content"><i class="remove icon"></i></div>
+							</div>
+						</span>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot class="controls" ng-show="status.user.type=='jobseeker'">
+			<tr class="buttons">
+				<th colspan="8">
+					<a class="ui yellow labeled icon button" ng-show="!checkFavorite()" href="#!/jobs/list/favorite">
+						<i class="star icon"></i> Show my favorite list
+					</a>
+				</th>
+			</tr>
+		</tfoot>
+		<tfoot class="controls" ng-show="status.user.type=='employer'">
+			<tr class="ui form" id="new-job-form" ng-show="viewer.editing('new')">
+				<th> </th>
+				<th class="field">
+					<div class="ui compact selection dropdown" tabindex="3">
+						<input name="occupation_id" type="hidden">
+						<div class="default text">Occupation</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="(key, value) in options.occupation" on-finish-render="initDropdown" ng-click="viewer.jobs['new'].select('occupation_id', key)" data-value="{{key}}">{{value}}</div>
+						</div>
+					</div>
+				</th>
+				<th class="field">
+					<div class="ui compact selection dropdown" tabindex="3">
+						<input name="location_id" type="hidden">
+						<div class="default text">Location</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="(key, value) in options.location" on-finish-render="initDropdown" ng-click="viewer.jobs['new'].select('location_id', key)" data-value="{{key}}">{{value}}</div>
+						</div>
+					</div>
+				</th>
+				<th class="field">
+					<div class="ui compact selection dropdown" tabindex="3">
+						<input name="working_time" type="hidden">
+						<div class="default text">Working Time</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="value in options.working_time" on-finish-render="initDropdown" ng-click="viewer.jobs['new'].select('working_time', value)" data-value="{{value}}">{{value}}</div>
+						</div>
+					</div>
+				</th>
+				<th class="field">
+					<div class="ui compact selection dropdown" tabindex="3">
+						<input name="education" type="hidden">
+						<div class="default text">Education</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<div class="item" ng-repeat="value in options.education" on-finish-render="initDropdown" ng-click="viewer.jobs['new'].select('education', value)" data-value="{{value}}">{{value}}</div>
+						</div>
+					</div>
+				</th>
+				<th class="field">
+					<div class="ui input">
+						<input ng-model="viewer.jobs['new'].formData.experience" name="experience" type="number" value="0" tabindex="3" />
+						 year(s)
+					</div>
+				</th>
+				<th class="field">
+					<div class="ui input">
+						$
+						<input ng-model="viewer.jobs['new'].formData.salary" name="salary" type="number" min="0" step="1000" value="0" tabindex="3" />
+					</div>
+				</th>
+				<th>
+					<div class="ui animated fade primary submit button" tabindex="3">
+						<div class="hidden content"> New </div>
+						<div class="visible content"><i class="add icon"></i></div>
+					</div>
+				</th>
+			</tr>
+			<tr class="buttons">
+				<th colspan="8">
+					<div class="ui primary labeled icon button" ng-show="status.user.type=='employer'" ng-click="viewer.toggle('new')">
+						<i class="add icon"></i> New Job
+					</div>
+				</th>
+			</tr>
+		</tfoot>
+	</table>
+-->
+</div>
