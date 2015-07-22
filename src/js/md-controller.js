@@ -73,7 +73,6 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', '$mdSidenav
         if( $scope.is.login() ) {
           if( $scope.is.employer() ) {
             $scope.navigates = [
-              { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
               { name: 'Jobs',
                 icon: 'list',
                 menu: [
@@ -81,27 +80,26 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', '$mdSidenav
                   { name: 'List My Jobs', href: '#!/jobs/list/my' }
                 ]
               },
-              { name: 'Jobseekers', href: '#!/jobseeker/list', icon: 'users' },
-              { name: 'Logout', href: '#!/logout', icon: 'sign out' }
+              { name: 'Jobseekers', href: '#!/jobseeker/list', icon: 'people' },
+              { name: 'Logout', href: '#!/logout', icon: 'logout' }
             ];
           } else {
             $scope.navigates = [
-              { name: $sce.trustAsHtml('<i>Hello, ' + $scope.status.user.name + '</i>!')},
               { name: 'Jobs', href: '#!/jobs/list', icon: 'list' },
-              { name: 'Logout', href: '#!/logout', icon: 'sign out' }
+              { name: 'Logout', href: '#!/logout', icon: 'logout' }
             ];
           }
         } else {
           $scope.navigates = [
             { name: 'Jobs', href: '#!/jobs/list', icon: 'list' },
             { name: 'Sign Up',
-              icon: 'add user',
+              icon: 'person_add',
               menu: [
                 { name: 'Job Seeker', href: '#!/register/jobseeker' },
                 { name: 'Employer', href: '#!/register/employer' }
               ]
             },
-            { name: 'Login', href: '#!/login', icon: 'sign in' }
+            { name: 'Login', href: '#!/login', icon: 'login' }
           ];
         }
       }

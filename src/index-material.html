@@ -19,15 +19,22 @@
 		<link rel="stylesheet" type="text/css" href="lib/normalize.css">
 		<link rel="stylesheet" type="text/css" href="lib/angular-material.min.css">
 		<link rel="stylesheet" type="text/css" href="css/md-style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
 	<body layout="row" flex>
 		<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
 			<md-toolbar class="md-theme-indigo">
-				<h1 class="md-toolbar-tools">Hello, {{ status.user.name }}!</h1>
+				<span flex></span>
+				<div layout="column" class="md-toolbar-tools-bottom inset">
+					<user-avatar></user-avatar>
+					<span class="user-name">{{ status.user.name }}</span>
+					<span class="user-email">{{ status.user.email }}</span>
+				</div>
 			</md-toolbar>
 			<md-content>
 				<md-list>
 					<md-list-item ng-repeat="item in navigates" ng-click="logg(item.name)">
+						<ng-md-icon icon="{{ item.icon }}"></ng-md-icon>
 						<p>{{ item.name }}</p>
 					</md-list-item>
 					<!--
@@ -52,13 +59,6 @@
 					</md-item>
 					-->
 				</md-list>
-        <md-button ng-click="toggleSidenav('left')" class="md-primary" hide-gt-md>
-          Close Sidenav Left
-        </md-button>
-        <p hide-md show-gt-md>
-          This sidenav is locked open on your device. To go back to the default behavior,
-          narrow your display.
-        </p>
 			</md-content>
 		</md-sidenav>
 		<div layout="column" class="relative" layout-fill role="main">
