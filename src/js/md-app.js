@@ -32,9 +32,12 @@ app
     enable: true,
     requireBase: false
   }).hashPrefix('!');
+
+  var TEMPLATE_ROOT = 'template/md/';
+
   $routeProvider
     .when('/', {
-      templateUrl: 'template/jobsList.html',
+      templateUrl: TEMPLATE_ROOT + 'jobsList.html',
       controller: 'jobsShowListCtrl',
       viewer: 'jobsShowListView',
       name: 'Index'
@@ -44,7 +47,7 @@ app
       name: 'Error'
     })
     .when('/login', {
-      templateUrl: 'template/login.html',
+      templateUrl: TEMPLATE_ROOT + 'login.html',
       controller: 'loginCtrl',
       viewer: 'loginView',
       name: 'Login'
@@ -53,41 +56,47 @@ app
       template: '',
       controller: 'logoutCtrl'
     })
+    .when('/register', {
+      templateUrl: TEMPLATE_ROOT + 'registerJobseeker.html',
+      controller: 'registerJobseekerCtrl',
+      viewer: 'registerJobseekerView',
+      name: 'Register Jobseeker'
+    })
     .when('/register/jobseeker', {
-      templateUrl: 'template/registerJobseeker.html',
+      templateUrl: TEMPLATE_ROOT + 'registerJobseeker.html',
       controller: 'registerJobseekerCtrl',
       viewer: 'registerJobseekerView',
       name: 'Register Jobseeker'
     })
     .when('/register/employer', {
-      templateUrl: 'template/registerEmployer.html',
+      templateUrl: TEMPLATE_ROOT + 'registerEmployer.html',
       controller: 'registerEmployerCtrl',
       viewer: 'registerEmployerView',
       name: 'Register Employer'
     })
     .when('/jobs/add', {
-      templateUrl: 'template/jobsAdd.html'
+      templateUrl: TEMPLATE_ROOT + 'jobsAdd.html'
     })
     .when('/jobs/list/my', {
-      templateUrl: 'template/jobsApplyList.html',
+      templateUrl: TEMPLATE_ROOT + 'jobsApplyList.html',
       controller: 'jobsShowApplyListCtrl',
       //viewer: 'jobsShowApplyListView',
       name: 'Your Job List'
     })
     .when('/jobs/list/:favorite?', {
-      templateUrl: 'template/jobsList.html',
+      templateUrl: TEMPLATE_ROOT + 'jobsList.html',
       controller: 'jobsShowListCtrl',
       viewer: 'jobsShowListView',
       name: 'Job List'
     })
     .when('/jobs/list/:favorite?/sort/:column/:order', {
-      templateUrl: 'template/jobsList.html',
+      templateUrl: TEMPLATE_ROOT + 'jobsList.html',
       controller: 'jobsShowListCtrl',
       viewer: 'jobsShowListView',
       name: 'Job List'
     })
     .when('/jobs/:id', {
-      templateUrl: 'template/jobsShow.html',
+      templateUrl: TEMPLATE_ROOT + 'jobsShow.html',
       controller: 'jobsShowCtrl',
       name: 'Job List',
       resolve: {
@@ -106,12 +115,12 @@ app
       }
     })
     .when('/jobseeker/list', {
-      templateUrl: 'template/jobseekerList.html',
+      templateUrl: TEMPLATE_ROOT + 'jobseekerList.html',
       controller: 'jobseekerListCtrl',
       name: 'Jobseeker List'
     })
     .when('/jobseeker/:id', {
-      templateUrl: 'template/jobseekerList.html'
+      templateUrl: TEMPLATE_ROOT + 'jobseekerList.html'
     })
     .otherwise({
       redirectTo: '/error'
