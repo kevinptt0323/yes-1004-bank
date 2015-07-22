@@ -73,32 +73,28 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', '$mdSidenav
         if( $scope.is.login() ) {
           if( $scope.is.employer() ) {
             $scope.navigates = [
-              { name: 'Jobs',
-                icon: 'list',
-                menu: [
-                  { name: 'List All Jobs', href: '#!/jobs/list' },
-                  { name: 'List My Jobs', href: '#!/jobs/list/my' }
-                ]
-              },
+              { name: 'All Jobs', href: '#!/jobs/list', icon: 'list' },
+              { name: 'My Jobs', href: '#!/jobs/list/my', icon: 'list' },
               { name: 'Jobseekers', href: '#!/jobseeker/list', icon: 'people' },
               { name: 'Logout', href: '#!/logout', icon: 'logout' }
             ];
           } else {
             $scope.navigates = [
-              { name: 'Jobs', href: '#!/jobs/list', icon: 'list' },
+              { name: 'All Jobs', href: '#!/jobs/list', icon: 'list' },
               { name: 'Logout', href: '#!/logout', icon: 'logout' }
             ];
           }
         } else {
           $scope.navigates = [
             { name: 'Jobs', href: '#!/jobs/list', icon: 'list' },
-            { name: 'Sign Up',
+            { name: 'Sign Up', href: '#!/register', icon: 'person_add' },
+            /*{ name: 'Sign Up',
               icon: 'person_add',
               menu: [
                 { name: 'Job Seeker', href: '#!/register/jobseeker' },
                 { name: 'Employer', href: '#!/register/employer' }
               ]
-            },
+            },*/
             { name: 'Login', href: '#!/login', icon: 'login' }
           ];
         }
@@ -177,8 +173,14 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', '$mdSidenav
     $mdSidenav(menuId).toggle();
   };
 
-  var logg = function(a, b) {
-    console.log(a, b);
+  $scope.gotoPath = function(path, menuId) {
+    if( path.substr(0, 3)=="#!/" ) {
+      $scope.$emit('redirect', path.substr(3));
+    } else {
+    }
+    if( menuId ) {
+      $mdSidenav(menuId).close();
+    }
   };
 
   load({

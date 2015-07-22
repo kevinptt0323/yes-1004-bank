@@ -33,9 +33,11 @@
 			</md-toolbar>
 			<md-content>
 				<md-list>
-					<md-list-item ng-repeat="item in navigates" ng-click="logg(item.name)">
-						<ng-md-icon icon="{{ item.icon }}"></ng-md-icon>
-						<p>{{ item.name }}</p>
+					<md-list-item ng-repeat="item in navigates" ng-click="gotoPath(item.href, 'left')">
+						<a href="#" class="md-button md-default-theme" md-ink-ripple>
+							<ng-md-icon icon="{{ item.icon }}"></ng-md-icon>
+							<span>{{ item.name }}</span>
+						</a>
 					</md-list-item>
 					<!--
 					<md-item ng-repeat-start="item in navigates" ng-if="!item.href && !item.menu" ng-bind-html="item.name">
@@ -68,7 +70,7 @@
 						<ng-md-icon icon="menu"></ng-md-icon>
 					</md-button>
 					<h2>
-						<a href="./#!/">{{ config.title }} | {{ currentPage.name }}</a>
+						<span ng-click="gotoPath('#!/', 'left')">{{ config.title }} | {{ currentPage.name }}</span>
 					</h2>
 					<span flex=""></span>
 					<md-button class="md-icon-button" aria-label="Favorite">
