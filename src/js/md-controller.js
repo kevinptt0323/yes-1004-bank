@@ -21,7 +21,7 @@ ctrl.directive('onFinishRender', function ($timeout) {
   };
 });
 
-ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($scope, $sce, $location, $http) {
+ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', '$mdSidenav', function($scope, $sce, $location, $http, $mdSidenav) {
   var load = function(config) {
     $scope[config.name] = $scope[config.name] || {};
     $http({ url: config.url })
@@ -174,6 +174,15 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', function($s
     return $scope.options.specialty[id];
   };
   $scope.searchData = {};
+
+  $scope.toggleSidenav = function(menuId) {
+    $mdSidenav(menuId).toggle();
+  };
+
+  var logg = function(a, b) {
+    console.log(a, b);
+  };
+
   load({
     name: 'options',
     url: 'api/options.php'

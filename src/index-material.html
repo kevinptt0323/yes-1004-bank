@@ -20,15 +20,55 @@
 		<link rel="stylesheet" type="text/css" href="lib/angular-material.min.css">
 		<link rel="stylesheet" type="text/css" href="css/md-style.css">
 	</head>
-	<body>
-		<md-content>
+	<body layout="row" flex>
+		<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+			<md-toolbar class="md-theme-indigo">
+				<h1 class="md-toolbar-tools">Hello, {{ status.user.name }}!</h1>
+			</md-toolbar>
+			<md-content>
+				<md-list>
+					<md-list-item ng-repeat="item in navigates" ng-click="logg(item.name)">
+						<p>{{ item.name }}</p>
+					</md-list-item>
+					<!--
+					<md-item ng-repeat-start="item in navigates" ng-if="!item.href && !item.menu" ng-bind-html="item.name">
+						<i class="ui {{ item.icon }} icon" ng-if="item.icon"></i>
+						{{ item.name }}
+					</md-item>
+					<md-item ng-if="!!item.href">
+						<a href="{{ item.href }}">
+							<i class="ui {{ item.icon }} icon" ng-if="item.icon"></i>
+							{{ item.name }}
+						</a>
+					</md-item>
+					<md-item ng-repeat-end ng-if="!!item.menu">
+						<i class="ui {{ item.icon }} icon" ng-if="item.icon"></i>
+						{{ item.name }}
+						<div class="menu">
+							<a class="item" href="{{ subitem.href }}" ng-repeat="subitem in item.menu" on-finish-render="initDropdown">
+								{{ subitem.name }}
+							</a>
+						</div>
+					</md-item>
+					-->
+				</md-list>
+        <md-button ng-click="toggleSidenav('left')" class="md-primary" hide-gt-md>
+          Close Sidenav Left
+        </md-button>
+        <p hide-md show-gt-md>
+          This sidenav is locked open on your device. To go back to the default behavior,
+          narrow your display.
+        </p>
+			</md-content>
+		</md-sidenav>
+		<div layout="column" class="relative" layout-fill role="main">
 			<md-toolbar>
 				<div class="md-toolbar-tools md-default-theme">
-					<md-button class="md-icon-button" aria-label="Settings">
+					<md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidenav('left')">
 						<ng-md-icon icon="menu"></ng-md-icon>
 					</md-button>
 					<h2>
-						<span>Toolbar with Icon Buttons</span>
+						<a href="./#!/">{{ config.title }} | {{ currentPage.name }}</a>
 					</h2>
 					<span flex=""></span>
 					<md-button class="md-icon-button" aria-label="Favorite">
@@ -39,7 +79,14 @@
 					</md-button>
 				</div>
 			</md-toolbar>
-		</md-content>
+			<md-content class="container">
+				<div ng-show="loading">Loading...</div>
+				<div ng-view></div>
+				<footer>
+					<p></p>
+				</footer>
+			</md-content>
+		</div>
 		<!--
 		<nav class="ui fixed blue large menu" id="nav-bar">
 			<a class="header item" href="./#!/">{{ config.title }} | {{ currentPage.name }}</a>
@@ -63,13 +110,6 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container">
-			<div ng-show="loading">Loading...</div>
-			<div ng-view></div>
-			<footer>
-				<p></p>
-			</footer>
-		</div>
 		-->
 	</body>
 </html>
