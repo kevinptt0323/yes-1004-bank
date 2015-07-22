@@ -10,11 +10,15 @@
 			<div class="md-toolbar-tools">
 				<h3>No. {{ item.id }} {{ occupation(item.occupation_id) }}</h3>
 				<span flex></span>
+				<md-button class="md-icon-button" ng-class="{'apply':item.apply==1}" ng-disabled="item.apply==1" ng-click="viewer.apply(item)" aria-label="Apply Now">
+					<ng-md-icon icon="done"></ng-md-icon>
+				</md-button>
 				<md-button class="md-icon-button" ng-class="{'md-accent':item.favorite==1}" ng-click="viewer.favorite(item)" aria-label="Favorite">
 					<ng-md-icon ng-show="item.favorite==1" icon="favorite"></ng-md-icon>
-					<ng-md-icon ng-show="item.favorite!=1" icon="favorite_outline"></ng-md-icon>
+					<ng-md-icon ng-hide="item.favorite==1" icon="favorite_outline"></ng-md-icon>
 				</md-button>
 			</div>
+			<md-divider></md-divider>
 			<md-content>
 				<p>Location: {{ location(item.location_id) }}</p>
 				<p>Salary: ${{ item.salary }}</p>

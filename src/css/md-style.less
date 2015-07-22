@@ -117,8 +117,14 @@ md-toolbar.md-default-theme .md-button {
 	fill: white;
 }
 
-.md-icon-button.md-accent {
-	fill: #FF4081;
+.md-button.md-icon-button {
+	margin: 0;
+	&.md-accent {
+		fill: #FF4081;
+	}
+	&.apply {
+		fill: rgba(0, 0, 0, 0.2);
+	}
 }
 
 md-grid-list md-grid-tile figure {
