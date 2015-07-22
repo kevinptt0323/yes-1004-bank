@@ -2,21 +2,38 @@
 	<md-grid-list
 		md-cols-sm="1"
 		md-cols-md="2"
-		md-cols-gt-md="4"
-		md-row-height-gt-md="4:3"
+		md-cols-lg="3"
+		md-cols-gt-lg="5"
 		md-row-height="4:3"
 		md-gutter="12px" md-gutter-gt-sm="8px" >
-		<md-grid-tile ng-repeat="item in jobs" class="md-whiteframe-z1">
+		<md-grid-tile ng-repeat="item in jobs" class="md-whiteframe-z2">
 			<div class="md-toolbar-tools">
 				<h3>No. {{ item.id }} {{ occupation(item.occupation_id) }}</h3>
 				<span flex></span>
-				<md-button class="md-icon-button" ng-class="{'apply':item.apply==1}" ng-disabled="item.apply==1" ng-click="viewer.apply(item)" aria-label="Apply Now">
-					<ng-md-icon icon="done"></ng-md-icon>
-				</md-button>
-				<md-button class="md-icon-button" ng-class="{'md-accent':item.favorite==1}" ng-click="viewer.favorite(item)" aria-label="Favorite">
-					<ng-md-icon ng-show="item.favorite==1" icon="favorite"></ng-md-icon>
-					<ng-md-icon ng-hide="item.favorite==1" icon="favorite_outline"></ng-md-icon>
-				</md-button>
+				<span ng-show="status.user.type=='jobseeker'" class="ui buttons">
+					<md-button class="md-icon-button" ng-class="{'apply':item.apply==1}" ng-disabled="item.apply==1" ng-click="viewer.apply(item)" aria-label="Apply Now">
+						<ng-md-icon icon="done"></ng-md-icon>
+					</md-button>
+					<md-button class="md-icon-button" ng-class="{'md-accent':item.favorite==1}" ng-click="viewer.favorite(item)" aria-label="Favorite">
+						<ng-md-icon ng-show="item.favorite==1" icon="favorite"></ng-md-icon>
+						<ng-md-icon ng-hide="item.favorite==1" icon="favorite_outline"></ng-md-icon>
+					</md-button>
+				</span>
+				<span ng-show="status.user.type=='employer' && item.employer_id == status.user.id" class="ui buttons">
+					<md-menu md-position-mode="target-right target">
+						<md-button class="md-icon-button" ng-click="$mdOpenMenu()" aria-label="More">
+							<ng-md-icon icon="more_vert"></ng-md-icon>
+						</md-button>
+						<md-menu-content>
+							<md-menu-item>
+								<md-button ng-click="logg(item, item)"> Edit </md-button>
+							</md-menu-item>
+							<md-menu-item>
+								<md-button ng-click="logg(item, item)"> Delete </md-button>
+							</md-menu-item>
+						</md-menu-content>
+					</md-menu>
+				</span>
 			</div>
 			<md-divider></md-divider>
 			<md-content>

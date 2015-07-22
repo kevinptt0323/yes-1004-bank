@@ -3,9 +3,10 @@
 @desktop:     ~"only screen and (min-width: 1024px) and (max-width: 1128px)";
 @desktop-xl:  ~"only screen and (min-width: 1129px)";
 
+/*
 .ui.center.aligned.table {
 	td, th {
-		/* fix bug for center table */
+		/* fix bug for center table * /
 		text-align: center;
 	}
 }
@@ -78,6 +79,18 @@ body {
 }
 
 footer {
+}*/
+
+body {
+	background: #eee;
+}
+
+.container {
+	background: transparent;
+	margin: 10px;
+}
+
+.template {
 }
 
 ng-md-icon svg {
@@ -127,9 +140,12 @@ md-toolbar.md-default-theme .md-button {
 	}
 }
 
-md-grid-list md-grid-tile figure {
-	display: block;
-	md-content {
-		padding: 0 1em;
+md-grid-list md-grid-tile {
+	background: #fff;
+	figure {
+		display: block;
+		md-content {
+			padding: 0 1em;
+		}
 	}
 }
