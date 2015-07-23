@@ -65,7 +65,7 @@
 				</md-list>
 			</md-content>
 		</md-sidenav>
-		<div layout="column" class="relative" layout-fill role="main">
+		<div class="relative" layout="column" layout-fill role="main">
 			<md-toolbar class="md-primary">
 				<div class="md-toolbar-tools">
 					<md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidenav('left')">
@@ -80,12 +80,9 @@
 					</md-button>
 				</div>
 			</md-toolbar>
-			<md-content class="container">
+			<md-content class="container" layout-fill>
 				<div ng-show="loading">Loading...</div>
-				<div ng-view></div>
-				<footer>
-					<p></p>
-				</footer>
+				<div ng-view layout-fill></div>
 			</md-content>
 		</div>
 		<!--

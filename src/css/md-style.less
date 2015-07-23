@@ -81,20 +81,35 @@ body {
 footer {
 }*/
 
+@md-primary: #03A9F4;
+@md-accent:  #FF4081;
+
 body {
 	background: #eee;
 }
 
 .container {
 	background: transparent;
-	margin: 10px;
 }
 
 .template {
+	height: 100%;
+	
 	&#login {
 		md-content {
-			max-width: 500px;
+			max-width: 400px;
 			margin: auto;
+
+			.md-subheader:before {
+				content: "";
+				width: 5px;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: -8px;
+				background: @md-primary;
+			}
+
 			#button_div {
 				width: 100%;
 				text-align: center;
@@ -143,7 +158,7 @@ md-toolbar.md-default-theme .md-button {
 .md-button.md-icon-button {
 	margin: 0;
 	&.md-accent {
-		fill: #FF4081;
+		fill: @md-accent;
 	}
 	&.apply {
 		fill: rgba(0, 0, 0, 0.2);

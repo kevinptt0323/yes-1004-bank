@@ -1,5 +1,6 @@
-<div class="template" id="login">
-	<md-content class="md-whiteframe-z2" layout-padding>
+<div class="template" id="login" layout="row" layout-padding layout-align="center center">
+	<md-content class="md-whiteframe-z2" flex layout-padding>
+		<md-subheader class="md-primary">Login</md-subheader>
 		<form id="login-form" name="loginForm">
 			<md-input-container flex>
 				<label>Username</label>
@@ -15,6 +16,11 @@
 					<div ng-message="required">This is required.</div>
 				</div>
 			</md-input-container>
+			<div layout="row" layout-align="center center">
+				<md-button class="md-primary md-hue-2" tabindex="3">
+					Login
+				</md-button>
+			</div>
 		</form>
 	</md-content>
 </div>
