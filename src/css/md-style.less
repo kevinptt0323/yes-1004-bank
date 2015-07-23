@@ -87,31 +87,6 @@ footer {
 body {
 	background: #eee;
 }
-
-.container {
-	background: transparent;
-}
-
-.template {
-	&#login {
-		height: 100%;
-
-		md-content {
-			max-width: 400px;
-
-			.md-subheader:before {
-				content: "";
-				width: 5px;
-				height: 100%;
-				position: absolute;
-				top: 0;
-				left: -8px;
-				background: @md-primary;
-			}
-		}
-	}
-}
-
 ng-md-icon svg {
 	transform: translateY(25%);
 }
@@ -138,9 +113,13 @@ md-sidenav {
 			display: block;
 			width: 100%;
 			margin: 0;
-
+			padding: 0 32px 0 16px;
 			line-height: 48px;
 			text-align: left;
+
+			ng-md-icon {
+				margin-right: 16px;
+			}
 		}
 	}
 }
@@ -148,6 +127,31 @@ md-sidenav {
 md-toolbar.md-default-theme .md-button {
 	fill: white;
 }
+
+.container {
+	background: transparent;
+}
+
+.template {
+	&#login {
+		height: 100%;
+
+		md-content {
+			max-width: 400px;
+
+			.md-subheader:before {
+				content: "";
+				width: 5px;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: -8px;
+				background: @md-primary;
+			}
+		}
+	}
+}
+
 
 .md-button.md-icon-button {
 	margin: 0;

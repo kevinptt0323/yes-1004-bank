@@ -70,33 +70,33 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'view', '$m
       name: 'status',
       url: 'api/status.php',
       onSuccess: function(data) {
+        $scope.navigates = [
+          { name: 'All Jobs', href: '#!/jobs/list', icon: 'list', val: $scope.status.jobs.all }
+        ];
         if( $scope.is.login() ) {
           if( $scope.is.employer() ) {
-            $scope.navigates = [
-              { name: 'All Jobs', href: '#!/jobs/list', icon: 'list' },
-              { name: 'My Jobs', href: '#!/jobs/list/my', icon: 'list' },
-              { name: 'Jobseekers', href: '#!/jobseeker/list', icon: 'people' },
-              { name: 'Logout', href: '#!/logout', icon: 'logout' }
-            ];
-          } else {
-            $scope.navigates = [
-              { name: 'All Jobs', href: '#!/jobs/list', icon: 'list' },
-              { name: 'Logout', href: '#!/logout', icon: 'logout' }
-            ];
+            Array.prototype.push.apply($scope.navigates, [
+              { name: 'My Jobs', href: '#!/jobs/list/my', icon: 'list', val: $scope.status.jobs.my },
+              { name: 'Jobseekers', href: '#!/jobseeker/list', icon: 'people', val: $scope.status.jobseekers.all },
+            ]);
           }
+          Array.prototype.push.apply($scope.navigates, [
+            { name: 'Logout', href: '#!/logout', icon: 'logout' }
+          ]);
         } else {
-          $scope.navigates = [
-            { name: 'Jobs', href: '#!/jobs/list', icon: 'list' },
+          Array.prototype.push.apply($scope.navigates, [
+            /*
+            { name: 'Sign Up',
+            icon: 'person_add',
+            menu: [
+              { name: 'Job Seeker', href: '#!/register/jobseeker' },
+              { name: 'Employer', href: '#!/register/employer' }
+            ]
+            },
+            */
             { name: 'Sign Up', href: '#!/register', icon: 'person_add' },
-            /*{ name: 'Sign Up',
-              icon: 'person_add',
-              menu: [
-                { name: 'Job Seeker', href: '#!/register/jobseeker' },
-                { name: 'Employer', href: '#!/register/employer' }
-              ]
-            },*/
             { name: 'Login', href: '#!/login', icon: 'login' }
-          ];
+          ]);
         }
       }
     });
