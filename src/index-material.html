@@ -24,7 +24,7 @@
 	</head>
 	<body layout="row" flex>
 		<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
-			<md-toolbar class="md-theme-indigo">
+			<md-toolbar class="md-primary md-hue-1">
 				<span flex></span>
 				<div layout="column" class="md-toolbar-tools-bottom inset">
 					<user-avatar></user-avatar>
@@ -65,8 +65,8 @@
 			</md-content>
 		</md-sidenav>
 		<div layout="column" class="relative" layout-fill role="main">
-			<md-toolbar>
-				<div class="md-toolbar-tools md-default-theme">
+			<md-toolbar class="md-primary">
+				<div class="md-toolbar-tools">
 					<md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidenav('left')">
 						<ng-md-icon icon="menu"></ng-md-icon>
 					</md-button>
