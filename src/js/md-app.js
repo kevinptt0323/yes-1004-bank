@@ -8,6 +8,7 @@ var app = angular.module('database.homework.app', [
   'database.homework.controller',
   'ngRoute',
   'ngMaterial',
+  'ngMessages',
   'ngMdIcons'
 ]);
 

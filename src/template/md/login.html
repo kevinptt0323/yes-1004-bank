@@ -1,26 +1,21 @@
 <div class="template" id="login">
-	<form class="ui blue segment form" id="login-form">
-		<div class="ui center aligned basic segment"> <h2>Login</h2> </div>
-		<div class="ui error message"></div>
-		<div class="field">
-			<label>Uesrname</label>
-			<div class="ui left icon input">
-				<i class="user icon"></i>
-				<input ng-model="formData.username" name="username" type="text" placeholder="Username" autocomplete="off" tabindex="1">
-			</div>
-		</div>
-		<div class="field">
-			<label>Password</label>
-			<div class="ui left icon input">
-				<i class="lock icon"></i>
-				<input ng-model="formData.password" name="password" type="password" placeholder="Password" tabindex="2">
-			</div>
-		</div>
-		<div id="button_div">
-			<div class="ui blue submit button" tabindex="3">
-				Login
-			</div>
-		</div>
-	</form>
+	<md-content class="md-whiteframe-z2" layout-padding>
+		<form id="login-form" name="loginForm">
+			<md-input-container flex>
+				<label>Username</label>
+				<input ng-model="formData.username" required name="username" type="text" placeholder="Username" autocomplete="off" tabindex="1">
+				<div ng-messages="loginForm.username.$error">
+					<div ng-message="required">This is required.</div>
+				</div>
+			</md-input-container>
+			<md-input-container>
+				<label>Password</label>
+				<input ng-model="formData.password" required name="password" type="password" placeholder="Password" tabindex="2">
+				<div ng-messages="loginForm.password.$error">
+					<div ng-message="required">This is required.</div>
+				</div>
+			</md-input-container>
+		</form>
+	</md-content>
 </div>
 
