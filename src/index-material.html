@@ -34,11 +34,11 @@
 			</md-toolbar>
 			<md-content>
 				<md-list>
-					<md-list-item ng-repeat="item in navigates" ng-click="gotoPath(item.href, 'left')">
-						<a href="#" class="md-button md-default-theme" md-ink-ripple>
+					<md-list-item ng-repeat="item in navigates">
+						<md-button ng-href="{{item.href}}" ng-click="toggleSidenav('left')">
 							<ng-md-icon icon="{{ item.icon }}"></ng-md-icon>
 							<span>{{ item.name }}</span>
-						</a>
+						</md-button>
 					</md-list-item>
 					<!--
 					<md-item ng-repeat-start="item in navigates" ng-if="!item.href && !item.menu" ng-bind-html="item.name">
