@@ -1,7 +1,7 @@
 <div class="template" id="login" layout="row" layout-padding layout-align="center center">
 	<md-content class="md-whiteframe-z2" flex layout-padding>
 		<md-subheader class="md-primary">Login</md-subheader>
-		<form id="login-form" name="loginForm">
+		<form id="login-form" name="loginForm" ng-submit="viewer.submit()">
 			<md-input-container flex>
 				<label>Username</label>
 				<input ng-model="formData.username" required name="username" type="text" placeholder="Username" autocomplete="off" tabindex="1">

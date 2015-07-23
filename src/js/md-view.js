@@ -21,8 +21,13 @@ var AjaxFormView = function($http, config) {
   var form = config.form;
   this.form = config.form;
   this.init = config.init || function() {};
-  this.message = {
+  this.submit = config.submit || function() {};
+  console.log(config.message);
+  this.message = config.message || {};
+  /*this.message = {
     success: function(message) {
+      console.log("Success message: ", message);
+      return;
       if( message ) {
         $(form).find('.ui.message')
           .removeClass('error')
@@ -36,6 +41,8 @@ var AjaxFormView = function($http, config) {
       }
     },
     error: function(message) {
+      console.log("Error message: ", message);
+      return;
       if( angular.isString(message) ) {
         $(form).find('.ui.message')
           .removeClass('positive')
@@ -46,9 +53,9 @@ var AjaxFormView = function($http, config) {
       $(form).transition('shake');
       return false;
     }
-  };
+  };*/
   var message = this.message;
-  this.submit = function(formData, callback) {
+  this._submit = function(formData, callback) {
     callback = callback || {};
     $http({
       method  : 'POST',
@@ -110,6 +117,33 @@ JobsForm.prototype = AjaxFormView.prototype;
 
 view.service('view', ['$http', function($http) {
 
+  this.message = function(param) {
+    var that = {};
+    that.success = function(message) {
+      var toast = param.$mdToast.simple()
+            .content(message)
+            .action('X')
+            .highlightAction(false)
+            .parent('.container')
+            .position('top right');
+      param.$mdToast.show(toast).then(function() {
+        param.$mdToast.hide();
+      });
+    };
+    that.error = function(message) {
+      var toast = param.$mdToast.simple()
+            .content(message)
+            .action('X')
+            .highlightAction(false)
+            .parent('.container')
+            .position('top right');
+      param.$mdToast.show(toast).then(function() {
+        param.$mdToast.hide();
+      });
+    };
+    return that;
+  };
+
   this.jobsShowListView = function(param) {
     var that = {};
     var initJob = function(self) {
@@ -147,7 +181,7 @@ view.service('view', ['$http', function($http) {
         }
       },{
         onSuccess: function() {
-          self.submit(self.formData, {
+          self._submit(self.formData, {
             onSuccess: function() {
               self.toggle();
               self.inited = false;
@@ -324,7 +358,7 @@ view.service('view', ['$http', function($http) {
                 param.$scope.formData.specialty.push(key);
               }
             }
-            that.submit(param.$scope.formData);
+            that._submit(param.$scope.formData);
             return false;
           },
           onFailure: that.message.error
@@ -366,7 +400,7 @@ view.service('view', ['$http', function($http) {
           }
         },{
           onSuccess: function() {
-            that.submit(param.$scope.formData);
+            that._submit(param.$scope.formData);
             return false;
           },
           onFailure: that.message.error
@@ -381,6 +415,7 @@ view.service('view', ['$http', function($http) {
     var that = new AjaxFormView($http, {
       form: loginForm,
       url: 'api/login.php',
+      /*
       init: function() {
         $(loginForm).form({
           username: {
@@ -393,7 +428,7 @@ view.service('view', ['$http', function($http) {
           }
         },{
           onSuccess: function() {
-            return that.submit(param.$scope.formData, {
+            return that._submit(param.$scope.formData, {
               onSuccess: function() {
                 param.$scope.$emit('loginStatusChange');
                 param.$scope.$emit('redirect', '/');
@@ -402,8 +437,18 @@ view.service('view', ['$http', function($http) {
           },
           onFailure: that.message.error
         });
-      }
+      }*/
+      submit: function() {
+        return that._submit(param.$scope.formData, {
+          onSuccess: function() {
+            param.$scope.$emit('loginStatusChange');
+            param.$scope.$emit('redirect', '/');
+          }
+        });
+      },
+      message: param.$scope.message
     });
+
     return that;
   };
 }]);

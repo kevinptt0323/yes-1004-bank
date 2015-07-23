@@ -21,7 +21,7 @@ ctrl.directive('onFinishRender', function ($timeout) {
   };
 });
 
-ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', '$mdSidenav', function($scope, $sce, $location, $http, $mdSidenav) {
+ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', 'view', '$mdSidenav', '$mdToast', function($scope, $sce, $location, $http, view, $mdSidenav, $mdToast) {
   var load = function(config) {
     $scope[config.name] = $scope[config.name] || {};
     $http({ url: config.url })
@@ -188,6 +188,10 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', '$mdSidenav
     url: 'api/options.php'
   });
   $scope.$emit('loginStatusChange');
+
+  $scope.message = view["message"]({
+    '$mdToast': $mdToast
+  });
 }])
 
 .controller('jobsShowListCtrl', ['$scope', '$route', '$routeParams', 'view', function($scope, $route, $routeParams, view) {
@@ -274,6 +278,7 @@ ctrl.controller('pageCtrl', ['$scope', '$sce', '$location', '$http', '$mdSidenav
         $scope.$emit('loginStatusChange');
         $scope.$emit('redirect', '/');
         $scope.jobseekers = null;
+        $scope.message.success('Logout Successfully!');
       })
       .error(function() {
       });
